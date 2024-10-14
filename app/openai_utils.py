@@ -47,7 +47,7 @@ def summarize_patient_notes(patient_notes):
 
     # Use the gpt-3.5-turbo model for chat-based completion
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model= "gpt-4-turbo", #"gpt-4o-mini" ,
         messages=messages,
         temperature=0.5,
         max_tokens=500,
@@ -56,10 +56,19 @@ def summarize_patient_notes(patient_notes):
 
     print(response)
     # Extract the response text
-    # summary = response['choices'][0]['message']['content'].strip()
-    # summary = response.choices[0].message['content'].strip()
     summary = response.choices[0].message.content.strip()
     return summary
+
+# Function to convert to ASCII-friendly output (removes Markdown-like syntax)
+def convert_to_ascii(text):
+    # Replace bold markdown (**text**) with dashes
+    text = text.replace('**', '')
+    
+    # Replace bullet points (-) with dashes (--)
+    #text = text.replace('- ', '-- ')
+    
+    # Return the converted text
+    return text
 
 # Example patient visit notes (this would be dynamic in a real app)
 text = """
@@ -167,6 +176,10 @@ Plan:
 
 # Call the summarization function
 summary = summarize_patient_notes(text)
+#print(summary)
 
-# Output the summary
-print(summary)
+# Convert the summary to ASCII-friendly format
+ascii_summary = convert_to_ascii(summary)
+
+# Output the ASCII-formatted summary
+print(ascii_summary)
