@@ -1,9 +1,49 @@
-# patient_summary_app
-Summarizes visit notes for patient historical visits.
+import os
+from anthropic import Anthropic
 
-## Example Visit Summary
+# Initialize the Anthropic client
+client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-```
+def create_prompt(patient_notes):
+    system_prompt = (
+        "You are an expert in Large Language models and a primary care physician. "
+        "Your task is to summarize key findings from patient visit notes, focusing on "
+        "crucial points that can help medical professionals quickly understand the "
+        "patient's condition and history."
+    )
+    
+    user_prompt = (
+        f"Summarize the following patient notes into a bullet-point list of key points, "
+        f"followed by a concise paragraph that encapsulates the patient's condition, "
+        f"trends, and the most important information from the visits. The summary should "
+        f"be professional, clear, and designed for busy healthcare providers.\n\n"
+        f"Patient Notes:\n{patient_notes}"
+    )
+    
+    return system_prompt, user_prompt
+
+def summarize_patient_notes(patient_notes):
+    system_prompt, user_prompt = create_prompt(patient_notes)
+    
+    response = client.messages.create(
+        model="claude-3-sonnet-20240229",
+        max_tokens=500,
+        temperature=0.5,
+        system=system_prompt,
+        messages=[
+            {"role": "user", "content": user_prompt}
+        ]
+    )
+    
+    summary = response.content[0].text
+    return summary
+
+def convert_to_ascii(text):
+    text = text.replace('**', '')
+    return text
+
+# Example patient visit notes (this would be dynamic in a real app)
+text = """
 Visit 1: October 1, 2024
 
 Subjective:
@@ -104,48 +144,14 @@ Plan:
     • Recommend over-the-counter NSAIDs for pain management.
     • Encourage gradual return to daily activities with attention to proper posture.
     • Follow-up visit in 2 months for reevaluation.
-```
+"""
 
-## Open AI Summary
+# Call the summarization function
+summary = summarize_patient_notes(text)
+#print(summary)
 
-```
-Key Points from Patient Visits:
+# Convert the summary to ASCII-friendly format
+ascii_summary = convert_to_ascii(summary)
 
-- Visit 1 (October 1, 2024): Hip Pain
-  - Patient reports increased hip pain, particularly when lying down.
-  - Pain described as aching around hip bones and muscles.
-  - Slight reduction in hip range of motion, no swelling or erythema noted.
-  - Post-surgical changes at L4/L5, no new abnormalities on MRI.
-  - Treatment includes Ibuprofen, Cyclobenzaprine, physical therapy, and stretching exercises.
-
-- Visit 2 (September 1, 2024): Upper Arm Pain
-  - Persistent pain in the upper arm, worse at night, affecting sleep.
-  - Diagnosed tendinitis in deltoid area, confirmed by ultrasound.
-  - Range of motion in shoulder restricted to 40%.
-  - Prescribed Naproxen and Tizanidine, continued physical therapy, and advised hot/cold compresses.
-
-- Visit 3 (August 1, 2024): Lower Back Pain
-  - Persistent mild lower back pain post-microdiscectomy.
-  - No new neurological symptoms; physical therapy has improved mobility but not completely alleviated pain.
-  - MRI shows post-operative changes, no new issues.
-  - Treatment includes Meloxicam, continued physical therapy focusing on core strengthening, and over-the-counter NSAIDs.
-
-Summary Paragraph:
-
-The patient has been experiencing persistent pain in multiple areas, including the hips, upper arms, and lower back, following a microdiscectomy at L4/L5. The hip pain is significant when lying down, and there is a reduction in the range of motion without visible inflammation. Upper arm tendinitis has been confirmed, causing sleep disturbances due to pain, with restricted shoulder mobility. Lower back pain remains mild and constant post-surgery, with no new neurological symptoms. Treatments across the visits have focused on managing pain and inflammation with NSAIDs, muscle relaxants, and targeted physical therapy to improve mobility and strength. Follow-up visits are scheduled to reassess and adjust treatment plans as needed, with an emphasis on non-invasive pain management and mobility enhancement.
-```
-
-## Anthropic Summary
-```
-Key Points:
-
-- Persistent hip pain, worse when lying down
-- History of lumbar microdiscectomy at L4/L5 6 months ago
-- Upper arm tendinitis, with reduced range of motion and strength
-- Lower back pain persisting after surgery
-- Physical therapy has improved mobility but pain persists
-- Imaging shows post-surgical changes but no new abnormalities
-
-Summary:
-The patient presents with a combination of musculoskeletal issues, including persistent hip and lower back pain following a recent lumbar microdiscectomy, as well as upper arm tendinitis. Despite undergoing physical therapy, the patient continues to experience discomfort, particularly when lying down or engaging in certain activities. Imaging studies reveal post-surgical changes but no new concerning findings. The treatment plan involves a combination of anti-inflammatory medications, muscle relaxants, and continued physical therapy focused on improving mobility, strength, and core stability. Close monitoring and follow-up are recommended to assess the effectiveness of the treatment and to address any potential complications or worsening of symptoms.
-```
+# Output the ASCII-formatted summary
+print(ascii_summary)
