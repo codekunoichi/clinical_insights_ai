@@ -10,7 +10,7 @@ client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 def create_prompt(patient_notes):
     # Prompt components
     persona = (
-        "You are an expert in Large Language models. You excel at breaking down complex papers "
+        "You are an expert in Large Language models. You excel at breaking down complex patient visit notes "
         "into digestible summaries. You are also an expert primary care physician.\n"
     )
     instruction = "Summarize the key findings of the patient chart from past visit summaries.\n"
@@ -30,19 +30,22 @@ def create_prompt(patient_notes):
     data = f"Text to summarize: {patient_notes}"
 
     # Combine all components into one prompt
-    prompt = persona + instruction + context + data_format + audience + tone + data
+    user_prompt = data_format + audience + tone + data
 
-    return prompt
+    # Combine to form system prompts
+    system_prompt = persona + instruction + context 
 
-# Function to call OpenAI API with prompt
+    return system_prompt, user_prompt
+
+# Function to call OpenAI API with the system and user prompts
 def summarize_patient_notes(patient_notes):
-    # Generate the prompt
-    prompt = create_prompt(patient_notes)
+    # Get the system and user prompts
+    system_prompt, user_prompt = create_prompt(patient_notes)
 
-    # Format the prompt for gpt-3.5-turbo (it expects messages in a chat format)
+    # Format the messages for the ChatCompletion API
     messages = [
-        {"role": "system", "content": "You are an expert summarizer of patient visit notes."},
-        {"role": "user", "content": prompt}
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
     ]
 
     # Use the gpt-3.5-turbo model for chat-based completion
@@ -53,6 +56,10 @@ def summarize_patient_notes(patient_notes):
         max_tokens=500,
         n=1
     )
+
+    # Extract the response text
+    summary = response.choices[0].message.content.strip()
+    return summary
 
     print(response)
     # Extract the response text
