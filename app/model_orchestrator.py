@@ -1,8 +1,7 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import BillerPrompter, SummarizeChartPrompter
-
+from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
@@ -10,6 +9,8 @@ class ModelOrchestrator:
             self.prompter = BillerPrompter()
         elif prompter_type == 'summarizer':
             self.prompter = SummarizeChartPrompter()
+        elif prompter_type == 'diagnosis':
+            self.prompter = DiagnosisCodePrompter()
         else:
             raise ValueError("Invalid prompter type provided. Choose 'biller' or 'summarizer'.")
 
@@ -45,12 +46,22 @@ if __name__ == "__main__":
     result = orchestrator.process_pretty(visit_summary)
     print(result)
 
-    # Orchestrate with OpenAI model and SummarizeChartPrompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='summarizer')
-    result = orchestrator.process_pretty(visit_summary)
-    print(result)
+    # # Orchestrate with OpenAI model and SummarizeChartPrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='summarizer')
+    # result = orchestrator.process_pretty(visit_summary)
+    # print(result)
 
-    # Orchestrate with Anthropic model and SummarizeChartPrompter
-    orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='summarizer')
-    result = orchestrator.process_pretty(visit_summary)
-    print(result)
+    # # Orchestrate with Anthropic model and SummarizeChartPrompter
+    # orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='summarizer')
+    # result = orchestrator.process_pretty(visit_summary)
+    # print(result)
+
+    # # Orchestrate with Anthropic model and DiagnosisCodePrompter
+    # orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='diagnosis')
+    # result = orchestrator.process_pretty(visit_summary)
+    # print(result)
+
+    # # Orchestrate with OpenAI model and DiagnosisCodePrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='diagnosis')
+    # result = orchestrator.process_pretty(visit_summary)
+    # print(result)

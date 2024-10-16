@@ -35,6 +35,35 @@ class BillerPrompter(AbstractPromptGenerator):
 
         return system_prompt, user_prompt
     
+class DiagnosisCodePrompter(AbstractPromptGenerator):
+    def generate_prompt(self, note) -> str:
+        # Set the system prompt for the Biller persona
+        # Prompt components
+        persona = (
+            "You are an expert in Ambulatory Patient Care Billing and Coding. You excel at breaking down complex patient visit notes "
+            "into appropriate ICD-10 Codes. You are also an expert HCC Coder.\n"
+        )
+        instruction = "Identify the key ICD-10 code from the patient chart for given visit summary.\n"
+        context = (
+            "Your ICD-10 should extract the most most relevant diagnosis for the given chart notes that can help billers create the right ICD-10 Code for the given visit summary.\n"
+        )
+        data_format = (
+            "Create a bullet-point ICD-10 Code Recommendation.\n"
+        )
+        audience = (
+            "The summary is designed for Revenue Cycle Management Team Billers to create claims with the right ICD-10 Code for the given visit summary.\n"
+        )
+        tone = "The tone should be professional and clear.\n"
+        data = f"Text to recommend ICD-10 From: {note}"
+
+        # Combine all components into one prompt
+        user_prompt = data_format + audience + tone + data
+
+        # Combine to form system prompts
+        system_prompt = persona + instruction + context 
+
+        return system_prompt, user_prompt
+    
 
 class SummarizeChartPrompter(AbstractPromptGenerator):
     def generate_prompt(self, note) -> str:
