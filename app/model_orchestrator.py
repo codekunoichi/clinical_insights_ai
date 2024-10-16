@@ -46,22 +46,22 @@ if __name__ == "__main__":
     result = orchestrator.process_pretty(visit_summary)
     print(result)
 
-    # # Orchestrate with OpenAI model and SummarizeChartPrompter
-    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='summarizer')
-    # result = orchestrator.process_pretty(visit_summary)
-    # print(result)
+    # Orchestrate with OpenAI model and SummarizeChartPrompter
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='summarizer')
+    result = orchestrator.process_pretty(visit_summary)
+    print(result)
 
-    # # Orchestrate with Anthropic model and SummarizeChartPrompter
-    # orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='summarizer')
-    # result = orchestrator.process_pretty(visit_summary)
-    # print(result)
+    # Orchestrate with Anthropic model and SummarizeChartPrompter
+    orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='summarizer')
+    result = orchestrator.process_pretty(visit_summary)
+    print(result)
 
-    # # Orchestrate with Anthropic model and DiagnosisCodePrompter
-    # orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='diagnosis')
-    # result = orchestrator.process_pretty(visit_summary)
-    # print(result)
+    # Orchestrate with Anthropic model and DiagnosisCodePrompter
+    orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='diagnosis')
+    result = orchestrator.process_pretty(visit_summary)
+    print(result)
 
-    # # Orchestrate with OpenAI model and DiagnosisCodePrompter
-    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='diagnosis')
-    # result = orchestrator.process_pretty(visit_summary)
-    # print(result)
+    # Orchestrate with OpenAI model and DiagnosisCodePrompter
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='diagnosis')
+    result = orchestrator.process_pretty(visit_summary)
+    print(result)
