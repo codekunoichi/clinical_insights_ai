@@ -7,10 +7,12 @@ class AIModel(ABC):
 
     def call_model(self, text_to_run) -> str:
         system_prompt, user_prompt = self.prompter.generate_prompt(text_to_run)
+        print (f"System Prompt :\n\n {system_prompt}, User Prompt:\n\n:{user_prompt}")
         return self.get_summary(system_prompt, user_prompt)
     
     def call_model_and_scrub(self, text_to_run) -> str:
         system_prompt, user_prompt = self.prompter.generate_prompt(text_to_run)
+        print (f"System Prompt :\n\n {system_prompt}, User Prompt:\n\n:{user_prompt}")
         return self.convert_to_ascii(self.get_summary(system_prompt, user_prompt))
 
     @abstractmethod

@@ -149,3 +149,22 @@ Key Points:
 Summary:
 The patient presents with a combination of musculoskeletal issues, including persistent hip and lower back pain following a recent lumbar microdiscectomy, as well as upper arm tendinitis. Despite undergoing physical therapy, the patient continues to experience discomfort, particularly when lying down or engaging in certain activities. Imaging studies reveal post-surgical changes but no new concerning findings. The treatment plan involves a combination of anti-inflammatory medications, muscle relaxants, and continued physical therapy focused on improving mobility, strength, and core stability. Close monitoring and follow-up are recommended to assess the effectiveness of the treatment and to address any potential complications or worsening of symptoms.
 ```
+
+### Setup the file path for proper environment for running the app
+
+```
+export PYTHONPATH=/workspaces/patient_summary_app
+
+/workspaces/patient_summary_app/.venv/bin/python -m app.model_orchestrator
+```
+- Setup the necessary libraries
+
+```
+pip install fastapi jinja2 uvicorn
+```
+
+- Run the server
+
+```
+uvicorn app.app:app --reload
+```

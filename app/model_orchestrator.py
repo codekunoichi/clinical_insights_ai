@@ -23,13 +23,14 @@ class ModelOrchestrator:
 
     def process(self, visit_summary: VisitSummary, ) -> str:
         # Call the model with the generated prompt
-        result = self.model.call_model(visit_summary.get_sample_visits())
+        print(f"Visit Summary: \n\n {visit_summary.get_text()}")
+        result = self.model.call_model(visit_summary.get_text())
         return result
     
     # removes the markdown characters returned.
     def process_pretty(self, visit_summary: VisitSummary, ) -> str:
         # Call the model with the generated prompt
-        result = self.model.call_model_and_scrub(visit_summary.get_sample_visits())
+        result = self.model.call_model_and_scrub(visit_summary.get_text())
         return result
 
 if __name__ == "__main__":

@@ -29,6 +29,6 @@ async def process_note(request: Request, visit_note: str = Form(...), prompter_t
     orchestrator = ModelOrchestrator(model_type='openai', prompter_type=prompter_type)  # Or 'anthropic'
     
     visit_summary = VisitSummary([visit_note])
-    result = orchestrator.process_pretty(visit_summary)
+    result = orchestrator.process_pretty(visit_summary.get_text())
 
-    return templates.TemplateResponse("form.html", {"request": request, "result": result})
+    return templates.TemplateResponse("form.html", {"request": request, "visit_note": visit_note, "result": result})
