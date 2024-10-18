@@ -341,8 +341,8 @@ Plan:
 response = generate_CPT_Codes(visit_1)
 print(convert_to_ascii(response))
 
-response = generate_CPT_Codes(visit_2)
-print(convert_to_ascii(response))
+# response = generate_CPT_Codes(visit_2)
+# print(convert_to_ascii(response))
 
-response = generate_CPT_Codes(visit_3)
-print(convert_to_ascii(response))
+# response = generate_CPT_Codes(visit_3)
+# print(convert_to_ascii(response))

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit Summary Prompter</title>
+</head>
+<body>
+    <h1>Visit Summary Prompter</h1>
+    
+    <form method="post" action="/process">
+        <label for="visit_note">Enter Visit Notes:</label><br>
+        <textarea id="visit_note" name="visit_note" rows="10" cols="50" placeholder="Enter patient visit notes..."></textarea><br><br>
+        
+        <label for="prompter_type">Select a Prompter:</label><br>
+        <input type="radio" id="biller" name="prompter_type" value="biller">
+        <label for="biller">CPT Picker</label><br><br>
+        
+        <input type="radio" id="summarizer" name="prompter_type" value="summarizer">
+        <label for="summarizer">Summarizer</label><br><br>
+
+        <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis">
+        <label for="diagnosis">Diagnosis Picker</label><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if result %}
+        <h2>Generated Output:</h2>
+        <p><pre>{{ result | safe }}</pre></p>
+    {% endif %}
+</body>
+</html>
