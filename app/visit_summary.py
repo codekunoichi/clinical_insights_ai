@@ -8,7 +8,7 @@ class VisitSummary:
     
     @staticmethod
     def get_sample_visits() -> list:
-        return [visit_1]
+        return [lab_result]
 
 
 
@@ -123,5 +123,34 @@ Plan:
     • Follow-up visit in 2 months for reevaluation.
 """
 
+lab_result = """Lab Results for: John Doe
+Date: October 10, 2024
+
+HbA1c (Hemoglobin A1c):
+- HbA1c: 6.5% (Normal: 4.0% - 5.6%)
+  - Interpretation: Consistent with Diabetes
+
+Complete Blood Count (CBC):
+- Hemoglobin: 14.8 g/dL (Normal: 13.8 - 17.2 g/dL)
+- Hematocrit: 44.5% (Normal: 40.7 - 50.3%)
+- White Blood Cells (WBC): 9.5 x10^9/L (Normal: 4.5 - 11.0 x10^9/L)
+- Platelet Count: 250 x10^9/L (Normal: 150 - 400 x10^9/L)
+- Mean Corpuscular Volume (MCV): 89 fL (Normal: 80 - 100 fL)
+
+Basic Metabolic Panel:
+- Sodium: 140 mmol/L (Normal: 135 - 145 mmol/L)
+- Potassium: 4.3 mmol/L (Normal: 3.5 - 5.0 mmol/L)
+- Chloride: 102 mmol/L (Normal: 98 - 107 mmol/L)
+- Bicarbonate: 25 mmol/L (Normal: 22 - 29 mmol/L)
+- Blood Urea Nitrogen (BUN): 18 mg/dL (Normal: 7 - 20 mg/dL)
+- Creatinine: 1.0 mg/dL (Normal: 0.6 - 1.2 mg/dL)
+- Glucose (Fasting): 105 mg/dL (Normal: 70 - 99 mg/dL)
+  - Interpretation: Mildly elevated fasting glucose level (Pre-Diabetes)
+- Calcium: 9.4 mg/dL (Normal: 8.5 - 10.2 mg/dL)
+
+Liver Enzymes (Part of the Metabolic Panel):
+- Alanine Aminotransferase (ALT): 22 U/L (Normal: 7 - 55 U/L)
+- Aspartate Aminotransferase (AST): 18 U/L (Normal: 8 - 48 U/L)
+"""
 # example = VisitSummary(VisitSummary.get_sample_visits())
 # print(example.get_text())
