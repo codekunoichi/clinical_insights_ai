@@ -58,9 +58,8 @@ input[type="radio"] {
 .split-container {
     display: flex;
     justify-content: space-between;
-    gap: 20px; /* Adjust the gap between the boxes */
-    min-height: 300px; /* Set a minimum height for the container */
-    height: calc(100vh - 300px); /* Dynamic height adjustment based on the viewport */
+    gap: 20px;
+    height: auto; /* Let the height adjust automatically */
 }
 
 .box {
@@ -69,8 +68,17 @@ input[type="radio"] {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    min-height: 300px; /* Set minimum height for the boxes */
-    overflow: auto; /* Still allow scrolling if content exceeds the box height */
+    display: block; /* Set to block to ensure the content starts from the top */
+    min-height: 300px;
+    overflow: auto;
+}
+
+.output-box h2 {
+    margin-top: 0;
+}
+
+.output-box p {
+    margin-top: 0;
 }
 
 .output-box {
