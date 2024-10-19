@@ -7,31 +7,42 @@ class AbstractPromptGenerator(ABC):
         pass
 
 class BillerPrompter(AbstractPromptGenerator):
-    def generate_prompt(self, note) -> str:
-        # Set the system prompt for the Biller persona
-        # Prompt components
+    def generate_prompt(self, note) -> tuple:
+        # System prompt components (for model behavior and boundaries)
         persona = (
-            "You are an expert in Ambulatory Patient Care Billing and Coding. You excel at breaking down complex patient visit notes "
-            "into appropriate CPT Codes. You are also an expert HCC Coder.\n"
+            "You are an expert in Ambulatory Patient Care Billing and Coding, with specialized expertise in identifying "
+            "appropriate CPT and CPT II codes from patient visit notes. You are also an expert HCC Coder.\n"
         )
-        instruction = "Identify the key CPT of the patient chart from given visit summary.\n"
+        instruction = (
+            "Your role is to analyze the provided patient visit note and identify the key CPT codes that apply. Focus only on "
+            "the information provided in the note and avoid making any assumptions or inferences not explicitly mentioned.\n"
+        )
         context = (
-            "Your CPT should extract the most crucial points that can help billers create the right CPT Code for the given visit summary.\n"
+            "Extract the most relevant CPT codes based on the procedures performed, referrals, and any evaluations documented in the visit note. "
+            "Additionally, consider any CPT II codes related to quality measures, as well as any codes for Social Determinants of Health (SDOH) if applicable. "
+            "Provide example CPT II codes and SDOH codes if relevant to the visit note, but only based on the information provided in the text.\n"
         )
+
+        # User prompt components (for generating the actual recommendation)
         data_format = (
-            "Create a bullet-point CPT Code Recommendation.\n"
+            "Create a clear, bullet-point list of CPT code recommendations. Start with the most relevant CPT codes based on "
+            "the procedures, treatments, and evaluations performed. Additionally, if applicable, recommend CPT II codes, SDOH-related codes, "
+            "and any referral codes. Provide a brief explanation next to each code, and ensure that all recommendations are strictly based "
+            "on the text in the visit note.\n"
+        )
+        follow_up = (
+            "Ensure that no inferences or additional assumptions are made beyond what is present in the visit note.\n"
         )
         audience = (
-            "The summary is designed for Revenue Cycle Management Team Billers to create claims with the right CPT Code for the given visit summary.\n"
+            "The CPT code recommendations are intended for the Revenue Cycle Management Team Billers to accurately create claims based on "
+            "the patient visit notes.\n"
         )
-        tone = "The tone should be professional and clear.\n"
-        data = f"Text to recommend CPT From: {note}"
+        tone = "The tone should be professional, concise, and clear.\n"
+        data = f"Text to generate CPT Codes from: {note}"
 
-        # Combine all components into one prompt
-        user_prompt = data_format + audience + tone + data
-
-        # Combine to form system prompts
-        system_prompt = persona + instruction + context 
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
     

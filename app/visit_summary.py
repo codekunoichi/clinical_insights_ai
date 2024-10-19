@@ -8,7 +8,7 @@ class VisitSummary:
     
     @staticmethod
     def get_sample_visits() -> list:
-        return [visit_1]
+        return [sdoh_visit]
 
 
 
@@ -151,6 +151,59 @@ Basic Metabolic Panel:
 Liver Enzymes (Part of the Metabolic Panel):
 - Alanine Aminotransferase (ALT): 22 U/L (Normal: 7 - 55 U/L)
 - Aspartate Aminotransferase (AST): 18 U/L (Normal: 8 - 48 U/L)
+"""
+
+sdoh_visit = """Visit 1: October 1, 2024
+
+Subjective:
+    • The patient reports an increase in hip pain, especially when lying down.
+    • Describes the pain as aching, mainly located around the hip bones and muscles.
+    • The patient also reports occasional upper arm aches when in a lying position.
+    • No radiating pain down the legs.
+    • Microdiscectomy at L4/L5 was performed 6 months ago, and the patient denies any radiating pain to the lower extremities.
+    • The patient reports difficulty managing blood sugar levels, with fasting glucose consistently over 130 mg/dL over the last few weeks.
+    • The patient reports concerns about the affordability of medications, noting difficulty paying for insulin and other diabetes-related medications.
+
+Objective:
+    • Vitals: BP 130/85 mmHg, HR 72 bpm, Temp 98.6°F, BMI 28.
+    • Physical exam:
+        • Tenderness on palpation around both hip bones.
+        • No visible swelling or erythema.
+        • Range of motion in hips slightly reduced.
+        • Neurological exam normal: no signs of numbness or weakness in lower extremities.
+    • Recent imaging: Lumbar MRI shows post-surgical changes at L4/L5 but no new abnormalities.
+    • Diabetes Management:
+        • HbA1c: 8.2% (elevated, goal < 7%).
+        • Fasting glucose: 135 mg/dL (normal: 70-99 mg/dL).
+    • Social Determinants of Health:
+        • Reports financial difficulty affording medications, specifically insulin and glucose monitoring supplies.
+
+Assessment:
+    • ICD-10 Codes:
+        • M25.551: Pain in right hip.
+        • M25.552: Pain in left hip.
+        • M54.5: Low back pain.
+        • E11.65: Type 2 diabetes mellitus with hyperglycemia.
+        • Z59.7: Insufficient social insurance and welfare support (related to medication affordability).
+    • CPT Codes:
+        • 99214: Established patient office visit, moderate complexity.
+        • 72148: MRI of lumbar spine.
+        • 83036: Hemoglobin A1c measurement.
+        • 99401: Preventive care counseling, addressing diabetes management and SDOH concerns.
+
+Plan:
+    • Medications:
+        • Ibuprofen 600 mg PO every 8 hours as needed for pain. RxNorm: 5640.
+        • Cyclobenzaprine 10 mg PO at bedtime for muscle relaxation. RxNorm: 3112.
+        • Insulin glargine 10 units at bedtime. RxNorm: 123456.
+        • Continue Metformin 500 mg BID. RxNorm: 860975.
+    • Diabetes Management:
+        • Referral to endocrinology for diabetes management and medication adjustment.
+        • Referral to social worker to assist with financial resources for insulin and glucose monitoring supplies.
+    • Continue physical therapy for mobility improvement.
+    • Recommended stretching exercises for hips and back.
+    • Follow up in 4 weeks for reassessment of hip pain and diabetes control.
+    • Consider adding a home health aide if the patient's diabetes control does not improve.
 """
 # example = VisitSummary(VisitSummary.get_sample_visits())
 # print(example.get_text())
