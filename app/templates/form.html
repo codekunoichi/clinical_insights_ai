@@ -20,13 +20,13 @@
                 <label for="prompter_type"><h2>What do you want to do?</h2></label>
                 <div class="radio-group">
                     <input type="radio" id="biller" name="prompter_type" value="biller" {% if prompter_type == "biller" %}checked{% endif %}>
-                    <label for="biller">Generate CPT Code for the Visit Note</label>
-
+                    <label for="biller">Generate CPT Code for the Visit Note</label><br>
+                
                     <input type="radio" id="summarizer" name="prompter_type" value="summarizer" {% if prompter_type == "summarizer" %}checked{% endif %}>
-                    <label for="summarizer">Summarize the Visit Note</label>
-
+                    <label for="summarizer">Summarize the Visit Note</label><br>
+                
                     <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis" {% if prompter_type == "diagnosis" %}checked{% endif %}>
-                    <label for="diagnosis">Recommend Diagnosis Code ICD-10 for the Visit Note</label>
+                    <label for="diagnosis">Recommend Diagnosis Code ICD-10 for the Visit Note</label><br>
                 </div>
 
                 <button type="submit">Submit</button>

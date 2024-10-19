@@ -119,17 +119,18 @@ pre {
 }
 
 .radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: block;
+}
+
+.radio-group input[type="radio"] {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
 }
 
 .radio-group label {
     display: inline-block;
-    margin-left: 5px;
-    font-size: 16px;
-}
-
-.radio-group input[type="radio"] {
+    vertical-align: middle;
     margin-right: 10px;
+    font-size: 16px;
 }
