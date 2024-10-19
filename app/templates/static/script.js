@@ -45,3 +45,14 @@ window.addEventListener('load', function() {
 function resetForm() {
     form.reset(); 
 }
+
+function resetResponsePanels() {
+    // Clear the content of the Visit Note and Generated Output panels
+    document.getElementById('visit-note-panel').innerHTML = '<p>No visit note entered yet.</p>';
+    document.getElementById('generated-output-panel').innerHTML = '<p>Generated output will appear here after submission.</p>';
+}
+
+// Add this to the form's onsubmit event
+form.onsubmit = function() {
+    resetResponsePanels(); // Clear the lower panels when submit is clicked
+};

@@ -46,7 +46,7 @@
     <!-- Split section (Bottom part) -->
     <div class="split-container">
         <!-- Left Side: Visit Note entered -->
-        <div class="box output-box">
+        <div id="visit-note-panel" class="box output-box">
             <h2>Visit Note Entered</h2>
             {% if visit_note %}
                 <pre>{{ visit_note }}</pre>
@@ -56,7 +56,7 @@
         </div>
 
         <!-- Right Side: Generated Output -->
-        <div class="box output-box">
+        <div id="generated-output-panel" class="box output-box">
             <h2>Generated Output {% if prompter_type %} <pre>{{ prompter_type }}</pre>{% endif %}</h2>
             {% if result %}
                 <pre>{{ result | safe }}</pre>
