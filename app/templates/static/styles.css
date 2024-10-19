@@ -78,3 +78,33 @@ pre {
     border: 1px solid #d9e8f2;
     overflow: auto;
 }
+
+/* Spinner CSS */
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    display: none; /* Hidden by default */
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.spinner-text {
+    margin-left: 20px;
+    font-size: 18px;
+    color: #333;
+}
