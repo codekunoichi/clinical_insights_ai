@@ -41,3 +41,7 @@ form.addEventListener('submit', function(event) {
 window.addEventListener('load', function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
 });
+
+function resetForm() {
+    form.reset(); 
+}
