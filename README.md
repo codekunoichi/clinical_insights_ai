@@ -98,11 +98,3 @@ Plan:
     • Medications: Ibuprofen, Cyclobenzaprine
     • Continue physical therapy and follow-up in 4 weeks.
 ```
-
----
-
-If you have any questions or run into issues, please feel free to reach out!
-
----
-
-This draft adds structured sections for setup, running, and prompter types, as well as keeping the original example. Let me know if any additional details should be included!
