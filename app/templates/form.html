@@ -27,6 +27,9 @@
                 
                     <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis" {% if prompter_type == "diagnosis" %}checked{% endif %}>
                     <label for="diagnosis">Recommend Diagnosis Code ICD-10 for the Visit Note</label><br>
+
+                    <input type="radio" id="lab_result" name="prompter_type" value="lab_result_emailer" {% if prompter_type == "lab_result_emailer" %}checked{% endif %}>
+                    <label for="diagnosis">Summarize the Lab Results and create a patient email.</label><br>
                 </div>
 
                 <button type="submit">Submit</button>
