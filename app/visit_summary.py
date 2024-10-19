@@ -8,7 +8,7 @@ class VisitSummary:
     
     @staticmethod
     def get_sample_visits() -> list:
-        return [lab_result]
+        return [visit_1]
 
 
 

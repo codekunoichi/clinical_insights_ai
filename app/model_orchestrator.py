@@ -56,10 +56,10 @@ if __name__ == "__main__":
     # result = orchestrator.process_pretty(visit_summary)
     # print(result)
 
-    # # Orchestrate with OpenAI model and SummarizeChartPrompter
-    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='summarizer')
-    # result = orchestrator.process_pretty(visit_summary)
-    # print(result)
+    # Orchestrate with OpenAI model and SummarizeChartPrompter
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='summarizer')
+    result = orchestrator.process_pretty(visit_summary)
+    print(result)
 
     # # Orchestrate with Anthropic model and SummarizeChartPrompter
     # orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='summarizer')
@@ -76,10 +76,10 @@ if __name__ == "__main__":
     # result = orchestrator.process_pretty(visit_summary)
     # print(result)
 
-    # Orchestrate with OpenAI model and LabEmailPrompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='lab_result_emailer')
-    result = orchestrator.process_pretty(visit_summary)
-    print(result)
-    email = orchestrator.generate_email(result)
-    print(email)
+    # # Orchestrate with OpenAI model and LabEmailPrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='lab_result_emailer')
+    # result = orchestrator.process_pretty(visit_summary)
+    # print(result)
+    # email = orchestrator.generate_email(result)
+    # print(email)
 

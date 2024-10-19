@@ -66,33 +66,42 @@ class DiagnosisCodePrompter(AbstractPromptGenerator):
     
 
 class SummarizeChartPrompter(AbstractPromptGenerator):
-    def generate_prompt(self, note) -> str:
-        # Prompt components
+    def generate_prompt(self, note) -> tuple:
+        # System prompt (for model behavior and boundaries)
         persona = (
-            "You are an expert in Large Language models. You excel at breaking down complex patient visit notes "
-            "into digestible summaries. You are also an expert primary care physician.\n"
+            "You are an expert in Large Language Models and clinical data analysis, specializing in summarizing "
+            "patient visit notes for busy healthcare professionals. You are also a highly experienced primary care physician.\n"
         )
-        instruction = "Summarize the key findings of the patient chart from past visit summaries.\n"
+        instruction = (
+            "Your task is to accurately summarize the key findings from the patient's visit note without adding any inference, "
+            "speculation, or additional information. Stay strictly within the boundaries of the provided text, focusing only on "
+            "what is explicitly mentioned.\n"
+        )
         context = (
-            "Your summary should extract the most crucial points that can help medical assistants, "
-            "physicians, and care providers quickly understand the most vital information in the patient chart.\n"
+            "The summary should highlight the most crucial points from the visit note that will help medical assistants, "
+            "physicians, and other healthcare providers quickly grasp the patient's condition, treatment plan, and any important "
+            "trends or changes. The summary should be actionable and relevant to ongoing patient care.\n"
         )
+        
+        # User prompt (for generating the actual summary)
         data_format = (
-            "Create a bullet-point summary that outlines the key points. Follow this up with a concise "
-            "paragraph that encapsulates the patient's condition, trends, and the most important information from the visits.\n"
+            "Create a concise, bullet-point summary of the key findings. Each bullet should represent an important fact from the visit note, "
+            "such as diagnoses, treatments, lab results, and notable trends.\n"
+        )
+        follow_up = (
+            "After the bullet points, provide a brief paragraph summarizing the patient's overall condition and any "
+            "important trends that have emerged from the visit. Avoid making any assumptions or adding extra context.\n"
         )
         audience = (
-            "The summary is designed for busy healthcare providers who need to quickly grasp the patient's health trends "
-            "in prior visit notes.\n"
+            "This summary is intended for busy healthcare providers who need a quick overview of the patient's "
+            "condition and the key takeaways from the visit.\n"
         )
-        tone = "The tone should be professional and clear.\n"
-        data = f"Text to summarize: {note}"
+        tone = "The tone should be professional, clear, and concise.\n"
+        data = f"Patient Visit Note to summarize: {note}"
 
-        # Combine all components into one prompt
-        user_prompt = data_format + audience + tone + data
-
-        # Combine to form system prompts
-        system_prompt = persona + instruction + context 
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
     
