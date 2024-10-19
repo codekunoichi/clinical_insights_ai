@@ -17,22 +17,21 @@
                 <textarea id="visit_note" name="visit_note" placeholder="Enter patient visit notes...">{{ visit_note or '' }}</textarea>
                 <br><br>
 
-                <label for="prompter_type">Select a Prompter:</label>
+                <label for="prompter_type"><h2>What do you want to do?</h2></label>
                 <input type="radio" id="biller" name="prompter_type" value="biller" {% if prompter_type == "biller" %}checked{% endif %}>
-                <label for="biller">CPT Picker</label><br>
+                <label for="biller">Generate CPT Code for the Visit Note</label>
 
                 <input type="radio" id="summarizer" name="prompter_type" value="summarizer" {% if prompter_type == "summarizer" %}checked{% endif %}>
-                <label for="summarizer">Summarizer</label><br>
+                <label for="summarizer">Summarize the Visit Note</label>
 
                 <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis" {% if prompter_type == "diagnosis" %}checked{% endif %}>
-                <label for="diagnosis">Diagnosis Picker</label><br><br>
+                <label for="diagnosis">Recommend Diagnosis Code ICD-10 for the Visit Note</label><br><br>
 
                 <button type="submit">Submit</button>
             </form>
         </div>
     </div>
 
-    <!-- Spinner (Initially Hidden) -->
     <!-- Spinner Container (Initially Hidden) -->
     <div id="spinner-container" class="spinner-container">
         <div id="spinner" class="spinner"></div>
@@ -62,55 +61,7 @@
         </div>
     </div>
 
-    <!-- JavaScript to Show Spinner and Handle Form Submission -->
-    <script>
-        const form = document.getElementById('visitForm');
-        const spinner = document.getElementById('spinner');
-        const spinnerContainer = document.getElementById('spinner-container');
-        const spinnerText = document.getElementById('spinner-text');
-
-        form.addEventListener('submit', function() {
-            // Show the spinner when form is submitted
-            spinner.style.display = 'block';
-        });
-
-        // List of messages to rotate through
-    const messages = [
-        "Talking to the OpenAI models...",
-        "Thinking...",
-        "Generating content..."
-    ];
-    let messageIndex = 0;
-
-    // Function to rotate messages
-    function rotateMessages() {
-        messageIndex = (messageIndex + 1) % messages.length;
-        spinnerText.innerHTML = messages[messageIndex];
-    }
-
-    // Set an interval to change the message every 2 seconds
-    let messageInterval;
-
-    form.addEventListener('submit', function(event) {
-        // Prevent the default form submission behavior
-        event.preventDefault();
-
-        // Show the spinner and rotating text
-        spinnerContainer.style.display = 'flex';
-
-        // Start rotating the messages
-        messageInterval = setInterval(rotateMessages, 2000);
-
-        // Simulate form submission for demo (remove this in production)
-        setTimeout(() => {
-            form.submit(); // Actually submit the form after the delay
-        }, 500);  // Submit the form after a short delay (500ms)
-     });
-
-    // When the page is reloaded after the response is received, hide the spinner container
-    window.addEventListener('load', function() {
-        spinnerContainer.style.display = 'none'; // Hide spinner on page load
-    });
-    </script>
+    <!-- Reference external JavaScript file -->
+    <script src="/static/script.js"></script>
 </body>
 </html>

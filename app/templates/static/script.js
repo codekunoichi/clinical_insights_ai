@@ -26,6 +26,7 @@ form.addEventListener('submit', function(event) {
 
     // Show the spinner and rotating text
     spinnerContainer.style.display = 'flex';
+    spinner.style.display = 'block';  // Ensure spinner itself is visible
 
     // Start rotating the messages
     messageInterval = setInterval(rotateMessages, 2000);

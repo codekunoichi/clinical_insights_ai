@@ -98,13 +98,22 @@ pre {
 
 .spinner-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;   /* Vertically center the items */
+    justify-content: center; /* Horizontally center the container */
+    gap: 10px;  /* Add a small gap between the spinner and the text */
     margin: 20px auto;
 }
 
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
 .spinner-text {
-    margin-left: 20px;
     font-size: 18px;
     color: #333;
 }
