@@ -47,31 +47,44 @@ class BillerPrompter(AbstractPromptGenerator):
         return system_prompt, user_prompt
     
 class DiagnosisCodePrompter(AbstractPromptGenerator):
-    def generate_prompt(self, note) -> str:
-        # Set the system prompt for the Biller persona
-        # Prompt components
+    def generate_prompt(self, note) -> tuple:
+        # System prompt components (for model behavior and boundaries)
         persona = (
-            "You are an expert in Ambulatory Patient Care Billing and Coding. You excel at breaking down complex patient visit notes "
-            "into appropriate ICD-10 Codes. You are also an expert HCC Coder.\n"
+            "You are an expert in Ambulatory Patient Care Billing and Coding, specializing in breaking down patient visit notes "
+            "into accurate ICD-10 Codes. You are also an expert in HCC (Hierarchical Condition Category) coding and Social Determinants "
+            "of Health (SDOH) coding using Z codes.\n"
         )
-        instruction = "Identify the key ICD-10 code from the patient chart for given visit summary.\n"
+        instruction = (
+            "Your task is to analyze the provided patient visit note and identify the most relevant ICD-10 codes. "
+            "You must only use the information explicitly mentioned in the visit note. Avoid making any assumptions or adding diagnoses "
+            "that are not supported by the information provided in the note.\n"
+        )
         context = (
-            "Your ICD-10 should extract the most most relevant diagnosis for the given chart notes that can help billers create the right ICD-10 Code for the given visit summary.\n"
+            "Your ICD-10 code recommendations should reflect the most important diagnoses for the patient, helping billers accurately code for "
+            "the visit. If there are any HCC-specific codes, highlight them in a separate section labeled 'HCC-Specific Codes'. Additionally, "
+            "if the note mentions any Social Determinants of Health (SDOH) issues, include relevant Z codes in a section labeled 'SDOH Z Codes'.\n"
         )
+
+        # User prompt components (for generating the actual recommendation)
         data_format = (
-            "Create a bullet-point ICD-10 Code Recommendation.\n"
+            "Create a bullet-point list of ICD-10 code recommendations based on the visit note. For each diagnosis, include "
+            "a brief explanation and ensure all codes are supported by the provided text. If any HCC-specific codes apply, highlight them in "
+            "a separate section labeled 'HCC-Specific Codes'. Similarly, if any Social Determinants of Health (SDOH) apply, highlight the "
+            "relevant Z codes in a section labeled 'SDOH Z Codes'.\n"
+        )
+        follow_up = (
+            "Do not infer or add diagnoses that are not directly mentioned in the note.\n"
         )
         audience = (
-            "The summary is designed for Revenue Cycle Management Team Billers to create claims with the right ICD-10 Code for the given visit summary.\n"
+            "The ICD-10 code recommendations are intended for the Revenue Cycle Management Team Billers to create claims with "
+            "the correct ICD-10 Codes based on the patient visit notes.\n"
         )
-        tone = "The tone should be professional and clear.\n"
+        tone = "The tone should be professional, concise, and clear.\n"
         data = f"Text to recommend ICD-10 From: {note}"
 
-        # Combine all components into one prompt
-        user_prompt = data_format + audience + tone + data
-
-        # Combine to form system prompts
-        system_prompt = persona + instruction + context 
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
     

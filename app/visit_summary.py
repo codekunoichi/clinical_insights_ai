@@ -8,7 +8,7 @@ class VisitSummary:
     
     @staticmethod
     def get_sample_visits() -> list:
-        return [sdoh_visit]
+        return [diagnosis_visit_note]
 
 
 
@@ -204,6 +204,33 @@ Plan:
     • Recommended stretching exercises for hips and back.
     • Follow up in 4 weeks for reassessment of hip pain and diabetes control.
     • Consider adding a home health aide if the patient's diabetes control does not improve.
+"""
+
+diagnosis_visit_note = """Patient Name: John Doe
+Visit Date: October 10, 2024
+
+Chief Complaint: Increased fatigue and muscle weakness.
+
+History of Present Illness:
+The patient reports progressive fatigue over the last few weeks. Complains of general muscle weakness, particularly in the arms. No recent illnesses or injuries. No chest pain, shortness of breath, or palpitations. Blood pressure and heart rate are stable.
+
+The patient is concerned about managing their diabetes due to financial difficulties in affording insulin and glucose testing supplies.
+
+Medications:
+Metformin 500mg BID, Lisinopril 10mg daily.
+
+Physical Exam:
+General: Alert and oriented.
+Heart: Regular rate and rhythm.
+Lungs: Clear to auscultation bilaterally.
+Extremities: Mild muscle weakness in upper arms, normal reflexes.
+
+Assessment and Plan:
+- Likely cause of fatigue: medication side effects (Lisinopril).
+- Type 2 diabetes, uncontrolled, contributing to fatigue.
+- Referral to endocrinology for diabetes management.
+- Patient referred to social services for assistance with insulin and glucose supply costs.
+- Follow-up in 2 weeks to reassess symptoms.
 """
 # example = VisitSummary(VisitSummary.get_sample_visits())
 # print(example.get_text())
