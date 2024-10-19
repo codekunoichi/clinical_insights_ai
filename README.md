@@ -1,4 +1,4 @@
-# patient_summary_app
+# Clinical Insights AI
 Summarizes visit notes for patient historical visits.
 
 ## Example Visit Summary
