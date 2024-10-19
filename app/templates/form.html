@@ -4,101 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visit Summary Prompter</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-        }
-
-        h1 {
-            text-align: center;
-            color: #0066cc;
-        }
-
-        .form-container {
-            display: block;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .form-box {
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
-
-        .form-box textarea {
-            width: 100%;
-            height: 150px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-
-        .form-box button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .form-box button:hover {
-            background-color: #005bb5;
-        }
-
-        .form-box input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        /* Split layout for visit notes and output */
-        .split-container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .box {
-            width: 48%;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            white-space: pre-wrap; /* Preserve whitespace */
-            overflow-y: auto; /* Enable vertical scroll */
-            max-height: 300px; /* Set max-height for scrolling */
-        }
-
-        .output-box {
-            background-color: #f4f7f6;
-        }
-
-        .output-box h2 {
-            color: #ff9933;
-        }
-
-        .box h2 {
-            color: #ff9933;
-        }
-
-        .output-box pre {
-            background-color: #e6f7ff;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #d9e8f2;
-            overflow: auto;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <h1>Visit Summary Prompter</h1>
@@ -108,17 +14,17 @@
         <div class="form-box">
             <h2>Enter Visit Notes</h2>
             <form method="post" action="/process">
-                <textarea id="visit_note" name="visit_note" placeholder="Enter patient visit notes..."></textarea>
+                <textarea id="visit_note" name="visit_note" placeholder="Enter patient visit notes...">{{ visit_note or '' }}</textarea>
                 <br><br>
 
-                <label for="prompter_type">Select a Prompter:</label><br>
-                <input type="radio" id="biller" name="prompter_type" value="biller">
+                <label for="prompter_type">Select a Prompter:</label>
+                <input type="radio" id="biller" name="prompter_type" value="biller" {% if prompter_type == "biller" %}checked{% endif %}>
                 <label for="biller">CPT Picker</label><br>
 
-                <input type="radio" id="summarizer" name="prompter_type" value="summarizer">
+                <input type="radio" id="summarizer" name="prompter_type" value="summarizer" {% if prompter_type == "summarizer" %}checked{% endif %}>
                 <label for="summarizer">Summarizer</label><br>
 
-                <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis">
+                <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis" {% if prompter_type == "diagnosis" %}checked{% endif %}>
                 <label for="diagnosis">Diagnosis Picker</label><br><br>
 
                 <button type="submit">Submit</button>
@@ -140,7 +46,7 @@
 
         <!-- Right Side: Generated Output -->
         <div class="box output-box">
-            <h2>Generated Output</h2>
+            <h2>Generated Output {% if prompter_type %} <pre>{{ prompter_type }}</pre>{% endif %}</h2>
             {% if result %}
                 <pre>{{ result | safe }}</pre>
             {% else %}
