@@ -117,3 +117,19 @@ pre {
     font-size: 18px;
     color: #333;
 }
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-group label {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 10px;
+}
