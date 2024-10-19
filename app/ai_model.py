@@ -24,6 +24,9 @@ class AIModel(ABC):
     def convert_to_ascii(self, text):
         # Replace bold markdown (**text**) with dashes
         text = text.replace('**', '')
+
+        # Replace bold markdown (**text**) with dashes
+        text = text.replace('#', '')
         
         # Replace bullet points (-) with dashes (--)
         #text = text.replace('- ', '-- ')
