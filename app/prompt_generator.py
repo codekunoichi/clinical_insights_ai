@@ -100,38 +100,39 @@ class LabResultEmailer(AbstractPromptGenerator):
     def generate_prompt(self, lab_results) -> tuple:
         # System prompt components
         persona = (
-            "You are an expert in clinical data analysis, specializing in interpreting lab results. "
-            "You excel at summarizing key insights from lab results in a concise and clear manner. "
-            "You are also an experienced laboratory specialist.\n"
+            "You are an expert in clinical data analysis, specializing in summarizing lab results in a concise, high-level "
+            "manner. Your summaries should avoid specific numerical values and instead focus on general trends.\n"
         )
         instruction = (
-            "Your role is to provide summaries that will help healthcare providers and patients understand "
-            "lab results accurately. Focus only on the data provided in the lab results without making any "
-            "assumptions or adding extra information.\n"
+            "Summarize the lab results, indicating whether they are normal, mildly elevated, or require follow-up. "
+            "Do not include specific values. For normal results, simply list the test names as normal. For any abnormal results, "
+            "mention the need for follow-up but avoid disclosing values.\n"
         )
         context = (
-            "Your summaries should highlight trends, abnormalities, and any important values that require attention.\n"
+            "Summarize lab trends, highlighting results that need attention. Protect patient privacy by omitting exact values."
         )
 
         # User prompt components
         data_format = (
-            "Summarize the lab results provided. Focus on the most significant data points, abnormalities, or trends. "
-            "Do not add any information beyond what is included in the lab report.\n"
+            "Summarize the lab results provided. Focus on overall trends, listing normal results without values and summarizing "
+            "any abnormal results with a brief follow-up recommendation.\n"
         )
         data = f"Lab Results to summarize: {lab_results}"
 
-        # Combine to form system and user prompts
+        # Combine system and user prompts
         system_prompt = persona + instruction + context
         user_prompt = data_format + data
 
         return system_prompt, user_prompt
 
-    def generate_email(self, lab_summary: str) -> str:
-        # Compose the email content
+    def generate_email(self, summary: str) -> str:
+        """Generates a brief email summarizing lab results trends."""
         email_body = (
             "Dear Patient,\n\n"
-            "We have received your recent lab results. Below is a summary of the key findings:\n\n"
-            f"{lab_summary}\n\n"
+            "We have reviewed your recent lab results. Here is a brief summary of the key findings:\n\n"
+            f"{summary}\n\n"
+            "If any of these results are elevated or require follow-up, we recommend contacting your healthcare provider. "
+            "Otherwise, there is no need to worry.\n\n"
             "If you have any questions, please feel free to reach out.\n\n"
             "Best regards,\nYour Healthcare Team"
         )
