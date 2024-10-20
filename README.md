@@ -17,6 +17,18 @@ This project provides AI-powered insights into patient visit notes, generating m
 
 ## Setup
 
+Before diving into the setup, let’s talk investment. If you’re experimenting with this repository or experimenting your own, consider spending a bit on token credits—it’s worth it for your career.
+
+	•	OpenAI Credits: $10 can get you almost 1 million tokens, enough for a solid POC. https://openai.com/api/pricing/
+	•	Anthropic Credits: $25 gets you plenty to run with. https://www.anthropic.com/pricing#anthropic-api
+
+Think of it this way: Instead of spending on Starbucks this month, invest in your future. Build AI models, learn prompt engineering, and develop valuable skills that will pay off in the long run!
+
+Following is the actual spend thus far, its not a lot, be brave and purchase! (yes that is daily spend of 70 cents on OpenAI, for running and re-running this experiment and iterating.
+
+![image](https://github.com/user-attachments/assets/1b53162f-7227-480e-9bdb-94676c936bc6)
+
+
 ### Environment Setup
 
 1. Clone the repository:
@@ -36,6 +48,18 @@ This project provides AI-powered insights into patient visit notes, generating m
     ```bash
     export PYTHONPATH=$(pwd)
     ```
+4. Token Credits and API Key Setup
+
+Before running the application, you need to purchase token credits for OpenAI and/or Anthropic if required.
+
+	-	OpenAI Credits: Purchase token credits from OpenAI.
+	-	Anthropic Credits: Purchase token credits from Anthropic.
+
+After purchasing credits, set the following environment variables for your API keys:
+```
+export OPENAI_API_KEY="your-openai-api-key"
+export ANTHROPIC_API_KEY="your-anthropic-api-key"
+```
 
 ### Required Libraries
 
