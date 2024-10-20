@@ -3,15 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Visit Summary App</title>
+    <title>Welcome to Clinical Insights AI</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .content-container {
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    .content-container {
+        max-width: 800px;
+        padding: 20px;
+        text-align: center; /* Keep the container centered */
+    }
+
+    .prompter-section {
+        text-align: left; /* Align this section to the left */
+        margin-top: 20px;
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Visit Summary Prompter App</h1>
-    <p>This is a simple FastAPI application where you can input patient visit notes and choose a prompter (Biller or Summarizer) to generate different outputs.</p>
-    <p>Click the button below to get started.</p>
-    <form action="/form" method="get">
-        <button type="submit">Get Started</button>
-    </form>
+
+    <div class="content-container">
+        <!-- Image in the middle -->
+        <img src="/static/clinical_insights_ai.png" alt="Clinical Insights AI Art">
+
+        <!-- Welcome message -->
+        <h1>Welcome to Clinical Insights AI Assistant</h1>
+
+        <!-- Application description -->
+        <p>
+            Clinical Insights AI helps healthcare providers generate quick, AI-powered assistant who creates insights from patient visit notes. It offers tools to generate summaries, CPT and ICD-10 codes, and patient-friendly lab result summaries.
+        </p>
+        <div class="prompter-section">
+        <h2>Features</h2>
+            <ul>Summarize patient visit notes.</ul>
+            <ul>Generates appropriate CPT codes for medical billing.</ul>
+            <ul>Recommends ICD-10 diagnosis codes.</ul>
+            <ul>Creates patient-friendly emails summarizing lab results with trends.</ul>
+            <ul>Facilitates healthcare providers by delivering quick, concise insights into patient histories.</ul>
+
+        <!-- Prompter types description, left-aligned -->
+        
+            <h2>Prompter Types</h2>
+            <p><strong>CPT Code Prompter:</strong> Extracts appropriate CPT codes for medical billing.</p>
+            <p><strong>ICD-10 Code Prompter:</strong> Recommends ICD-10 codes based on patient visits, including HCC and SDOH codes.</p>
+            <p><strong>Chart Summary Prompter:</strong> Provides a concise summary of the patient's visit for healthcare providers.</p>
+            <p><strong>Lab Result Email Prompter:</strong> Generates patient-friendly emails summarizing lab results.</p>
+        </div>
+
+        <p>This project provides AI-powered insights into patient visit notes, generating medical summaries, CPT and ICD codes, and lab result summaries, while also maintaining HIPAA-compliant patient communication.</p>
+        <!-- Get Started Button -->
+        <form action="/form" method="get">
+            <button type="submit">Get Started</button>
+        </form>
+    </div>
+
 </body>
 </html>
