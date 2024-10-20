@@ -41,8 +41,8 @@ This project provides AI-powered insights into patient visit notes, generating m
 
 Before running the application, you need to purchase token credits for OpenAI and/or Anthropic if required.
 
-	-	OpenAI Credits: Purchase token credits from OpenAI.
-	-	Anthropic Credits: Purchase token credits from Anthropic.
+- OpenAI Credits: Purchase token credits from OpenAI.
+- Anthropic Credits: Purchase token credits from Anthropic.
 
 After purchasing credits, set the following environment variables for your API keys:
 ```
@@ -117,12 +117,11 @@ Plan:
 
 We encourage you to dive into this repository and experiment with the tools and AI models. Consider investing a small amount in token credits:
 
-	-	OpenAI Credits: $10 for nearly 1 million tokens, enough for a proof of concept.
-	-	Anthropic Credits: $25 to get started.
+- OpenAI Credits: $10 for nearly 1 million tokens, enough for a proof of concept.
+- Anthropic Credits: $25 to get started.
 
 Instead of spending on that daily coffee, invest in yourself and your future. Learn prompt engineering, develop AI skills, and experiment freely!
 
-For pricing details, check out:
 
 For pricing details, check out:
 - [OpenAI Pricing](https://openai.com/api/pricing/)
