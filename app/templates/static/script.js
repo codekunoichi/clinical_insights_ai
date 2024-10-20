@@ -56,3 +56,10 @@ function resetResponsePanels() {
 form.onsubmit = function() {
     resetResponsePanels(); // Clear the lower panels when submit is clicked
 };
+
+function fillVisitNote() {
+    const visitNoteSelect = document.getElementById('visit_note_select');
+    const visitNoteTextarea = document.getElementById('visit_note');
+    visitNoteTextarea.value = visitNoteSelect.value;
+    console.log("Selected note: ", visitNoteSelect.value); // Add this to see if it's being triggered
+}

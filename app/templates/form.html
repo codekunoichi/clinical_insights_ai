@@ -14,9 +14,26 @@
         <div class="form-box">
             <h2>Enter Visit Notes</h2>
             <form id="visitForm" method="post" action="/process">
+                <!-- Dropdown to select a visit note -->
+                <label for="visit_note_select">Choose a visit note:</label>
+                <select id="visit_note_select" onchange="fillVisitNote()">
+                    <option value="">-- Select a visit note --</option>
+                    <!-- Backend will populate these options with visit notes -->
+                    <option value="{{ visit_1 }}">Example Visit Note 1</option>
+                    <option value="{{ visit_2 }}">Example Visit Note 2</option>
+                    <option value="{{ visit_3 }}">Example Visit Note 3</option>
+                    <option value="{{ visit_4 }}">Example Visit Note 4</option>
+                    <option value="{{ sdoh_visit }}">Example Visit Note  with SDOH (use in diagnosis test and hcc test)</option>
+                    <option value="{{ diagnosis_visit_note }}">Example Visit Note with HCC, SDOH (use for diagnosis test)</option>
+                    <option value="{{ lab_result }}">Example Visit Note for Lab Result Summary and Email</option>
+                </select>
+                <br><br>
+
+                <!-- Visit Note Textarea -->
                 <textarea id="visit_note" name="visit_note" placeholder="Enter patient visit notes...">{{ visit_note or '' }}</textarea>
                 <br><br>
 
+                <!-- Prompter Type Radio Buttons -->
                 <label for="prompter_type"><h2>What do you want to do?</h2></label>
                 <div class="radio-group">
                     <input type="radio" id="biller" name="prompter_type" value="biller" {% if prompter_type == "biller" %}checked{% endif %}>

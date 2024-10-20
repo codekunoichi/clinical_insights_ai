@@ -4,7 +4,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
 from fastapi.staticfiles import StaticFiles
 from app.model_orchestrator import ModelOrchestrator
-from app.visit_summary import VisitSummary
+from app.visit_summary import VisitSummary, visit_1, visit_3, visit_2, visit_4, sdoh_visit, diagnosis_visit_note, lab_result
+from flask import render_template
+
 import os
 from pathlib import Path
 
@@ -40,3 +42,7 @@ async def process_note(request: Request, visit_note: str = Form(...), prompter_t
     result = orchestrator.process_pretty(visit_summary)
 
     return templates.TemplateResponse("form.html", {"request": request, "visit_note": visit_note, "prompter_type":prompter_type, "result": result})
+
+@app.route('/')
+def index():
+    return render_template('form.html', visit_1=visit_1, visit_2=visit_2, visit_3=visit_3, visit_4=visit_4, sdoh_visit=sdoh_visit, diagnosis_visit_note=diagnosis_visit_note, lab_result=lab_result)

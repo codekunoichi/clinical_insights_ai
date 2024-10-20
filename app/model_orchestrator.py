@@ -73,21 +73,21 @@ if __name__ == "__main__":
     # result = orchestrator.process_pretty(visit_summary)
     # print(result)
 
-    # # Orchestrate with Anthropic model and DiagnosisCodePrompter
-    # orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='diagnosis')
-    # result = orchestrator.process_pretty(visit_summary)
-    # print(result)
+    # Orchestrate with Anthropic model and DiagnosisCodePrompter
+    orchestrator = ModelOrchestrator(model_type='anthropic', prompter_type='diagnosis')
+    result = orchestrator.process_pretty(visit_summary)
+    print(result)
 
     # # Orchestrate with OpenAI model and DiagnosisCodePrompter
     # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='diagnosis')
     # result = orchestrator.process_pretty(visit_summary)
     # print(result)
 
-    # Orchestrate with OpenAI model and LabEmailPrompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='lab_result_emailer')
-    result, email = orchestrator.process_summary_and_email(visit_summary)
-    print("&&&&&&&&&&&&&&&&&&&& \n\n\nSummary:\n\n")
-    print(result)
-    print("&&&&&&&&&&&&&&&&&&&& \n\n\nEmail:\n\n")
-    print(email)
+    # # Orchestrate with OpenAI model and LabEmailPrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='lab_result_emailer')
+    # result, email = orchestrator.process_summary_and_email(visit_summary)
+    # print("&&&&&&&&&&&&&&&&&&&& \n\n\nSummary:\n\n")
+    # print(result)
+    # print("&&&&&&&&&&&&&&&&&&&& \n\n\nEmail:\n\n")
+    # print(email)
 
