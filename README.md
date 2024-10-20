@@ -17,17 +17,6 @@ This project provides AI-powered insights into patient visit notes, generating m
 
 ## Setup
 
-Before diving into the setup, let’s talk investment. If you’re experimenting with this repository or experimenting your own, consider spending a bit on token credits—it’s worth it for your career.
-
-	•	OpenAI Credits: $10 can get you almost 1 million tokens, enough for a solid POC. https://openai.com/api/pricing/
-	•	Anthropic Credits: $25 gets you plenty to run with. https://www.anthropic.com/pricing#anthropic-api
-
-Think of it this way: Instead of spending on Starbucks this month, invest in your future. Build AI models, learn prompt engineering, and develop valuable skills that will pay off in the long run!
-
-Following is the actual spend thus far, its not a lot, be brave and purchase! (yes that is daily spend of 70 cents on OpenAI, for running and re-running this experiment and iterating.
-
-![image](https://github.com/user-attachments/assets/1b53162f-7227-480e-9bdb-94676c936bc6)
-
 
 ### Environment Setup
 
@@ -123,3 +112,22 @@ Plan:
     • Medications: Ibuprofen, Cyclobenzaprine
     • Continue physical therapy and follow-up in 4 weeks.
 ```
+
+## Lets Experiment!
+
+We encourage you to dive into this repository and experiment with the tools and AI models. Consider investing a small amount in token credits:
+
+	-	OpenAI Credits: $10 for nearly 1 million tokens, enough for a proof of concept.
+	-	Anthropic Credits: $25 to get started.
+
+Instead of spending on that daily coffee, invest in yourself and your future. Learn prompt engineering, develop AI skills, and experiment freely!
+
+For pricing details, check out:
+
+For pricing details, check out:
+- [OpenAI Pricing](https://openai.com/api/pricing/)
+- [Anthropic Pricing](https://www.anthropic.com/pricing#anthropic-api)
+
+Following is the actual spend thus far, its not a lot, be brave and purchase! (Yes that is daily spend of 70 cents on OpenAI, for running and re-running this experiment and iterating.)
+
+![image](https://github.com/user-attachments/assets/1b53162f-7227-480e-9bdb-94676c936bc6)
