@@ -1,4 +1,5 @@
 
+![image](https://github.com/user-attachments/assets/e305c847-373c-4892-a450-d6cb2b7e4db0)
 
 # Clinical Insights AI
 
