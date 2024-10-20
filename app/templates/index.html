@@ -61,6 +61,17 @@
     .prompter-section {
         text-align: left; /* Align this section to the left */
         margin-top: 20px;
+    }
+
+    .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -89,12 +100,23 @@
             <h2>Prompter Types</h2>
             <p><strong>CPT Code Prompter:</strong> Extracts appropriate CPT codes for medical billing.</p>
             <p><strong>ICD-10 Code Prompter:</strong> Recommends ICD-10 codes based on patient visits, including HCC and SDOH codes.</p>
-            <p><strong>Chart Summary Prompter:</strong> Provides a concise summary of the patient's visit for healthcare providers.</p>
+            <p><strong>Chart Summary Prompter:</strong> Provides a concise summary of the patient visit for healthcare providers.</p>
             <p><strong>Lab Result Email Prompter:</strong> Generates patient-friendly emails summarizing lab results.</p>
         </div>
 
         <p>This project provides AI-powered insights into patient visit notes, generating medical summaries, CPT and ICD codes, and lab result summaries, while also maintaining HIPAA-compliant patient communication.</p>
         <!-- Get Started Button -->
+
+
+        <div id="api-key-status">
+            {% if openai_key_present and anthropic_key_present %}
+                <p class="success">API keys for OpenAI and Anthropic are present.</p>
+            {% elif not openai_key_present %}
+                <p class="error">OpenAI API key is missing. Please add it to continue.</p>
+            {% elif not anthropic_key_present %}
+                <p class="error">Anthropic API key is missing. Please add it to continue.</p>
+            {% endif %}
+        </div>
         <form action="/form" method="get">
             <button type="submit">Get Started</button>
         </form>

@@ -17,7 +17,14 @@ templates = Jinja2Templates(directory="app/templates")
 @app.get("/", response_class=HTMLResponse)
 async def get_landing_page(request: Request):
     print("Current working directory:", os.getcwd())  # Debugging
-    return templates.TemplateResponse("index.html", {"request": request})
+    # Check if the API keys are present
+    openai_key_present = bool(os.getenv("OPENAI_API_KEY"))
+    anthropic_key_present = bool(os.getenv("ANTHROPIC_API_KEY"))
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "openai_key_present": openai_key_present,
+        "anthropic_key_present": anthropic_key_present
+    })
 
 # Create the absolute path for the static directory
 static_dir = Path(__file__).parent / "templates/static"
