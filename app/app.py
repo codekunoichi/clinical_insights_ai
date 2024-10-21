@@ -62,17 +62,17 @@ async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
 @app.post("/process", response_class=HTMLResponse)
-async def process_note(request: Request, visit_note: str = Form(...), prompter_type: str = Form(...)):
+async def process_note(request: Request, visit_note: str = Form(...), prompter_type: str = Form(...), model_type: str = Form(...) ):
     # You can invoke the orchestrator here based on the selected prompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type=prompter_type)  # Or 'anthropic'
+    orchestrator = ModelOrchestrator(model_type=model_type, prompter_type=prompter_type)
     print(f"Request received for note:\n\n{visit_note}")
     visit_summary = VisitSummary([visit_note])
     if (prompter_type == 'lab_result_emailer'):
         result, email = orchestrator.process_summary_and_email(visit_summary)
-        return templates.TemplateResponse("form.html", {"request": request, "visit_note": visit_note, "prompter_type":prompter_type, "result": result, "email": email})
+        return templates.TemplateResponse("form.html", {"request": request, "model_type":model_type, "visit_note": visit_note, "prompter_type":prompter_type, "result": result, "email": email})
     else:
         result = orchestrator.process_pretty(visit_summary)
-        return templates.TemplateResponse("form.html", {"request": request, "visit_note": visit_note, "prompter_type":prompter_type, "result": result})
+        return templates.TemplateResponse("form.html", {"request": request, "model_type":model_type, "visit_note": visit_note, "prompter_type":prompter_type, "result": result})
 
 @app.route('/')
 def index():

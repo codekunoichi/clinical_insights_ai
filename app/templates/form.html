@@ -49,6 +49,16 @@
                     <label for="diagnosis">Summarize the Lab Results and create a patient email.</label><br>
                 </div>
 
+                <!-- AI Model to use-->
+                 <h2>AI Model to Choose:</h2>
+                 <div id="model_type" class="radio-group">
+                    <input type="radio" id="openai" name="model_type" value="openai" {% if model_type == "openai" %}checked{% endif %}>
+                    <label for="openai">Open AI</label><br>
+                
+                    <input type="radio" id="anthropic" name="model_type" value="anthropic" {% if model_type == "anthropic" %}checked{% endif %}>
+                    <label for="anthropic">Anthropic</label><br>
+                </div>
+
                 <button type="submit">Submit</button>
                 <!-- Reset button with an onClick event to reset the form -->
                 <button type="button" class="reset-button" onclick="resetForm()">Reset Form</button>
@@ -77,7 +87,10 @@
 
         <!-- Right Side: Generated Output -->
         <div id="generated-output-panel" class="box output-box">
-            <h2>Generated Output {% if prompter_type %} <pre>{{ prompter_type }}</pre>{% endif %}</h2>
+            <h2>Generated Output 
+                {% if model_type %} <pre> using {{ model_type }}</pre>{% endif %}
+                {% if prompter_type %} <pre>for {{ prompter_type }}</pre>{% endif %}
+            </h2>
             {% if result %}
                 <pre>{{ result | safe }}</pre>
             {% else %}
