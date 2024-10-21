@@ -57,9 +57,20 @@ form.onsubmit = function() {
     resetResponsePanels(); // Clear the lower panels when submit is clicked
 };
 
+
 function fillVisitNote() {
+    console.log("Function called!");  // For debugging
     const visitNoteSelect = document.getElementById('visit_note_select');
     const visitNoteTextarea = document.getElementById('visit_note');
-    visitNoteTextarea.value = visitNoteSelect.value;
-    console.log("Selected note: ", visitNoteSelect.value); // Add this to see if it's being triggered
+    const selectedNoteId = visitNoteSelect.value;
+    console.log('Selected Note: ' + selectedNoteId);
+    if (selectedNoteId) {
+        console.log("about to call the route in app")
+        fetch(`/get_visit_note?note_id=${selectedNoteId}`)
+            .then(response => response.json())
+            .then(data => {
+                visitNoteTextarea.value = data.visit_note;
+            })
+            .catch(error => console.error('Error fetching visit note:', error));
+    }
 }
