@@ -9,6 +9,18 @@ class VisitSummary:
     @staticmethod
     def get_sample_visits() -> list:
         return [diagnosis_visit_note]
+    
+    @staticmethod
+    def get_medication_adherance() -> tuple:
+        return [medication_adherance_note], [medication_adherance_response]
+    
+    @staticmethod
+    def get_sdoh_samplenote() -> list:
+        return [sdoh_visit]
+
+    @staticmethod
+    def get_lab_result_samplenote() -> list:
+        return [lab_result]
 
 
 
@@ -232,5 +244,31 @@ Assessment and Plan:
 - Patient referred to social services for assistance with insulin and glucose supply costs.
 - Follow-up in 2 weeks to reassess symptoms.
 """
+
+medication_adherance_note = """Visit Date: October 10, 2024
+
+Subjective:
+- The patient reports feeling lightheaded in the morning but denies any chest pain or shortness of breath. 
+- They have been experiencing fatigue and mild headaches, especially after exertion.
+
+Objective:
+- Vitals: BP 135/85 mmHg, HR 80 bpm, Temp 98.1°F.
+- Physical exam: The heart and lung sounds are normal. Mild pallor observed.
+
+Assessment:
+- Hypertension (ICD-10: I10).
+- Fatigue, likely related to hypertension and suboptimal medication adherence.
+- Headaches, likely related to elevated blood pressure.
+
+Plan:
+- Increase Lisinopril dosage from 10 mg to 20 mg daily.
+- Emphasize the importance of adhering to the prescribed medication regimen.
+- Follow-up in 4 weeks to reassess blood pressure and symptoms."""
+
+medication_adherance_response = """- Medication Adherence Responses:
+  - "Do you ever forget to take your medicine?": Yes, about once a week.
+  - "When you feel better, do you sometimes stop taking your medicine?": Sometimes, especially when symptoms improve.
+  - "If you feel worse when you take your medicine, do you sometimes stop taking it?": No, I continue taking it.
+  - "Do you sometimes take your medicine differently from how your doctor prescribed?": Yes, occasionally I reduce the dose when I feel better."""
 # example = VisitSummary(VisitSummary.get_sample_visits())
 # print(example.get_text())

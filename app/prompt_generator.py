@@ -2,12 +2,13 @@ from abc import ABC, abstractmethod
 
 class AbstractPromptGenerator(ABC):
     @abstractmethod
-    def generate_prompt(self, note) -> str:
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
         """Abstract method to generate the system prompt and user prompt pair for the model."""
         pass
+    
 
 class BillerPrompter(AbstractPromptGenerator):
-    def generate_prompt(self, note) -> tuple:
+    def generate_prompt(self, note, additional_data: str = None) -> tuple:
         # System prompt components (for model behavior and boundaries)
         persona = (
             "You are an expert in Ambulatory Patient Care Billing and Coding, with specialized expertise in identifying "
@@ -47,7 +48,7 @@ class BillerPrompter(AbstractPromptGenerator):
         return system_prompt, user_prompt
     
 class DiagnosisCodePrompter(AbstractPromptGenerator):
-    def generate_prompt(self, note) -> tuple:
+    def generate_prompt(self, note, additional_data: str = None) -> tuple:
         # System prompt components (for model behavior and boundaries)
         persona = (
             "You are an expert in Ambulatory Patient Care Billing and Coding, specializing in breaking down patient visit notes "
@@ -90,7 +91,7 @@ class DiagnosisCodePrompter(AbstractPromptGenerator):
     
 
 class SummarizeChartPrompter(AbstractPromptGenerator):
-    def generate_prompt(self, note) -> tuple:
+    def generate_prompt(self, note, additional_data: str = None) -> tuple:
         # System prompt (for model behavior and boundaries)
         persona = (
             "You are an expert in Large Language Models and clinical data analysis, specializing in summarizing "
@@ -130,7 +131,7 @@ class SummarizeChartPrompter(AbstractPromptGenerator):
         return system_prompt, user_prompt
     
 class LabResultEmailer(AbstractPromptGenerator):
-    def generate_prompt(self, lab_results) -> tuple:
+    def generate_prompt(self, lab_results, additional_data: str = None) -> tuple:
         # System prompt components
         persona = (
             "You are an expert in clinical data analysis, specializing in summarizing lab results in a concise, high-level "
@@ -170,3 +171,42 @@ class LabResultEmailer(AbstractPromptGenerator):
             "Best regards,\nYour Healthcare Team"
         )
         return email_body
+    
+class MedicationAdherencePrompter(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+         # Use additional_data (medication adherence responses) if available
+        medication_question = additional_data if additional_data else "No additional medication data provided."
+
+        # System prompt (for model behavior and boundaries)
+        persona = (
+            "You are an expert in patient engagement, specializing in breaking down medical information to help "
+            "patients understand their medication regimen. You focus on creating easy-to-understand summaries "
+            "that encourage adherence to prescribed medications.\n"
+        )
+        instruction = (
+            "Your task is to generate a simple, easy-to-read message summarizing the patient's medication plan and "
+            "reminding them of their adherence goals. Keep the message at a 6th-grade reading level.\n"
+        )
+        context = (
+            "The message should help patients understand their medication, why it’s important to take it regularly, "
+            "and any advice they have received from their healthcare provider. Use clear, simple language without "
+            "medical jargon, and offer encouragement for sticking to the plan.\n"
+        )
+
+        # User prompt (for generating the actual message)
+        data_format = (
+            "Create a simple message summarizing the patient’s medication plan based on the visit note and their recent responses. "
+            "The message should explain what the medication is for and remind them to stay on track. "
+            "Make sure to include positive encouragement.\n"
+        )
+        follow_up = (
+            "Provide a final sentence with a reminder to reach out to their healthcare provider if they have any questions or concerns about their medications.\n"
+        )
+        tone = "The tone should be supportive, simple, and clear at a 6th-grade reading level.\n"
+        data = f"Patient Visit Note: {note}\nRecent Medication Question Response: {medication_question}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt

@@ -1,7 +1,7 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer
+from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
@@ -13,6 +13,8 @@ class ModelOrchestrator:
             self.prompter = DiagnosisCodePrompter()
         elif prompter_type == 'lab_result_emailer':
             self.prompter = LabResultEmailer()
+        elif prompter_type == 'medication_reminder':
+            self.prompter = MedicationAdherencePrompter()
         else:
             raise ValueError("Invalid prompter type provided. Choose 'biller' or 'summarizer'.")
 
@@ -38,8 +40,14 @@ class ModelOrchestrator:
     # removes the markdown characters returned.
     def process_pretty(self, visit_summary: VisitSummary, ) -> str:
         # Call the model with the generated prompt
-        result = self.model.call_model_and_scrub(visit_summary.get_text())
+        result = self.model.call_model_and_scrub(visit_summary.get_text(), None)
         return result
+    
+    def process_pretty_with_additional_data(self, visit_summary: VisitSummary, additiona_data) -> str:
+        # Call the model with the generated prompt
+        result = self.model.call_model_and_scrub(visit_summary.get_text(), additiona_data)
+        return result
+    
     
     def process_summary_and_email(self, visit_summary: VisitSummary, ) -> tuple:
         # Call the model with the generated prompt
@@ -90,4 +98,10 @@ if __name__ == "__main__":
     # print(result)
     # print("&&&&&&&&&&&&&&&&&&&& \n\n\nEmail:\n\n")
     # print(email)
+
+    # Orchestrate with OpenAI model and MedicationAdherencePrompter
+    visit_summary = VisitSummary(VisitSummary.get_medication_adherance()[0])
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='medication_reminder')
+    result = orchestrator.process_pretty_with_additional_data(visit_summary, VisitSummary.get_medication_adherance()[1])
+    print(result)
 
