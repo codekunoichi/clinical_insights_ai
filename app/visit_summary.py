@@ -15,12 +15,32 @@ class VisitSummary:
         return [medication_adherance_note], [medication_adherance_response]
     
     @staticmethod
-    def get_sdoh_samplenote() -> list:
-        return [sdoh_visit]
+    def get_diagnosis_visit_note() -> list:
+        return [diagnosis_visit_note]
 
     @staticmethod
     def get_lab_result_samplenote() -> list:
         return [lab_result]
+    
+    @staticmethod
+    def get_visit_1():
+        return [visit_1]
+    
+    @staticmethod
+    def get_visit_2():
+        return [visit_2]
+    
+    @staticmethod
+    def get_visit_3():
+        return [visit_3]
+    
+    @staticmethod
+    def get_visit_4():
+        return [visit_4]
+    
+    @staticmethod
+    def get_sdoh_visit():
+        return sdoh_visit
 
 
 
