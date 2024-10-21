@@ -67,9 +67,12 @@ async def process_note(request: Request, visit_note: str = Form(...), prompter_t
     orchestrator = ModelOrchestrator(model_type='openai', prompter_type=prompter_type)  # Or 'anthropic'
     print(f"Request received for note:\n\n{visit_note}")
     visit_summary = VisitSummary([visit_note])
-    result = orchestrator.process_pretty(visit_summary)
-
-    return templates.TemplateResponse("form.html", {"request": request, "visit_note": visit_note, "prompter_type":prompter_type, "result": result})
+    if (prompter_type == 'lab_result_emailer'):
+        result, email = orchestrator.process_summary_and_email(visit_summary)
+        return templates.TemplateResponse("form.html", {"request": request, "visit_note": visit_note, "prompter_type":prompter_type, "result": result, "email": email})
+    else:
+        result = orchestrator.process_pretty(visit_summary)
+        return templates.TemplateResponse("form.html", {"request": request, "visit_note": visit_note, "prompter_type":prompter_type, "result": result})
 
 @app.route('/')
 def index():

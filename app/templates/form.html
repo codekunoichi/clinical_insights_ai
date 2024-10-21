@@ -83,6 +83,10 @@
             {% else %}
                 <p>Generated output will appear here after submission.</p>
             {% endif %}
+            {% if email %}
+                <h2>Patient Email</h2>
+                <pre>{{ email | safe }}</pre>
+            {% endif %}
         </div>
     </div>
 
