@@ -3,18 +3,36 @@ const spinner = document.getElementById('spinner');
 const spinnerContainer = document.getElementById('spinner-container');
 const spinnerText = document.getElementById('spinner-text');
 
-// List of messages to rotate through
-const messages = [
-    "Talking to the OpenAI models...",
-    "Thinking...",
-    "Generating content..."
-];
 let messageIndex = 0;
+let selectedModel = 'OpenAI'; // Default model
+
+// Function to set selected AI model based on radio button
+function setSelectedModel() {
+    const modelTypeRadio = document.querySelector('input[name="model_type"]:checked');
+    selectedModel = modelTypeRadio ? modelTypeRadio.value : 'OpenAI';
+    console.log("Selected AI model: " + selectedModel);
+}
 
 // Function to rotate messages
 function rotateMessages() {
+    const spinnerText = document.getElementById('spinner-text');
+    
+    // Update messages array after setting the selected model
+    const messages = [
+        `Talking to the ${selectedModel} models...`,
+        "Thinking...",
+        "Generating content..."
+    ];
+
     messageIndex = (messageIndex + 1) % messages.length;
     spinnerText.innerHTML = messages[messageIndex];
+}
+
+// Call this function when form is submitted or spinner is shown
+function showSpinner() {
+    setSelectedModel();  // Capture the selected model
+    rotateMessages();    // Start rotating messages with updated model
+    setInterval(rotateMessages, 1000);  // Rotate every 1 seconds
 }
 
 // Set an interval to change the message every 2 seconds
@@ -23,18 +41,18 @@ let messageInterval;
 form.addEventListener('submit', function(event) {
     // Prevent the default form submission behavior
     event.preventDefault();
-
+    setSelectedModel();
     // Show the spinner and rotating text
     spinnerContainer.style.display = 'flex';
     spinner.style.display = 'block';  // Ensure spinner itself is visible
 
     // Start rotating the messages
-    messageInterval = setInterval(rotateMessages, 2000);
+    messageInterval = setInterval(rotateMessages, 1000);
 
     // Simulate form submission for demo (remove this in production)
     setTimeout(() => {
         form.submit(); // Actually submit the form after the delay
-    }, 500);  // Submit the form after a short delay (500ms)
+    }, 100);  // Submit the form after a short delay (500ms)
 });
 
 // When the page is reloaded after the response is received, hide the spinner container
