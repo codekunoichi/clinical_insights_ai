@@ -91,17 +91,17 @@ if __name__ == "__main__":
     # result = orchestrator.process_pretty(visit_summary)
     # print(result)
 
-    # Orchestrate with OpenAI model and LabEmailPrompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='lab_result_emailer')
-    result, email = orchestrator.process_summary_and_email(VisitSummary(VisitSummary.get_lab_result_samplenote()))
-    print("&&&&&&&&&&&&&&&&&&&& \n\n\nSummary:\n\n")
-    print(result)
-    print("&&&&&&&&&&&&&&&&&&&& \n\n\nEmail:\n\n")
-    print(email)
-
-    # # Orchestrate with OpenAI model and MedicationAdherencePrompter
-    # visit_summary = VisitSummary(VisitSummary.get_medication_adherance()[0])
-    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='medication_reminder')
-    # result = orchestrator.process_pretty_with_additional_data(visit_summary, VisitSummary.get_medication_adherance()[1])
+    # # Orchestrate with OpenAI model and LabEmailPrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='lab_result_emailer')
+    # result, email = orchestrator.process_summary_and_email(VisitSummary(VisitSummary.get_lab_result_samplenote()))
+    # print("&&&&&&&&&&&&&&&&&&&& \n\n\nSummary:\n\n")
     # print(result)
+    # print("&&&&&&&&&&&&&&&&&&&& \n\n\nEmail:\n\n")
+    # print(email)
+
+    # Orchestrate with OpenAI model and MedicationAdherencePrompter
+    visit_summary = VisitSummary(VisitSummary.get_medication_adherance()[0])
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='medication_reminder')
+    result = orchestrator.process_pretty_with_additional_data(visit_summary, VisitSummary.get_medication_adherance()[1])
+    print(result)
 
