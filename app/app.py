@@ -44,7 +44,8 @@ def get_visit_note(note_id: str):
         "visit_4": VisitSummary.get_visit_4(),
         "sdoh_visit": VisitSummary.get_sdoh_visit(),
         "diagnosis_visit_note": VisitSummary.get_diagnosis_visit_note(),
-        "lab_result": VisitSummary.get_lab_result_samplenote()
+        "lab_result": VisitSummary.get_lab_result_samplenote(),
+        "follow_up" : VisitSummary.get_followup_visit()
     }
     
     note = visit_notes.get(note_id, "No visit note found.")

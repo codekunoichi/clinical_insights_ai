@@ -41,6 +41,10 @@ class VisitSummary:
     @staticmethod
     def get_sdoh_visit():
         return sdoh_visit
+    
+    @staticmethod
+    def get_followup_visit():
+        return follow_up_example
 
 
 
@@ -292,3 +296,24 @@ medication_adherance_response = """- Medication Adherence Responses:
   - "Do you sometimes take your medicine differently from how your doctor prescribed?": Yes, occasionally I reduce the dose when I feel better."""
 # example = VisitSummary(VisitSummary.get_sample_visits())
 # print(example.get_text())
+
+follow_up_example = """
+Visit Date: October 15, 2024
+
+Subjective:
+- The patient reports mild abdominal discomfort for the past week. No significant weight loss or changes in bowel habits.
+- Family history of breast cancer (mother) and colorectal cancer (father).
+
+Objective:
+- Vitals: BP 125/80 mmHg, HR 70 bpm, Temp 98.7°F.
+- Physical exam: Abdomen soft with mild tenderness in the lower quadrant.
+
+Assessment:
+- Abdominal pain, likely non-urgent but requiring imaging.
+- Routine cancer screening based on family history.
+
+Plan:
+- Schedule a CAT Scan of the abdomen within the next two weeks.
+- Routine mammogram recommended in two years.
+- FOBT (Fecal Occult Blood Test) for colorectal cancer screening to be performed annually starting this year.
+"""

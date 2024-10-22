@@ -210,3 +210,46 @@ class MedicationAdherencePrompter(AbstractPromptGenerator):
         system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
+    
+
+class FollowUpPrompter(AbstractPromptGenerator):
+    def generate_prompt(self, notes, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in identifying patient follow-up needs from multiple visit notes. "
+            "Your task is to curate a list of follow-ups mentioned in past visits, ensuring busy physicians can easily see what "
+            "services or appointments are needed without digging through old notes.\n"
+        )
+        instruction = (
+            "For each visit note provided, itemize the follow-ups needed, including the visit date and the specific service "
+            "or follow-up mentioned. Present this in a clear, bullet-point format for quick reference.\n"
+        )
+        context = (
+            "The goal is to create a summary that highlights follow-up appointments, tests, or services the patient needs, "
+            "making it easier for physicians to review the follow-ups without reading through entire visit notes. "
+            "Only extract follow-up items explicitly mentioned in the notes, without adding new information.\n"
+        )
+
+        # User prompt components (for generating the actual follow-up list)
+        data_format = (
+            "Create a bullet-point list of follow-up services or appointments. Each bullet point should include:\n"
+            "- The date of the visit where the follow-up was mentioned.\n"
+            "- The specific follow-up required (e.g., 'Lab test', 'Follow-up with cardiologist', etc.).\n"
+            "- If no follow-up is mentioned, include a statement: 'No follow-up mentioned in this visit'.\n"
+        )
+        follow_up = (
+            "Do not add any extra information or assumptions. If no follow-up is mentioned, clearly state that no follow-up was noted for that visit.\n"
+        )
+        audience = (
+            "This prompt is intended for physicians who need a concise and clear list of follow-ups from past visits."
+        )
+        tone = "The tone should be professional, concise, and clear.\n"
+        
+        # Formatting the provided notes for the prompt
+        data = f"Visit Notes to process: {notes}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt

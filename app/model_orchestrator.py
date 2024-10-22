@@ -1,7 +1,7 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter
+from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
@@ -15,6 +15,8 @@ class ModelOrchestrator:
             self.prompter = LabResultEmailer()
         elif prompter_type == 'medication_reminder':
             self.prompter = MedicationAdherencePrompter()
+        elif prompter_type == 'follow_up':
+            self.prompter = FollowUpPrompter()
         else:
             raise ValueError("Invalid prompter type provided. Choose 'biller' or 'summarizer'.")
 
@@ -99,9 +101,13 @@ if __name__ == "__main__":
     # print("&&&&&&&&&&&&&&&&&&&& \n\n\nEmail:\n\n")
     # print(email)
 
-    # Orchestrate with OpenAI model and MedicationAdherencePrompter
-    visit_summary = VisitSummary(VisitSummary.get_medication_adherance()[0])
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='medication_reminder')
-    result = orchestrator.process_pretty_with_additional_data(visit_summary, VisitSummary.get_medication_adherance()[1])
-    print(result)
+    # # Orchestrate with OpenAI model and MedicationAdherencePrompter
+    # visit_summary = VisitSummary(VisitSummary.get_medication_adherance()[0])
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='medication_reminder')
+    # result = orchestrator.process_pretty_with_additional_data(visit_summary, VisitSummary.get_medication_adherance()[1])
+    # print(result)
 
+    # Orchestrate with OpenAI model and FollowupPrompter
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='follow_up')
+    result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_followup_visit()))
+    print(result)

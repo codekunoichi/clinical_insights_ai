@@ -26,6 +26,7 @@
                     <option value="sdoh_visit">Example Visit Note  with SDOH (use in diagnosis test and hcc test)</option>
                     <option value="diagnosis_visit_note">Example Visit Note with HCC, SDOH (use for diagnosis test)</option>
                     <option value="lab_result">Example Visit Note for Lab Result Summary and Email</option>
+                    <option value="follow_up">Example Visit Note for Follow Up</option>
                 </select>
                 <br><br>
 
@@ -47,6 +48,9 @@
 
                     <input type="radio" id="lab_result" name="prompter_type" value="lab_result_emailer" {% if prompter_type == "lab_result_emailer" %}checked{% endif %}>
                     <label for="diagnosis">Summarize the Lab Results and create a patient email.</label><br>
+
+                    <input type="radio" id="follow_up" name="prompter_type" value="follow_up" {% if prompter_type == "follow_up" %}checked{% endif %}>
+                    <label for="follow_up">Pick out follow up for the patient from the Visit Note.</label><br>
                 </div>
 
                 <!-- AI Model to use-->
