@@ -45,8 +45,14 @@ def get_visit_note(note_id: str):
         "sdoh_visit": VisitSummary.get_sdoh_visit(),
         "diagnosis_visit_note": VisitSummary.get_diagnosis_visit_note(),
         "lab_result": VisitSummary.get_lab_result_samplenote(),
-        "follow_up" : VisitSummary.get_followup_visit()
+        "follow_up" : VisitSummary.get_followup_visit(),
+        "medication_adherance": VisitSummary.get_medication_adherance()
     }
+
+    # Check if the selected note is 'medication_adherance' which returns both note and response
+    if note_id == "medication_adherance":
+        note, adherence_response = visit_notes.get(note_id)
+        return JSONResponse({"visit_note": note, "adherence_response": adherence_response})
     
     note = visit_notes.get(note_id, "No visit note found.")
     return JSONResponse({"visit_note": note})
@@ -63,7 +69,7 @@ async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
 @app.post("/process", response_class=HTMLResponse)
-async def process_note(request: Request, visit_note: str = Form(...), prompter_type: str = Form(...), model_type: str = Form(...) ):
+async def process_note(request: Request, visit_note: str = Form(...), prompter_type: str = Form(...), model_type: str = Form(...) , adherence_response: str = Form(...) ):
     # You can invoke the orchestrator here based on the selected prompter
     orchestrator = ModelOrchestrator(model_type=model_type, prompter_type=prompter_type)
     print(f"Request received for note:\n\n{visit_note}")
@@ -71,6 +77,9 @@ async def process_note(request: Request, visit_note: str = Form(...), prompter_t
     if (prompter_type == 'lab_result_emailer'):
         result, email = orchestrator.process_summary_and_email(visit_summary)
         return templates.TemplateResponse("form.html", {"request": request, "model_type":model_type, "visit_note": visit_note, "prompter_type":prompter_type, "result": result, "email": email})
+    if (prompter_type == 'medication_adherance'):
+        result = orchestrator.process_pretty_with_additional_data(visit_summary, adherence_response)
+        return templates.TemplateResponse("form.html", {"request": request, "model_type":model_type, "visit_note": visit_note, "adherence_response": adherence_response, "prompter_type":prompter_type, "result": result})
     else:
         result = orchestrator.process_pretty(visit_summary)
         return templates.TemplateResponse("form.html", {"request": request, "model_type":model_type, "visit_note": visit_note, "prompter_type":prompter_type, "result": result})

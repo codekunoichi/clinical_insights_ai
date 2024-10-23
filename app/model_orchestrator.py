@@ -13,12 +13,12 @@ class ModelOrchestrator:
             self.prompter = DiagnosisCodePrompter()
         elif prompter_type == 'lab_result_emailer':
             self.prompter = LabResultEmailer()
-        elif prompter_type == 'medication_reminder':
+        elif prompter_type == 'medication_adherance':
             self.prompter = MedicationAdherencePrompter()
         elif prompter_type == 'follow_up':
             self.prompter = FollowUpPrompter()
         else:
-            raise ValueError("Invalid prompter type provided. Choose 'biller' or 'summarizer'.")
+            raise ValueError(f"{prompter_type} - Invalid prompter type provided.")
 
         if model_type == 'openai':
             self.model = OpenAIModel(self.prompter)

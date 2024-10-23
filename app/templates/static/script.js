@@ -77,17 +77,18 @@ form.onsubmit = function() {
 
 
 function fillVisitNote() {
-    console.log("Function called!");  // For debugging
     const visitNoteSelect = document.getElementById('visit_note_select');
     const visitNoteTextarea = document.getElementById('visit_note');
+    const adherenceResponseTextarea = document.getElementById('adherence_response');
     const selectedNoteId = visitNoteSelect.value;
-    console.log('Selected Note: ' + selectedNoteId);
+
+    // Fetch the visit note and medication adherence responses if available
     if (selectedNoteId) {
-        console.log("about to call the route in app")
         fetch(`/get_visit_note?note_id=${selectedNoteId}`)
             .then(response => response.json())
             .then(data => {
-                visitNoteTextarea.value = data.visit_note;
+                visitNoteTextarea.value = data.visit_note || '';
+                adherenceResponseTextarea.value = data.adherence_response || '';  // Fill the additional textarea
             })
             .catch(error => console.error('Error fetching visit note:', error));
     }
