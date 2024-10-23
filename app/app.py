@@ -9,6 +9,7 @@ from flask import render_template
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from app.visit_summary import VisitSummary
+from typing import Optional
 
 import os
 from pathlib import Path
@@ -69,7 +70,8 @@ async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
 @app.post("/process", response_class=HTMLResponse)
-async def process_note(request: Request, visit_note: str = Form(...), prompter_type: str = Form(...), model_type: str = Form(...) , adherence_response: str = Form(...) ):
+async def process_note(request: Request, visit_note: str = Form(...), prompter_type: str = Form(...), model_type: str = Form(...) , 
+                       adherence_response: Optional[str] = Form(None) ):  # Make it optional
     # You can invoke the orchestrator here based on the selected prompter
     orchestrator = ModelOrchestrator(model_type=model_type, prompter_type=prompter_type)
     print(f"Request received for note:\n\n{visit_note}")

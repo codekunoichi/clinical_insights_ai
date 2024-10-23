@@ -223,6 +223,8 @@ class FollowUpPrompter(AbstractPromptGenerator):
         instruction = (
             "For each visit note provided, itemize the follow-ups needed, including the visit date and the specific service "
             "or follow-up mentioned. Present this in a clear, bullet-point format for quick reference.\n"
+            "For each follow-up, use the current query date to calculate when the future appointment should take place. If a follow-up "
+            "is required in 6 months or 1 year from the visit date, convert this into the appropriate month and year for scheduling."
         )
         context = (
             "The goal is to create a summary that highlights follow-up appointments, tests, or services the patient needs, "
@@ -236,17 +238,61 @@ class FollowUpPrompter(AbstractPromptGenerator):
             "- The date of the visit where the follow-up was mentioned.\n"
             "- The specific follow-up required (e.g., 'Lab test', 'Follow-up with cardiologist', etc.).\n"
             "- If no follow-up is mentioned, include a statement: 'No follow-up mentioned in this visit'.\n"
+            "- For follow-ups, project the future appointment date based on the visit date. Provide the specific month and year "
+            "the follow-up should be scheduled (e.g., 'Follow-up in June 2025')."
         )
         follow_up = (
             "Do not add any extra information or assumptions. If no follow-up is mentioned, clearly state that no follow-up was noted for that visit.\n"
         )
         audience = (
-            "This prompt is intended for physicians who need a concise and clear list of follow-ups from past visits."
+            "This prompt is intended for physicians who need a concise and clear list of follow-ups from past visits, "
+            "including a projection of when future appointments should occur."
         )
         tone = "The tone should be professional, concise, and clear.\n"
         
         # Formatting the provided notes for the prompt
         data = f"Visit Notes to process: {notes}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt
+    
+class HCCPrompter(AbstractPromptGenerator):
+    def generate_prompt(self, note, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert in Hierarchical Condition Category (HCC) coding and ICD-10 coding for Ambulatory Patient Care. "
+            "Your task is to accurately extract and recommend HCC ICD-10 codes based strictly on the provided visit notes. "
+            "You should only use information explicitly mentioned in the notes without making any assumptions or adding diagnoses that are not supported by the text.\n"
+        )
+        instruction = (
+            "Review the visit notes and extract any relevant HCC ICD-10 codes. When recommending a code, you must provide a brief explanation "
+            "referencing the visit note text that supports the code recommendation. If there are no applicable HCC codes based on the provided information, "
+            "you should clearly state: 'No HCC ICD-10 was found in the given visit note input'.\n"
+        )
+        context = (
+            "This task is designed to assist healthcare billing teams and clinicians in understanding which HCC codes are applicable for the patient's visit, "
+            "so that they can accurately submit claims and ensure proper reimbursement.\n"
+        )
+
+        # User prompt components (for generating the actual code recommendations)
+        data_format = (
+            "Create a bullet-point list of HCC ICD-10 code recommendations. For each code, provide the following:\n"
+            "- The ICD-10 code and description.\n"
+            "- A brief explanation citing the specific part of the visit note that justifies this code.\n"
+            "- If no HCC ICD-10 codes are applicable, clearly state: 'No HCC ICD-10 was found in the given visit note input'.\n"
+        )
+        follow_up = (
+            "Do not add any information or diagnoses that are not directly supported by the visit note text. Stay strictly within the information provided.\n"
+        )
+        audience = (
+            "The HCC ICD-10 code recommendations are intended for healthcare billing professionals and clinicians who need accurate coding for "
+            "HCC-related conditions, ensuring proper reimbursement under risk-adjusted payment models."
+        )
+        tone = "The tone should be professional, concise, and clear.\n"
+        data = f"Text to analyze: {note}"
 
         # Combine prompts
         user_prompt = data_format + follow_up + audience + tone + data

@@ -22,7 +22,7 @@
                     <option value="visit_1">Example Visit Note 1</option>
                     <option value="visit_2">Example Visit Note 2</option>
                     <option value="visit_3">Example Visit Note 3 </option>
-                    <option value="visit_4">Example Visit Note 4</option>
+                    <option value="visit_4">Transcription Note from Rendr Doc</option>
                     <option value="sdoh_visit">Example Visit Note  with SDOH (use in diagnosis test and hcc test)</option>
                     <option value="diagnosis_visit_note">Example Visit Note with HCC, SDOH (use for diagnosis test)</option>
                     <option value="lab_result">Example Visit Note for Lab Result Summary and Email</option>
@@ -51,6 +51,9 @@
                 
                     <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis" {% if prompter_type == "diagnosis" %}checked{% endif %}>
                     <label for="diagnosis">Recommend Diagnosis Code ICD-10 for the Visit Note</label><br>
+
+                    <input type="radio" id="hcc_coder" name="prompter_type" value="hcc_coder" {% if prompter_type == "hcc_coder" %}checked{% endif %}>
+                    <label for="follow_up">Generate HCC ICD-10 Codes.</label><br>
 
                     <input type="radio" id="lab_result" name="prompter_type" value="lab_result_emailer" {% if prompter_type == "lab_result_emailer" %}checked{% endif %}>
                     <label for="diagnosis">Summarize the Lab Results and create a patient email.</label><br>

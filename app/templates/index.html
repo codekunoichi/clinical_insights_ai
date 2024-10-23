@@ -73,6 +73,30 @@
             font-weight: bold;
         }
 
+        .disclaimer {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        .disclaimer img {
+            margin-right: 10px;
+        }
+
+        /* Style for the warning icon */
+        .warning-icon {
+            width: 40px;  /* Increase size for prominence */
+            height: 30px;
+            margin-right: 10px;
+            vertical-align: middle; /* Aligns with the text vertically */
+            /*border-radius: 50%;  If the image has sharp edges, this makes it round */
+            background-color: transparent; /* Removes any grey background */
+        }
+
     </style>
 </head>
 <body>
@@ -118,6 +142,12 @@
             {% elif not anthropic_key_present %}
                 <p class="error">Anthropic API key is missing. Please add it to continue.</p>
             {% endif %}
+        </div>
+        <div class="disclaimer">
+            <p>
+                <img src="/static/warning.png" alt="Warning" style="width:24px; vertical-align:middle;" class="warning-icon">
+                <strong>Disclaimer:</strong> Please avoid using real patient data (PHI) in this tool. This application is intended for experimentation with anonymized or fake data. Use it at your own risk. By using this tool, you agree to only input data that is not protected under HIPAA or other privacy laws.
+            </p>
         </div>
         <form action="/form" method="get">
             <button type="submit">Get Started</button>
