@@ -1,7 +1,7 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter
+from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
@@ -19,6 +19,8 @@ class ModelOrchestrator:
             self.prompter = FollowUpPrompter()
         elif prompter_type == 'hcc_coder':
             self.prompter = HCCPrompter()
+        elif prompter_type == 'sdoh_coder':
+            self.prompter = SDOHPrompter()
         else:
             raise ValueError(f"{prompter_type} - Invalid prompter type provided.")
 
@@ -114,7 +116,12 @@ if __name__ == "__main__":
     # result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_followup_visit()))
     # print(result)
 
-    # Orchestrate with OpenAI model and HCCPrompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='hcc_coder')
-    result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_visit_4()))
+    # # Orchestrate with OpenAI model and HCCPrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='hcc_coder')
+    # result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_visit_4()))
+    # print(result)
+
+    # Orchestrate with OpenAI model and SDOHPrompter
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='sdoh_coder')
+    result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_sdoh_visit()))
     print(result)

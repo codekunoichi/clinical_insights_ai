@@ -299,3 +299,47 @@ class HCCPrompter(AbstractPromptGenerator):
         system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
+    
+class SDOHPrompter(AbstractPromptGenerator):
+    def generate_prompt(self, note, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert in Social Determinants of Health (SDOH) and ICD-10 coding for Ambulatory Patient Care. "
+            "Your task is to accurately extract and recommend SDOH ICD-10 codes based strictly on the provided visit notes. "
+            "You should only use information explicitly mentioned in the notes without making any assumptions or adding details that are not supported by the text.\n"
+        )
+        instruction = (
+            "Review the visit notes and extract any relevant SDOH ICD-10 codes. When recommending a code, you must provide a brief explanation "
+            "referencing the visit note text that supports the code recommendation. If no applicable SDOH codes are found, you should clearly state: "
+            "'No SDOH ICD-10 was found in the given visit note input'.\n"
+        )
+        context = (
+            "This task is designed to assist healthcare billing teams and clinicians in understanding which SDOH codes are applicable for the patient's visit, "
+            "ensuring accurate coding for social determinants that may affect the patient's care. You should only focus on codes for social issues such as housing, "
+            "employment, education, and access to healthcare, and make sure these align with the specific issues mentioned in the visit note.\n"
+        )
+
+        # User prompt components (for generating the actual code recommendations)
+        data_format = (
+            "Create a bullet-point list of SDOH ICD-10 code recommendations. For each code, provide the following:\n"
+            "- The ICD-10 code and description.\n"
+            "- A brief explanation citing the specific part of the visit note that justifies this code.\n"
+            "- If no SDOH ICD-10 codes are applicable, clearly state: 'No SDOH ICD-10 was found in the given visit note input'.\n"
+        )
+        follow_up = (
+            "Do not add any extra information or assumptions. Stick strictly to the details in the visit note.\n"
+        )
+        audience = (
+            "This prompt is intended for healthcare billing professionals and clinicians who need accurate SDOH coding to ensure "
+            "the patient's social determinants of health are appropriately considered in their care plan and billing."
+        )
+        tone = "The tone should be professional, concise, and clear.\n"
+        
+        # Formatting the provided notes for the prompt
+        data = f"Visit Notes to process: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt

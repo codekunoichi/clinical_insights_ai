@@ -53,7 +53,10 @@
                     <label for="diagnosis">Recommend Diagnosis Code ICD-10 for the Visit Note</label><br>
 
                     <input type="radio" id="hcc_coder" name="prompter_type" value="hcc_coder" {% if prompter_type == "hcc_coder" %}checked{% endif %}>
-                    <label for="follow_up">Generate HCC ICD-10 Codes.</label><br>
+                    <label for="hcc_coder">Generate HCC ICD-10 Codes.</label><br>
+
+                    <input type="radio" id="sdoh_coder" name="prompter_type" value="sdoh_coder" {% if prompter_type == "sdoh_coder" %}checked{% endif %}>
+                    <label for="sdoh_coder">Generate SDOH Specific Z-Codes/ICD-10.</label><br>
 
                     <input type="radio" id="lab_result" name="prompter_type" value="lab_result_emailer" {% if prompter_type == "lab_result_emailer" %}checked{% endif %}>
                     <label for="diagnosis">Summarize the Lab Results and create a patient email.</label><br>
@@ -61,8 +64,8 @@
                     <input type="radio" id="follow_up" name="prompter_type" value="follow_up" {% if prompter_type == "follow_up" %}checked{% endif %}>
                     <label for="follow_up">Pick out follow up for the patient from the Visit Note.</label><br>
 
-                    <input type="radio" id="follow_up" name="prompter_type" value="medication_adherance" {% if prompter_type == "medication_adherance" %}checked{% endif %}>
-                    <label for="follow_up">Generate Medication Adherance Patient Message at 6th Grade Reading Level.</label><br>
+                    <input type="radio" id="medication_adherance" name="prompter_type" value="medication_adherance" {% if prompter_type == "medication_adherance" %}checked{% endif %}>
+                    <label for="medication_adherance">Generate Medication Adherance Patient Message at 6th Grade Reading Level.</label><br>
                 </div>
 
                 <!-- AI Model to use-->
