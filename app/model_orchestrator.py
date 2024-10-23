@@ -1,12 +1,12 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import BillerPrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter
+from app.prompt_generator import CPTCodePrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
         if prompter_type == 'biller':
-            self.prompter = BillerPrompter()
+            self.prompter = CPTCodePrompter()
         elif prompter_type == 'summarizer':
             self.prompter = SummarizeChartPrompter()
         elif prompter_type == 'diagnosis':

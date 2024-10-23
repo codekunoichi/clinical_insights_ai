@@ -7,38 +7,44 @@ class AbstractPromptGenerator(ABC):
         pass
     
 
-class BillerPrompter(AbstractPromptGenerator):
-    def generate_prompt(self, note, additional_data: str = None) -> tuple:
+class CPTCodePrompter(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
         # System prompt components (for model behavior and boundaries)
         persona = (
-            "You are an expert in Ambulatory Patient Care Billing and Coding, with specialized expertise in identifying "
-            "appropriate CPT and CPT II codes from patient visit notes. You are also an expert HCC Coder.\n"
+            "You are an expert in Ambulatory Patient Care Billing and Coding, specializing in identifying appropriate "
+            "CPT and CPT II codes based on patient visit notes. Your task is to accurately recommend the relevant CPT codes, "
+            "based only on the information provided in the visit note.\n"
         )
         instruction = (
-            "Your role is to analyze the provided patient visit note and identify the key CPT codes that apply. Focus only on "
-            "the information provided in the note and avoid making any assumptions or inferences not explicitly mentioned.\n"
+            "Analyze the patient visit note provided, focusing on identifying the following categories:\n"
+            "- E&M (Evaluation and Management) codes for office visits\n"
+            "- Procedure mentions (e.g., surgeries, diagnostic tests, treatments)\n"
+            "- Referrals to specialists or external services\n"
+            "- Quality Measure CPT II codes related to performance or outcome metrics\n"
+            "Each recommendation should be based strictly on the text provided in the visit note, and you must avoid making any assumptions "
+            "or inferences not directly supported by the note.\n"
         )
         context = (
-            "Extract the most relevant CPT codes based on the procedures performed, referrals, and any evaluations documented in the visit note. "
-            "Additionally, consider any CPT II codes related to quality measures, as well as any codes for Social Determinants of Health (SDOH) if applicable. "
-            "Provide example CPT II codes and SDOH codes if relevant to the visit note, but only based on the information provided in the text.\n"
+            "Your goal is to help healthcare billing teams accurately code for services and procedures rendered during the patient visit. "
+            "Where applicable, recommend CPT II codes that reflect quality measures (such as outcomes or performance metrics), but only if "
+            "explicitly mentioned in the visit note.\n"
         )
 
         # User prompt components (for generating the actual recommendation)
         data_format = (
-            "Create a clear, bullet-point list of CPT code recommendations. Start with the most relevant CPT codes based on "
-            "the procedures, treatments, and evaluations performed. Additionally, if applicable, recommend CPT II codes, SDOH-related codes, "
-            "and any referral codes. Provide a brief explanation next to each code, and ensure that all recommendations are strictly based "
-            "on the text in the visit note.\n"
+            "Create a bullet-point list of CPT code recommendations. For each category (E&M codes, procedures, referrals, and CPT II codes), "
+            "provide the CPT code, its description, and a brief explanation of why that code was selected based on the specific text in the visit note. "
+            "If no code can be recommended for a category, clearly state: 'No applicable code for this category based on the visit note.'\n"
         )
         follow_up = (
-            "Ensure that no inferences or additional assumptions are made beyond what is present in the visit note.\n"
+            "Do not infer or add any information beyond what is explicitly mentioned in the note. Only recommend codes for services and procedures "
+            "that are documented in the visit note.\n"
         )
         audience = (
-            "The CPT code recommendations are intended for the Revenue Cycle Management Team Billers to accurately create claims based on "
-            "the patient visit notes.\n"
+            "This recommendation is intended for Revenue Cycle Management and Billing teams who will use the provided CPT codes to accurately "
+            "create claims based on the patient's visit.\n"
         )
-        tone = "The tone should be professional, concise, and clear.\n"
+        tone = "The tone should be professional, clear, and concise.\n"
         data = f"Text to generate CPT Codes from: {note}"
 
         # Combine prompts

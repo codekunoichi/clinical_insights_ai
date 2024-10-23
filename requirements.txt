@@ -6,4 +6,4 @@ python-dotenv
 jinja2==3.0.1  # Dependency for FastAPI templating
 anthropic==0.36.1
 python-multipart
-Werkzeug==1.0.1
+Werkzeug==2.0
