@@ -47,7 +47,8 @@ def get_visit_note(note_id: str):
         "diagnosis_visit_note": VisitSummary.get_diagnosis_visit_note(),
         "lab_result": VisitSummary.get_lab_result_samplenote(),
         "follow_up" : VisitSummary.get_followup_visit(),
-        "medication_adherance": VisitSummary.get_medication_adherance()
+        "medication_adherance": VisitSummary.get_medication_adherance(),
+        "previsit_planner": VisitSummary.get_previst_planning_visit()
     }
 
     # Check if the selected note is 'medication_adherance' which returns both note and response

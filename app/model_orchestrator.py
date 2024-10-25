@@ -1,7 +1,7 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import CPTCodePrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter
+from app.prompt_generator import CPTCodePrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter, PreVisitPlanningPrompter
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
@@ -21,6 +21,8 @@ class ModelOrchestrator:
             self.prompter = HCCPrompter()
         elif prompter_type == 'sdoh_coder':
             self.prompter = SDOHPrompter()
+        elif prompter_type == 'previsit_planner':
+            self.prompter = PreVisitPlanningPrompter()
         else:
             raise ValueError(f"{prompter_type} - Invalid prompter type provided.")
 
@@ -121,7 +123,12 @@ if __name__ == "__main__":
     # result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_visit_4()))
     # print(result)
 
+    # # Orchestrate with OpenAI model and SDOHPrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='sdoh_coder')
+    # result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_sdoh_visit()))
+    # print(result)
+
     # Orchestrate with OpenAI model and SDOHPrompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='sdoh_coder')
-    result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_sdoh_visit()))
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='previsit_planner')
+    result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_previst_planning_visit()))
     print(result)

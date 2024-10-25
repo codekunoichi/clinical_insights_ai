@@ -28,6 +28,7 @@
                     <option value="lab_result">Example Visit Note for Lab Result Summary and Email</option>
                     <option value="follow_up">Example Visit Note for Follow Up</option>
                     <option value="medication_adherance">Example Visit Note with medication adherance Q & A</option>
+                    <option value="previsit_planner">Example Visit Note for Previsit Planning</option>
                 </select>
                 <br><br>
 
@@ -66,6 +67,9 @@
 
                     <input type="radio" id="medication_adherance" name="prompter_type" value="medication_adherance" {% if prompter_type == "medication_adherance" %}checked{% endif %}>
                     <label for="medication_adherance">Generate Medication Adherance Patient Message at 6th Grade Reading Level.</label><br>
+
+                    <input type="radio" id="previsit_planner" name="prompter_type" value="previsit_planner" {% if prompter_type == "previsit_planner" %}checked{% endif %}>
+                    <label for="previsit_planner">Do the previsit planning for the patient.</label><br>
                 </div>
 
                 <!-- AI Model to use-->

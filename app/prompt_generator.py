@@ -349,3 +349,50 @@ class SDOHPrompter(AbstractPromptGenerator):
         system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
+    
+
+class PreVisitPlanningPrompter(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in pre-visit planning. Your role is to analyze a patient's "
+            "EHR data, including active problem lists, medications, lab results, immunizations, and care gaps, and generate a "
+            "pre-visit summary to help clinicians prepare for the upcoming appointment.\n"
+        )
+        instruction = (
+            "Review the patient's demographics, active problem list, medications, allergies, lab results, immunization history, "
+            "and screening schedules. Generate a bullet-point list of important information for the clinician and recommend any follow-up "
+            "or screenings that may be needed based on the patient's current health status and care plan.\n"
+        )
+        context = (
+            "The goal is to create a concise, action-oriented pre-visit summary that includes any follow-up actions from prior visits, "
+            "relevant lab results, and pending screenings. Only extract items that are explicitly mentioned in the patient chart data."
+        )
+
+        # User prompt components (for generating the pre-visit plan)
+        data_format = (
+            "Create a pre-visit summary using the following key sections:\n"
+            "- Patient Demographics\n"
+            "- Active Problem List (extracted from the CCDA data)\n"
+            "- Current Medications\n"
+            "- Medication Adherence History (if available)\n"
+            "- Recent Lab Results (highlight any abnormalities)\n"
+            "- Immunization History\n"
+            "- Screening and Care Gaps (e.g., missed screenings or upcoming preventive measures)\n"
+            "- Referrals to Specialists\n"
+            "- Any Follow-up Appointments\n"
+        )
+        follow_up = (
+            "Do not add any new information or assumptions. Summarize strictly based on the provided EHR and CCDA data points."
+        )
+        audience = (
+            "This pre-visit planning summary is intended for healthcare providers preparing for the patient's upcoming appointment."
+        )
+        tone = "The tone should be professional, concise, and action-oriented.\n"
+        data = f"Patient EHR Data to process: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt

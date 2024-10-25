@@ -46,6 +46,9 @@ class VisitSummary:
     def get_followup_visit():
         return follow_up_example
 
+    @staticmethod
+    def get_previst_planning_visit():
+        return previsit_example
 
 
 visit_4 = """Pre-operation evaluation for cataract surgery, left side. Patient planning for cataract surgery and denying difficult breathing, denying chest pain, denying nausea, vomiting, denying breathing. Next paragraph. Patient was evaluated by cardiology. According to cardiology report, on July 22, patient had CAD. CAD concern had stress positive on 2022. Last CAT showed LAD mild. Patient on aspirin. Patient denied any chest pain but had exertion shortness of breath. Next paragraph. Patient also had severe apnea, snoring, denying any severe. Next paragraph. Pre-diabetic hemoglobin A1c 6.4, non-compliant with the IR. Next paragraph. Next paragraph. COPD. Patient will have COPD. Was on inhaler and followed up by pulmonary. Recent CT scan was told unremarkable. CT scan on March 2023 shows emphysema in aorta, ascending aorta. Next paragraph. ECTASIS 3.9 cm. CT scan on the left upper lobe 1.6 cm was told stable by pulmonary. Assessment pre-operation evaluation, medical stable for cataract. This gastric patient continued on aspirin and Serato unless contraindicated by ophthalmology. Next paragraph. Emphysema. This gastric patient continued on the inhaler including Comvavent, COMVI, ENT inhaler stable. CT scan showed emphysema. Next paragraph. CAD with angina. Patient continued on Lipitor 20 mg and aspirin stable. Next paragraph. Patient had psoriasis. Psoriasis was followed by rheumatology. Continued on MTX 2.53 tablet and also another medication OTE ZLA 30 mg. Patient continued followed by rheumatology."""
@@ -316,4 +319,16 @@ Plan:
 - Schedule a CAT Scan of the abdomen within the next two weeks.
 - Routine mammogram recommended in two years.
 - FOBT (Fecal Occult Blood Test) for colorectal cancer screening to be performed annually starting this year.
+"""
+
+previsit_example = """
+John Doe, a 58-year-old male, office worker who quit smoking 5 years ago, came in today saying he’s had a bit of discomfort after meals. He is still on his usual meds—Metformin, Lisinopril, and Simvastatin—and he says he’s pretty consistent with them. His last blood pressure check was slightly high, 135/85, but nothing unusual. His HbA1c came in at 7.1%, which is a little higher than we’d like to see but not a huge concern yet. We’ll need to keep an eye on that. He did his cholesterol panel recently too, and his LDL is fine, sitting at 100 mg/dL.
+
+John also mentioned he got his flu shot last month. He’s up to date with his vaccinations except for his pneumococcal vaccine, which he’ll need again in 6 months. His diabetes is mostly under control, but I’ve asked him to see an endocrinologist for an opinion, especially considering his history with hyperlipidemia.
+
+He hasn’t had a colonoscopy in 7 years, which is overdue. He also needs to schedule a diabetic eye exam, as it’s been over a year since his last one. During the visit, we talked a bit about his diet, but he says he hasn’t changed much, and that’s likely why his HbA1c hasn’t improved. He’s still at a BMI of 28.5, so we should also keep monitoring his weight.
+
+He’s going to follow up with me in November to recheck his diabetes numbers and make sure the referrals are moving forward. He’s still a little stressed from work, but he hasn’t noticed any new issues. I’ll write up a referral to endocrinology and suggest that we book his follow-up appointments before the end of the year.”
+
+This text contains excessive narrative and information that isn’t immediately necessary for pre-visit planning. It includes lifestyle details, general comments, and less organized follow-up items scattered throughout the note. Testing your PreVisitPlanningPrompter with this kind of noisy input will demonstrate how the system can distill the essential medical information (medications, lab results, referrals, and screenings) from the extraneous context.
 """
