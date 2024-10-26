@@ -114,15 +114,15 @@
         </p>
         <div class="prompter-section">
             <h2>Features</h2>
-            <ul>Summarize patient visit notes in a concise, easy-to-read format.</ul>
-            <ul>Generate appropriate CPT codes for medical billing, including E&M, procedures, and referrals.</ul>
-            <ul>Recommend ICD-10 diagnosis codes based on visit notes, including HCC and SDOH codes.</ul>
-            <ul>Create patient-friendly emails summarizing lab results with trends.</ul>
-            <ul>Provide medication adherence reminders based on patient responses and visit notes.</ul>
-            <ul>Curate follow-up needs from past visit notes to aid physicians in patient follow-up planning.</ul>
-            <ul>Identify Hierarchical Condition Category (HCC) codes relevant to risk-adjusted payments.</ul>
-            <ul>Recommend Social Determinants of Health (SDOH) codes, providing an explanation for their inclusion based on the visit note.</ul>
-            <ul>Maintain accuracy by strictly using information present in the visit notes, avoiding any assumptions or hallucinations.</ul>
+            <ul>Generates CPT codes for medical billing with justifiable explanations.</ul>
+            <ul>Summarizes patient visit notes concisely.</ul>
+            <ul>Recommends ICD-10 diagnosis codes with clear rationale.</ul>
+            <ul>Generates HCC ICD-10 Codes with explanations.</ul>
+            <ul>Generates SDOH-specific Z-Codes/ICD-10 based on the visit note text.</ul>
+            <ul>Summarizes lab results and creates patient-friendly emails with trend highlights.</ul>
+            <ul>Extracts follow-up needs from the visit note to aid in patient care continuity.</ul>
+            <ul>Creates medication adherence messages at a 6th-grade reading level.</ul>
+            <ul>Conducts pre-visit planning to help clinicians prepare for upcoming appointments.</ul>
             
             <!-- Prompter types description, left-aligned -->
             <h2>Prompter Types</h2>
@@ -142,7 +142,9 @@
             <p><strong>HCC Coder Prompter:</strong> Identifies relevant Hierarchical Condition Category (HCC) ICD-10 codes from the visit note, ensuring all recommendations are grounded in the provided text. It explains the reasoning behind each recommendation and avoids any assumptions.</p>
             
             <p><strong>SDOH Prompter:</strong> Recommends Social Determinants of Health (SDOH) ICD-10 codes based on the visit note, providing an explanation for each code that relates directly to the visit text. If no SDOH codes apply, it clearly states that none were found.</p>
-         </div>
+           
+            <p><strong>Pre-Visit Planning Prompter:</strong> Creates a pre-visit summary to help clinicians prepare, ensuring recommendations are based solely on available EHR data.</p> 
+        </div>
 
         <!-- New Section: Emphasis on No Hallucination and Justified Recommendations -->
         <h2>Accuracy and Justification</h2>
