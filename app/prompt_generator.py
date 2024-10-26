@@ -363,10 +363,13 @@ class PreVisitPlanningPrompter(AbstractPromptGenerator):
             "Review the patient's demographics, active problem list, medications, allergies, lab results, immunization history, "
             "and screening schedules. Generate a bullet-point list of important information for the clinician and recommend any follow-up "
             "or screenings that may be needed based on the patient's current health status and care plan.\n"
+            "For each recommendation or follow-up action, provide a brief explanation that references relevant information "
+            "from the patient’s EHR data, explaining why it was included in the pre-visit summary."
         )
         context = (
             "The goal is to create a concise, action-oriented pre-visit summary that includes any follow-up actions from prior visits, "
-            "relevant lab results, and pending screenings. Only extract items that are explicitly mentioned in the patient chart data."
+            "relevant lab results, and pending screenings. Only extract items that are explicitly mentioned in the patient chart data, "
+            "and justify each recommendation by referencing specific data points from the provided information."
         )
 
         # User prompt components (for generating the pre-visit plan)
@@ -376,14 +379,17 @@ class PreVisitPlanningPrompter(AbstractPromptGenerator):
             "- Active Problem List (extracted from the CCDA data)\n"
             "- Current Medications\n"
             "- Medication Adherence History (if available)\n"
-            "- Recent Lab Results (highlight any abnormalities)\n"
+            "- Recent Lab Results (highlight any abnormalities and provide context for recommendations)\n"
             "- Immunization History\n"
             "- Screening and Care Gaps (e.g., missed screenings or upcoming preventive measures)\n"
             "- Referrals to Specialists\n"
             "- Any Follow-up Appointments\n"
+            "For each recommendation, include a brief explanation that ties it back to the data in the EHR or CCDA. "
+            "If no relevant data supports a specific section, clearly state 'No relevant data found.'\n"
         )
         follow_up = (
-            "Do not add any new information or assumptions. Summarize strictly based on the provided EHR and CCDA data points."
+            "Do not add any new information or assumptions. Summarize strictly based on the provided EHR and CCDA data points, "
+            "and ensure each recommendation is justified by referencing the specific data in the note."
         )
         audience = (
             "This pre-visit planning summary is intended for healthcare providers preparing for the patient's upcoming appointment."
