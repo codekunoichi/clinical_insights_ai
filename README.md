@@ -161,17 +161,17 @@ Replace <your-app-name> with a unique name for your app.
 
 Ensure your repository contains:
 
-	•	A runtime.txt specifying the Python version, e.g., python-3.9.12.
-	•	A Procfile in the root directory with the following line:
+- A runtime.txt specifying the Python version, e.g., python-3.9.12.
+- A Procfile in the root directory with the following line:
 
-```web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.app:app --bind 0.0.0.0:8000```
+``` web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.app:app --bind 0.0.0.0:8000 ```
 
 
 
 #### Step 5: Deploy the App
 
-	1.	Once GitHub integration is set, Heroku will automatically deploy the app when changes are pushed to the linked branch.
-	2.	Alternatively, you can manually trigger a deployment from the Deploy tab in the Heroku dashboard by clicking Deploy Branch.
+- Once GitHub integration is set, Heroku will automatically deploy the app when changes are pushed to the linked branch.
+- Alternatively, you can manually trigger a deployment from the Deploy tab in the Heroku dashboard by clicking Deploy Branch.
 
 #### Step 6: View Logs for Troubleshooting
 
@@ -199,3 +199,10 @@ For pricing details, check out:
 Following is the actual spend thus far, its not a lot, be brave and purchase! (Yes that is daily spend of 70 cents on OpenAI, for running and re-running this experiment and iterating.)
 
 ![image](https://github.com/user-attachments/assets/1b53162f-7227-480e-9bdb-94676c936bc6)
+
+[For Heroku App Deployments](https://www.heroku.com/pricing?)
+The eco pricing is $5/month you get 999 eco dyno hours.
+
+Following is the actual spend thus far for last two days of 24 X 7 running with few clicks of experiments here and there.
+
+[Eco Dyno Hours](https://devcenter.heroku.com/articles/eco-dyno-hours)
