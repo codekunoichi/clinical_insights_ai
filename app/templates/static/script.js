@@ -58,6 +58,10 @@ form.addEventListener('submit', function(event) {
 // When the page is reloaded after the response is received, hide the spinner container
 window.addEventListener('load', function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
+    document.getElementById("generated-output-panel").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    })
 });
 
 function resetForm() {
