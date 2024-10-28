@@ -84,7 +84,7 @@
 
                 <div id="prompter_type" class="radio-group">
                     <input type="radio" id="spanish_summary" name="prompter_type" value="spanish_summary" {% if prompter_type == "spanish_summary" %}checked{% endif %}>
-                    <label for="spanish_summary">Generate patient summary in spanish with follow-up due dates.</label><br>
+                    <label for="spanish_summary">Generate patient summary in Spanish with follow-up due dates.</label><br>
 
                     <!-- mandarin_summary-->
                     <input type="radio" id="mandarin_summary" name="prompter_type" value="mandarin_summary" {% if prompter_type == "mandarin_summary" %}checked{% endif %}>
@@ -101,6 +101,10 @@
                     <!-- arabic_summary -->
                     <input type="radio" id="arabic_summary" name="prompter_type" value="arabic_summary" {% if prompter_type == "arabic_summary" %}checked{% endif %}>
                     <label for="arabic_summary">Generate patient summary in Arabic with follow-up due dates.</label><br>
+
+                    <!-- bengali_summary -->
+                    <input type="radio" id="bengali_summary" name="prompter_type" value="bengali_summary" {% if prompter_type == "bengali_summary" %}checked{% endif %}>
+                    <label for="bengali_summary">Generate patient summary in Bengali with follow-up due dates.</label><br>
                 </div>
 
                 <!-- AI Model to use-->
