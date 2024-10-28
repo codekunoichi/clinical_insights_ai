@@ -72,6 +72,21 @@
                     <label for="previsit_planner">Do the previsit planning for the patient.</label><br>
                 </div>
 
+                <h2>Multi-Lingual POC Examples</h2>
+
+                <div id="prompter_type" class="radio-group">
+                    <input type="radio" id="spanish_summary" name="prompter_type" value="spanish_summary" {% if prompter_type == "spanish_summary" %}checked{% endif %}>
+                    <label for="spanish_summary">Generate patient summary in spanish with follow-up due dates.</label><br>
+
+                    <!-- mandarin_summary-->
+                    <input type="radio" id="mandarin_summary" name="prompter_type" value="mandarin_summary" {% if prompter_type == "mandarin_summary" %}checked{% endif %}>
+                    <label for="mandarin_summary">Generate patient summary in Mandarin with follow-up due dates.</label><br>
+
+                    <!-- english_summary-->
+                    <input type="radio" id="english_summary" name="prompter_type" value="english_summary" {% if prompter_type == "english_summary" %}checked{% endif %}>
+                    <label for="english_summary">Generate patient summary in English with follow-up due dates.</label><br>
+                </div>
+
                 <!-- AI Model to use-->
                  <h2>AI Model to Choose:</h2>
                  <div id="model_type" class="radio-group">
