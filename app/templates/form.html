@@ -43,13 +43,24 @@
 
                 <!-- Prompter Type Radio Buttons -->
                 <h2>What do you want to do?</h2>
+                <h2>Administrative Assistants(Audience of output = Medical Assistants, Care Team)</h2>
                 <div id="prompter_type" class="radio-group">
-                    <input type="radio" id="biller" name="prompter_type" value="biller" {% if prompter_type == "biller" %}checked{% endif %}>
-                    <label for="biller">Generate CPT Code for the Visit Note</label><br>
-                
+
                     <input type="radio" id="summarizer" name="prompter_type" value="summarizer" {% if prompter_type == "summarizer" %}checked{% endif %}>
                     <label for="summarizer">Summarize the Visit Note</label><br>
                 
+
+                    <input type="radio" id="follow_up" name="prompter_type" value="follow_up" {% if prompter_type == "follow_up" %}checked{% endif %}>
+                    <label for="follow_up">Pick out follow up for the patient from the Visit Note.</label><br>
+
+                    <input type="radio" id="previsit_planner" name="prompter_type" value="previsit_planner" {% if prompter_type == "previsit_planner" %}checked{% endif %}>
+                    <label for="previsit_planner">Do the previsit planning for the patient.</label><br>
+                </div>
+                <h2>Administrative Assistants(Audience of output = Biller)</h2>
+                <div id="prompter_type" class="radio-group">
+                    <input type="radio" id="biller" name="prompter_type" value="biller" {% if prompter_type == "biller" %}checked{% endif %}>
+                    <label for="biller">Generate CPT Code for the Visit Note</label><br>
+
                     <input type="radio" id="diagnosis" name="prompter_type" value="diagnosis" {% if prompter_type == "diagnosis" %}checked{% endif %}>
                     <label for="diagnosis">Recommend Diagnosis Code ICD-10 for the Visit Note</label><br>
 
@@ -58,21 +69,18 @@
 
                     <input type="radio" id="sdoh_coder" name="prompter_type" value="sdoh_coder" {% if prompter_type == "sdoh_coder" %}checked{% endif %}>
                     <label for="sdoh_coder">Generate SDOH Specific Z-Codes/ICD-10.</label><br>
+                </div>
 
-                    <input type="radio" id="lab_result" name="prompter_type" value="lab_result_emailer" {% if prompter_type == "lab_result_emailer" %}checked{% endif %}>
-                    <label for="diagnosis">Summarize the Lab Results and create a patient email.</label><br>
-
-                    <input type="radio" id="follow_up" name="prompter_type" value="follow_up" {% if prompter_type == "follow_up" %}checked{% endif %}>
-                    <label for="follow_up">Pick out follow up for the patient from the Visit Note.</label><br>
-
+                <h2>Patient Engagement Assistant (Audience of output = Patient)</h2>
+                <div id="prompter_type" class="radio-group">
                     <input type="radio" id="medication_adherance" name="prompter_type" value="medication_adherance" {% if prompter_type == "medication_adherance" %}checked{% endif %}>
                     <label for="medication_adherance">Generate Medication Adherance Patient Message at 6th Grade Reading Level.</label><br>
 
-                    <input type="radio" id="previsit_planner" name="prompter_type" value="previsit_planner" {% if prompter_type == "previsit_planner" %}checked{% endif %}>
-                    <label for="previsit_planner">Do the previsit planning for the patient.</label><br>
+                    <input type="radio" id="lab_result" name="prompter_type" value="lab_result_emailer" {% if prompter_type == "lab_result_emailer" %}checked{% endif %}>
+                    <label for="diagnosis">Summarize the Lab Results and create a patient email.</label><br>
                 </div>
 
-                <h2>Multi-Lingual POC Examples</h2>
+                <h2>Multi-Lingual POC Examples for Patient Engagement (Audience of output = Patient)</h2>
 
                 <div id="prompter_type" class="radio-group">
                     <input type="radio" id="spanish_summary" name="prompter_type" value="spanish_summary" {% if prompter_type == "spanish_summary" %}checked{% endif %}>
