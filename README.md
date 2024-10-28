@@ -113,6 +113,75 @@ Plan:
     • Continue physical therapy and follow-up in 4 weeks.
 ```
 
+
+## Heroku Deployment Setup
+
+To deploy the Clinical Insights AI application to Heroku and integrate it with GitHub for continuous deployment, follow these steps:
+
+### Prerequisites
+
+- Create a Heroku account
+- Install the Heroku CLI on your local machine
+- Ensure your application code is version-controlled with Git and accessible on GitHub
+
+#### MacOS
+
+    ```brew tap heroku/brew && brew install heroku```
+
+#### Step 1: Create a Heroku App
+
+- Log in to Heroku via the CLI:
+
+```heroku login```
+
+
+- In your terminal, navigate to the project directory and create a new Heroku app:
+
+```heroku create <your-app-name>```
+
+Replace <your-app-name> with a unique name for your app.
+
+#### Step 2: Set Up Environment Variables
+
+- Go to the Heroku dashboard, navigate to your app, and open Settings.
+- Under Config Vars, click Reveal Config Vars and add the necessary environment variables:
+  - OPENAI_API_KEY
+  - ANTHROPIC_API_KEY
+  - BASIC_AUTH_USERNAME
+  - BASIC_AUTH_PASSWORD
+
+#### Step 3: Configure GitHub Integration for Continuous Deployment
+
+- In the Heroku dashboard for your app, go to the Deploy tab.
+- Under Deployment method, select GitHub.
+- Connect to your GitHub account and select the repository with the Clinical Insights AI code.
+- Enable Automatic Deploys to deploy each time you push a new commit to the main branch.
+
+#### Step 4: Specify the Heroku Runtime and Procfile
+
+Ensure your repository contains:
+
+- A runtime.txt specifying the Python version, e.g., python-3.9.12.
+- A Procfile in the root directory with the following line:
+
+``` web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.app:app --bind 0.0.0.0:8000 ```
+
+
+
+#### Step 5: Deploy the App
+
+- Once GitHub integration is set, Heroku will automatically deploy the app when changes are pushed to the linked branch.
+- Alternatively, you can manually trigger a deployment from the Deploy tab in the Heroku dashboard by clicking Deploy Branch.
+
+#### Step 6: View Logs for Troubleshooting
+
+To view logs for debugging:
+
+```heroku logs --tail --app <your-app-name>```
+
+You can now access the deployed application via the Heroku app URL provided in your dashboard.
+
+
 ## Lets Experiment!
 
 We encourage you to dive into this repository and experiment with the tools and AI models. Consider investing a small amount in token credits:
@@ -130,3 +199,12 @@ For pricing details, check out:
 Following is the actual spend thus far, its not a lot, be brave and purchase! (Yes that is daily spend of 70 cents on OpenAI, for running and re-running this experiment and iterating.)
 
 ![image](https://github.com/user-attachments/assets/1b53162f-7227-480e-9bdb-94676c936bc6)
+
+[For Heroku App Deployments](https://www.heroku.com/pricing?)
+The eco pricing is $5/month you get 999 eco dyno hours.
+
+Following is the actual spend thus far for last two days of 24 X 7 running with few clicks of experiments here and there.
+<img width="1597" alt="image" src="https://github.com/user-attachments/assets/cd17e8b5-33a9-4543-9399-95b1e74ef5b3">
+
+
+[Eco Dyno Hours](https://devcenter.heroku.com/articles/eco-dyno-hours)

@@ -402,3 +402,280 @@ class PreVisitPlanningPrompter(AbstractPromptGenerator):
         system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
+    
+
+class VisitSummaryPrompterEnglish(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in generating patient visit summaries in English, tailored for patients. "
+            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the care plan, "
+            "and any necessary follow-up steps in a way that the patient can easily understand.\n"
+        )
+        
+        instruction = (
+            "Review the patient’s visit notes and highlight the main reason for the visit, the essential parts of the treatment plan, "
+            "and any instructions for follow-up. When noting follow-up dates, convert them into the MM/DD/YYYY format for clarity. "
+            "Make sure the language is simple and patient-friendly, avoiding medical jargon.\n"
+        )
+        
+        context = (
+            "The goal is to give the patient a clear summary in English that helps them remember why they visited, what care plan was decided, "
+            "and any next steps they should take. Only use information in the provided visit notes, and avoid any assumptions.\n"
+        )
+
+        # User prompt components (for generating the summary in English)
+        data_format = (
+            "Please create a patient-friendly summary with these sections:\n"
+            "- **Reason for Visit**: Briefly explain why the patient came in.\n"
+            "- **Care Plan**: List the main points of the treatment plan.\n"
+            "- **Next Steps**: Include follow-up dates and any upcoming appointments in MM/DD/YYYY format. If no follow-up is needed, state 'No follow-up needed.'\n"
+        )
+        
+        follow_up = (
+            "Do not add any new information. Keep the summary based strictly on the provided notes, ensuring that it’s easy to understand for the patient.\n"
+        )
+        
+        audience = (
+            "This summary is for patients, to help them remember the key points from their visit in simple English."
+        )
+        
+        tone = "The tone should be friendly, clear, and supportive.\n"
+        data = f"Patient visit notes to summarize: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt
+    
+
+class VisitSummaryPrompterSpanish(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "Eres un asistente médico experto especializado en generar resúmenes de visitas médicas en español, adaptados para los pacientes. "
+            "Tu tarea es proporcionar un resumen claro y fácil de entender que explique la razón principal de la visita, el plan de atención, "
+            "y cualquier paso de seguimiento necesario de una manera que el paciente pueda comprender fácilmente.\n"
+        )
+        
+        instruction = (
+            "Revisa las notas de la visita del paciente y destaca la razón principal de la visita, las partes esenciales del plan de tratamiento "
+            "y cualquier instrucción para el seguimiento. Al indicar las fechas de seguimiento, conviértelas al formato MM/DD/YYYY para mayor claridad. "
+            "Asegúrate de que el lenguaje sea sencillo y amigable para el paciente, evitando jerga médica.\n"
+        )
+        
+        context = (
+            "El objetivo es ofrecer al paciente un resumen claro en español que le ayude a recordar el motivo de su visita, el plan de atención acordado, "
+            "y los próximos pasos que debe seguir. Solo utiliza la información proporcionada en las notas de la visita, y evita cualquier suposición.\n"
+        )
+
+        # User prompt components (for generating the summary in Spanish)
+        data_format = (
+            "Por favor, crea un resumen amigable para el paciente con estas secciones:\n"
+            "- **Razón de la Visita**: Explica brevemente por qué el paciente acudió a la consulta.\n"
+            "- **Plan de Atención**: Enumera los puntos principales del plan de tratamiento.\n"
+            "- **Próximos Pasos**: Incluye fechas de seguimiento y cualquier cita futura en el formato MM/DD/YYYY. Si no se necesita seguimiento, indica 'No se necesita seguimiento.'\n"
+        )
+        
+        follow_up = (
+            "No agregues ninguna información nueva. Mantén el resumen basado estrictamente en las notas proporcionadas, asegurándote de que sea fácil de entender para el paciente.\n"
+        )
+        
+        audience = (
+            "Este resumen es para los pacientes, para ayudarles a recordar los puntos clave de su visita en español sencillo."
+        )
+        
+        tone = "El tono debe ser amigable, claro y de apoyo.\n"
+        data = f"Notas de la visita del paciente a resumir: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt
+    
+
+class VisitSummaryPrompterMandarin(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "您是一位专注于为患者生成中文就诊摘要的专业医疗助理。"
+            "您的任务是提供一个清晰易懂的摘要，解释患者的主要就诊原因、治疗计划，"
+            "以及任何必要的后续步骤，使患者能够轻松理解。\n"
+        )
+        
+        instruction = (
+            "阅读患者的就诊记录，突出就诊的主要原因、治疗计划的关键部分，"
+            "并列出任何需要的后续步骤。在注明后续日期时，请使用 MM/DD/YYYY 格式。"
+            "确保语言简单、易于理解，避免使用医学术语。\n"
+        )
+
+        context = (
+            "目标是为患者提供一份中文的清晰摘要，帮助他们回忆就诊原因、制定的护理计划，"
+            "以及需要采取的下一步措施。仅使用提供的就诊记录中的信息，避免任何假设。\n"
+        )
+
+        # User prompt components (for generating the summary in Mandarin)
+        data_format = (
+            "请用以下部分创建一份便于患者理解的摘要：\n"
+            "- **就诊原因**：简要说明患者的来诊原因。\n"
+            "- **护理计划**：列出治疗计划的主要要点。\n"
+            "- **后续步骤**：包括后续日期和任何即将进行的预约，日期格式为 MM/DD/YYYY。如不需后续，请说明“无需后续”。\n"
+        )
+        
+        follow_up = (
+            "请勿添加任何新信息。仅基于提供的记录撰写摘要，确保内容易于患者理解。\n"
+        )
+        
+        audience = (
+            "本摘要是为患者准备的，旨在帮助他们回忆就诊中的关键要点，以简明中文呈现。\n"
+        )
+        
+        tone = "语气应友好、清晰、支持性强。\n"
+        data = f"需要总结的患者就诊记录：{note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt
+    
+class VisitSummaryPrompterKorean(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in generating patient visit summaries in Korean, tailored for patients. "
+            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the care plan, "
+            "and any necessary follow-up steps in a way that the patient can easily understand.\n"
+        )
+        
+        instruction = (
+            "Review the patient’s visit notes and highlight the main reason for the visit, the essential parts of the treatment plan, "
+            "and any instructions for follow-up. When noting follow-up dates, convert them into the MM/DD/YYYY format for clarity. "
+            "Make sure the language is simple and patient-friendly, avoiding medical jargon.\n"
+        )
+        
+        context = (
+            "The goal is to give the patient a clear summary in Korean that helps them remember why they visited, what care plan was decided, "
+            "and any next steps they should take. Only use information in the provided visit notes, and avoid any assumptions.\n"
+        )
+
+        # User prompt components (for generating the summary in Korean)
+        data_format = (
+            "Please create a patient-friendly summary with these sections:\n"
+            "- **방문 이유** (Reason for Visit): Briefly explain why the patient came in.\n"
+            "- **치료 계획** (Care Plan): List the main points of the treatment plan.\n"
+            "- **다음 단계** (Next Steps): Include follow-up dates and any upcoming appointments in MM/DD/YYYY format. "
+            "If no follow-up is needed, state '추가 방문 필요 없음.' (No follow-up needed).\n"
+        )
+        
+        follow_up = (
+            "Do not add any new information. Keep the summary based strictly on the provided notes, ensuring that it’s easy to understand for the patient.\n"
+        )
+        
+        audience = (
+            "This summary is for patients, to help them remember the key points from their visit in simple Korean."
+        )
+        
+        tone = "The tone should be friendly, clear, and supportive.\n"
+        data = f"Patient visit notes to summarize: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt
+    
+
+class VisitSummaryPrompterArabic(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in generating patient visit summaries in Arabic, tailored for patients. "
+            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the care plan, "
+            "and any necessary follow-up steps in a way that the patient can easily understand.\n"
+        )
+        
+        instruction = (
+            "Review the patient’s visit notes and highlight the main reason for the visit, the essential parts of the treatment plan, "
+            "and any instructions for follow-up. When noting follow-up dates, convert them into the MM/DD/YYYY format for clarity. "
+            "Make sure the language is simple and patient-friendly, avoiding medical jargon.\n"
+        )
+        
+        context = (
+            "The goal is to give the patient a clear summary in Arabic that helps them remember why they visited, what care plan was decided, "
+            "and any next steps they should take. Only use information in the provided visit notes, and avoid any assumptions.\n"
+        )
+
+        # User prompt components (for generating the summary in Arabic)
+        data_format = (
+            "Please create a patient-friendly summary with these sections:\n"
+            "- **سبب الزيارة** (Reason for Visit): Briefly explain why the patient came in.\n"
+            "- **خطة العلاج** (Care Plan): List the main points of the treatment plan.\n"
+            "- **الخطوات التالية** (Next Steps): Include follow-up dates and any upcoming appointments in MM/DD/YYYY format. "
+            "If no follow-up is needed, state 'لا توجد متابعة مطلوبة.' (No follow-up needed).\n"
+        )
+        
+        follow_up = (
+            "Do not add any new information. Keep the summary based strictly on the provided notes, ensuring that it’s easy to understand for the patient.\n"
+        )
+        
+        audience = (
+            "This summary is for patients, to help them remember the key points from their visit in simple Arabic."
+        )
+        
+        tone = "The tone should be friendly, clear, and supportive.\n"
+        data = f"Patient visit notes to summarize: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt
+    
+class VisitSummaryPrompterBengali(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in generating patient visit summaries in Bengali, tailored for patients. "
+            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the care plan, "
+            "and any necessary follow-up steps in a way that the patient can easily understand.\n"
+        )
+        
+        instruction = (
+            "Review the patient’s visit notes and highlight the main reason for the visit, the essential parts of the treatment plan, "
+            "and any instructions for follow-up. When noting follow-up dates, convert them into the MM/DD/YYYY format for clarity. "
+            "Make sure the language is simple and patient-friendly, avoiding medical jargon.\n"
+        )
+        
+        context = (
+            "The goal is to give the patient a clear summary in Bengali that helps them remember why they visited, what care plan was decided, "
+            "and any next steps they should take. Only use information in the provided visit notes, and avoid any assumptions.\n"
+        )
+
+        # User prompt components (for generating the summary in Bengali)
+        data_format = (
+            "Please create a patient-friendly summary with these sections:\n"
+            "- **ভিজিটের কারণ** (Reason for Visit): Briefly explain why the patient came in.\n"
+            "- **চিকিৎসা পরিকল্পনা** (Care Plan): List the main points of the treatment plan.\n"
+            "- **পরবর্তী পদক্ষেপ** (Next Steps): Include follow-up dates and any upcoming appointments in MM/DD/YYYY format. "
+            "If no follow-up is needed, state 'পরবর্তী অনুসরণ প্রয়োজন নেই।' (No follow-up needed).\n"
+        )
+        
+        follow_up = (
+            "Do not add any new information. Keep the summary based strictly on the provided notes, ensuring that it’s easy to understand for the patient.\n"
+        )
+        
+        audience = (
+            "This summary is for patients, to help them remember the key points from their visit in simple Bengali."
+        )
+        
+        tone = "The tone should be friendly, clear, and supportive.\n"
+        data = f"Patient visit notes to summarize: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt
