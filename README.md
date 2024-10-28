@@ -120,9 +120,9 @@ To deploy the Clinical Insights AI application to Heroku and integrate it with G
 
 ### Prerequisites
 
-	•	Create a Heroku account
-	•	Install the Heroku CLI on your local machine
-	•	Ensure your application code is version-controlled with Git and accessible on GitHub
+- Create a Heroku account
+- Install the Heroku CLI on your local machine
+- Ensure your application code is version-controlled with Git and accessible on GitHub
 
 #### MacOS
 
@@ -130,12 +130,12 @@ To deploy the Clinical Insights AI application to Heroku and integrate it with G
 
 #### Step 1: Create a Heroku App
 
-	1.	Log in to Heroku via the CLI:
+- Log in to Heroku via the CLI:
 
 ```heroku login```
 
 
-	2.	In your terminal, navigate to the project directory and create a new Heroku app:
+- In your terminal, navigate to the project directory and create a new Heroku app:
 
 ```heroku create <your-app-name>```
 
@@ -143,19 +143,19 @@ Replace <your-app-name> with a unique name for your app.
 
 #### Step 2: Set Up Environment Variables
 
-	1.	Go to the Heroku dashboard, navigate to your app, and open Settings.
-	2.	Under Config Vars, click Reveal Config Vars and add the necessary environment variables:
-	•	OPENAI_API_KEY
-	•	ANTHROPIC_API_KEY
-	•	BASIC_AUTH_USERNAME
-	•	BASIC_AUTH_PASSWORD
+- Go to the Heroku dashboard, navigate to your app, and open Settings.
+- Under Config Vars, click Reveal Config Vars and add the necessary environment variables:
+  - OPENAI_API_KEY
+  - ANTHROPIC_API_KEY
+  - BASIC_AUTH_USERNAME
+  - BASIC_AUTH_PASSWORD
 
 #### Step 3: Configure GitHub Integration for Continuous Deployment
 
-	1.	In the Heroku dashboard for your app, go to the Deploy tab.
-	2.	Under Deployment method, select GitHub.
-	3.	Connect to your GitHub account and select the repository with the Clinical Insights AI code.
-	4.	Enable Automatic Deploys to deploy each time you push a new commit to the main branch.
+- In the Heroku dashboard for your app, go to the Deploy tab.
+- Under Deployment method, select GitHub.
+- Connect to your GitHub account and select the repository with the Clinical Insights AI code.
+- Enable Automatic Deploys to deploy each time you push a new commit to the main branch.
 
 #### Step 4: Specify the Heroku Runtime and Procfile
 
@@ -204,5 +204,7 @@ Following is the actual spend thus far, its not a lot, be brave and purchase! (Y
 The eco pricing is $5/month you get 999 eco dyno hours.
 
 Following is the actual spend thus far for last two days of 24 X 7 running with few clicks of experiments here and there.
+<img width="1597" alt="image" src="https://github.com/user-attachments/assets/cd17e8b5-33a9-4543-9399-95b1e74ef5b3">
+
 
 [Eco Dyno Hours](https://devcenter.heroku.com/articles/eco-dyno-hours)
