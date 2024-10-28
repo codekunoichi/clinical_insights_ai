@@ -540,3 +540,49 @@ class VisitSummaryPrompterMandarin(AbstractPromptGenerator):
         system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
+    
+class VisitSummaryPrompterKorean(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in generating patient visit summaries in Korean, tailored for patients. "
+            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the care plan, "
+            "and any necessary follow-up steps in a way that the patient can easily understand.\n"
+        )
+        
+        instruction = (
+            "Review the patient’s visit notes and highlight the main reason for the visit, the essential parts of the treatment plan, "
+            "and any instructions for follow-up. When noting follow-up dates, convert them into the MM/DD/YYYY format for clarity. "
+            "Make sure the language is simple and patient-friendly, avoiding medical jargon.\n"
+        )
+        
+        context = (
+            "The goal is to give the patient a clear summary in Korean that helps them remember why they visited, what care plan was decided, "
+            "and any next steps they should take. Only use information in the provided visit notes, and avoid any assumptions.\n"
+        )
+
+        # User prompt components (for generating the summary in Korean)
+        data_format = (
+            "Please create a patient-friendly summary with these sections:\n"
+            "- **방문 이유** (Reason for Visit): Briefly explain why the patient came in.\n"
+            "- **치료 계획** (Care Plan): List the main points of the treatment plan.\n"
+            "- **다음 단계** (Next Steps): Include follow-up dates and any upcoming appointments in MM/DD/YYYY format. "
+            "If no follow-up is needed, state '추가 방문 필요 없음.' (No follow-up needed).\n"
+        )
+        
+        follow_up = (
+            "Do not add any new information. Keep the summary based strictly on the provided notes, ensuring that it’s easy to understand for the patient.\n"
+        )
+        
+        audience = (
+            "This summary is for patients, to help them remember the key points from their visit in simple Korean."
+        )
+        
+        tone = "The tone should be friendly, clear, and supportive.\n"
+        data = f"Patient visit notes to summarize: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt

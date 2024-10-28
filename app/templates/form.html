@@ -93,6 +93,10 @@
                     <!-- english_summary-->
                     <input type="radio" id="english_summary" name="prompter_type" value="english_summary" {% if prompter_type == "english_summary" %}checked{% endif %}>
                     <label for="english_summary">Generate patient summary in English with follow-up due dates.</label><br>
+
+                    <!-- korean_summary -->
+                    <input type="radio" id="korean_summary" name="prompter_type" value="korean_summary" {% if prompter_type == "korean_summary" %}checked{% endif %}>
+                    <label for="korean_summary">Generate patient summary in Korean with follow-up due dates.</label><br>
                 </div>
 
                 <!-- AI Model to use-->
