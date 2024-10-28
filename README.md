@@ -113,6 +113,75 @@ Plan:
     • Continue physical therapy and follow-up in 4 weeks.
 ```
 
+
+## Heroku Deployment Setup
+
+To deploy the Clinical Insights AI application to Heroku and integrate it with GitHub for continuous deployment, follow these steps:
+
+### Prerequisites
+
+	•	Create a Heroku account
+	•	Install the Heroku CLI on your local machine
+	•	Ensure your application code is version-controlled with Git and accessible on GitHub
+
+#### MacOS
+
+    ```brew tap heroku/brew && brew install heroku```
+
+#### Step 1: Create a Heroku App
+
+	1.	Log in to Heroku via the CLI:
+
+```heroku login```
+
+
+	2.	In your terminal, navigate to the project directory and create a new Heroku app:
+
+```heroku create <your-app-name>```
+
+Replace <your-app-name> with a unique name for your app.
+
+#### Step 2: Set Up Environment Variables
+
+	1.	Go to the Heroku dashboard, navigate to your app, and open Settings.
+	2.	Under Config Vars, click Reveal Config Vars and add the necessary environment variables:
+	•	OPENAI_API_KEY
+	•	ANTHROPIC_API_KEY
+	•	BASIC_AUTH_USERNAME
+	•	BASIC_AUTH_PASSWORD
+
+#### Step 3: Configure GitHub Integration for Continuous Deployment
+
+	1.	In the Heroku dashboard for your app, go to the Deploy tab.
+	2.	Under Deployment method, select GitHub.
+	3.	Connect to your GitHub account and select the repository with the Clinical Insights AI code.
+	4.	Enable Automatic Deploys to deploy each time you push a new commit to the main branch.
+
+#### Step 4: Specify the Heroku Runtime and Procfile
+
+Ensure your repository contains:
+
+	•	A runtime.txt specifying the Python version, e.g., python-3.9.12.
+	•	A Procfile in the root directory with the following line:
+
+```web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.app:app --bind 0.0.0.0:8000```
+
+
+
+#### Step 5: Deploy the App
+
+	1.	Once GitHub integration is set, Heroku will automatically deploy the app when changes are pushed to the linked branch.
+	2.	Alternatively, you can manually trigger a deployment from the Deploy tab in the Heroku dashboard by clicking Deploy Branch.
+
+#### Step 6: View Logs for Troubleshooting
+
+To view logs for debugging:
+
+```heroku logs --tail --app <your-app-name>```
+
+You can now access the deployed application via the Heroku app URL provided in your dashboard.
+
+
 ## Lets Experiment!
 
 We encourage you to dive into this repository and experiment with the tools and AI models. Consider investing a small amount in token credits:
