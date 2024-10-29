@@ -50,6 +50,9 @@ class VisitSummary:
     def get_previst_planning_visit():
         return previsit_example
 
+    @staticmethod
+    def get_previsit_planning_visit_with_huddlenotes():
+        return SAMPLE_PATIENT_NOTE_PREVISIT
 
 visit_4 = """Pre-operation evaluation for cataract surgery, left side. Patient planning for cataract surgery and denying difficult breathing, denying chest pain, denying nausea, vomiting, denying breathing. Next paragraph. Patient was evaluated by cardiology. According to cardiology report, on July 22, patient had CAD. CAD concern had stress positive on 2022. Last CAT showed LAD mild. Patient on aspirin. Patient denied any chest pain but had exertion shortness of breath. Next paragraph. Patient also had severe apnea, snoring, denying any severe. Next paragraph. Pre-diabetic hemoglobin A1c 6.4, non-compliant with the IR. Next paragraph. Next paragraph. COPD. Patient will have COPD. Was on inhaler and followed up by pulmonary. Recent CT scan was told unremarkable. CT scan on March 2023 shows emphysema in aorta, ascending aorta. Next paragraph. ECTASIS 3.9 cm. CT scan on the left upper lobe 1.6 cm was told stable by pulmonary. Assessment pre-operation evaluation, medical stable for cataract. This gastric patient continued on aspirin and Serato unless contraindicated by ophthalmology. Next paragraph. Emphysema. This gastric patient continued on the inhaler including Comvavent, COMVI, ENT inhaler stable. CT scan showed emphysema. Next paragraph. CAD with angina. Patient continued on Lipitor 20 mg and aspirin stable. Next paragraph. Patient had psoriasis. Psoriasis was followed by rheumatology. Continued on MTX 2.53 tablet and also another medication OTE ZLA 30 mg. Patient continued followed by rheumatology."""
 
@@ -331,4 +334,52 @@ He hasn’t had a colonoscopy in 7 years, which is overdue. He also needs to sch
 He’s going to follow up with me in November to recheck his diabetes numbers and make sure the referrals are moving forward. He’s still a little stressed from work, but he hasn’t noticed any new issues. I’ll write up a referral to endocrinology and suggest that we book his follow-up appointments before the end of the year.”
 
 This text contains excessive narrative and information that isn’t immediately necessary for pre-visit planning. It includes lifestyle details, general comments, and less organized follow-up items scattered throughout the note. Testing your PreVisitPlanningPrompter with this kind of noisy input will demonstrate how the system can distill the essential medical information (medications, lab results, referrals, and screenings) from the extraneous context.
+"""
+
+SAMPLE_PATIENT_NOTE_PREVISIT = """
+Patient Demographics:
+- Name: John Doe
+- Age: 58
+- Gender: Male
+- Primary Language: English
+
+Active Problem List:
+- Type 2 Diabetes Mellitus
+- Hypertension
+- Hyperlipidemia
+- Chronic Low Back Pain
+
+Medications:
+- Metformin 500 mg PO BID
+- Lisinopril 20 mg PO daily
+- Atorvastatin 10 mg PO daily
+- Ibuprofen 200 mg PO PRN for pain
+
+Pending Orders from Previous Visit:
+- Foot exam (requested 3 months ago, incomplete)
+- A1c test (due from last visit for diabetes management)
+- Lipid panel (pending due to elevated cholesterol)
+
+Huddle Notes:
+- Physician requests updated A1c and lipid panel before the visit to discuss diabetes and cholesterol management.
+- Alert for recent weight gain, patient may need dietary counseling.
+
+Recent Lab Results:
+- Last A1c: 8.3% (above target; recommended <7%)
+- Blood pressure readings: 140/90 mmHg (slightly elevated)
+- LDL cholesterol: 160 mg/dL (target <100 mg/dL)
+
+Immunization History:
+- Influenza vaccine: October 2023
+- Pneumococcal vaccine: October 2021 (consider for re-administration in October 2026)
+
+Care Gaps:
+- Colorectal cancer screening (due for colonoscopy, patient overdue by 1 year)
+- Eye exam for diabetic retinopathy (last completed in 2020)
+
+Next Steps:
+- Schedule A1c, lipid panel, and foot exam before the visit.
+- Refer to dietitian for nutrition counseling.
+- Schedule follow-up in 3 months to re-evaluate diabetes and hypertension management.
+- Ensure colorectal cancer screening referral.
 """
