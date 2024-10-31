@@ -1,7 +1,7 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import CPTCodePrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter, PreVisitPlanningPrompter, VisitSummaryPrompterSpanish, VisitSummaryPrompterMandarin, VisitSummaryPrompterEnglish, VisitSummaryPrompterKorean, VisitSummaryPrompterArabic, VisitSummaryPrompterBengali
+from app.prompt_generator import CPTCodePrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter, PreVisitPlanningPrompter, VisitSummaryPrompterSpanish, VisitSummaryPrompterMandarin, VisitSummaryPrompterEnglish, VisitSummaryPrompterKorean, VisitSummaryPrompterArabic, VisitSummaryPrompterBengali, PreVisitPlanningPrompter_Alternate
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
@@ -23,6 +23,8 @@ class ModelOrchestrator:
             self.prompter = SDOHPrompter()
         elif prompter_type == 'previsit_planner':
             self.prompter = PreVisitPlanningPrompter()
+        elif prompter_type == 'previsit_planner_2':
+            self.prompter = PreVisitPlanningPrompter_Alternate()
         elif prompter_type == 'spanish_summary':
             self.prompter = VisitSummaryPrompterSpanish()
         elif prompter_type == 'mandarin_summary':

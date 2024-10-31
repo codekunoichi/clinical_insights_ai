@@ -679,3 +679,58 @@ class VisitSummaryPrompterBengali(AbstractPromptGenerator):
         system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
+    
+
+class PreVisitPlanningPrompter_Alternate(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert medical assistant specializing in pre-visit planning for patient appointments. "
+            "Your role is to review a patient's chart and ensure that all relevant information is available for the provider. "
+            "You will identify quality care gaps, pend orders, and use huddle notes to streamline the visit.\n"
+        )
+
+        instruction = (
+            "Analyze the provided patient's chart, focusing on demographics, active problem list, medications, allergies, "
+            "recent lab results, immunization history, and care gaps (from Health Maintenance). Create a pre-visit summary "
+            "that highlights necessary actions, orders, and critical information to prepare for the visit.\n"
+        )
+
+        context = (
+            "The goal is to assist the clinician with an action-oriented pre-visit summary that ensures a smooth, "
+            "efficient patient visit. Use huddle notes for bidirectional information exchange and alert the clinician to "
+            "incomplete care gaps or orders. Ensure all items are clearly marked for easy reference in the patient chart.\n"
+        )
+
+        # User prompt components (for generating the pre-visit summary)
+        data_format = (
+            "Create a pre-visit summary with the following sections:\n"
+            "- **Patient Demographics**: Brief summary of age, gender, and primary language.\n"
+            "- **Active Problem List**: List current diagnoses or chronic conditions.\n"
+            "- **Pending Orders**: List any incomplete orders from previous visits; specify orders that need immediate action.\n"
+            "- **Huddle Notes**: Summarize any notes from the huddle for this visit. Include physician requests or alerts for "
+            "specific screenings or samples needed, like A1c or urine tests.\n"
+            "- **Recent Lab Results**: Summarize key results and flag abnormal findings.\n"
+            "- **Care Gaps**: Identify any unaddressed health maintenance issues and outline necessary screenings, "
+            "such as mammograms, colorectal cancer screenings, and vaccinations.\n"
+            "- **Next Steps**: Provide recommendations for follow-up appointments, pending screenings, and referrals. "
+            "Ensure dates are formatted in MM/DD/YYYY and provide clear instructions for the clinician.\n"
+        )
+        
+        follow_up = (
+            "Avoid adding assumptions or extra information. Keep the summary concise, using only data from the patient chart, "
+            "and ensure clarity for easy clinician review.\n"
+        )
+
+        audience = (
+            "This summary is for healthcare providers who need a clear, concise overview to prepare for the upcoming visit."
+        )
+        
+        tone = "The tone should be professional, concise, and actionable.\n"
+        data = f"Patient Chart Data: {note}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt

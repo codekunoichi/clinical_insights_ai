@@ -52,7 +52,7 @@ class VisitSummary:
 
     @staticmethod
     def get_previsit_planning_visit_with_huddlenotes():
-        return SAMPLE_PATIENT_NOTE_PREVISIT
+        return SAMPLE_PATIENT_NOTE_VERBOS
 
 visit_4 = """Pre-operation evaluation for cataract surgery, left side. Patient planning for cataract surgery and denying difficult breathing, denying chest pain, denying nausea, vomiting, denying breathing. Next paragraph. Patient was evaluated by cardiology. According to cardiology report, on July 22, patient had CAD. CAD concern had stress positive on 2022. Last CAT showed LAD mild. Patient on aspirin. Patient denied any chest pain but had exertion shortness of breath. Next paragraph. Patient also had severe apnea, snoring, denying any severe. Next paragraph. Pre-diabetic hemoglobin A1c 6.4, non-compliant with the IR. Next paragraph. Next paragraph. COPD. Patient will have COPD. Was on inhaler and followed up by pulmonary. Recent CT scan was told unremarkable. CT scan on March 2023 shows emphysema in aorta, ascending aorta. Next paragraph. ECTASIS 3.9 cm. CT scan on the left upper lobe 1.6 cm was told stable by pulmonary. Assessment pre-operation evaluation, medical stable for cataract. This gastric patient continued on aspirin and Serato unless contraindicated by ophthalmology. Next paragraph. Emphysema. This gastric patient continued on the inhaler including Comvavent, COMVI, ENT inhaler stable. CT scan showed emphysema. Next paragraph. CAD with angina. Patient continued on Lipitor 20 mg and aspirin stable. Next paragraph. Patient had psoriasis. Psoriasis was followed by rheumatology. Continued on MTX 2.53 tablet and also another medication OTE ZLA 30 mg. Patient continued followed by rheumatology."""
 
@@ -382,4 +382,18 @@ Next Steps:
 - Refer to dietitian for nutrition counseling.
 - Schedule follow-up in 3 months to re-evaluate diabetes and hypertension management.
 - Ensure colorectal cancer screening referral.
+"""
+
+SAMPLE_PATIENT_NOTE_VERBOS = """
+Patient John Doe is a 58-year-old male whose primary language is English. He has a history of Type 2 Diabetes Mellitus, hypertension, hyperlipidemia, and chronic low back pain. His current medications include Metformin 500 mg taken twice daily, Lisinopril 20 mg once daily, Atorvastatin 10 mg once daily, and Ibuprofen 200 mg as needed for pain.
+
+During his last visit, several follow-up tests were ordered but remain incomplete. These include a foot exam, requested three months ago, an A1c test for diabetes management, and a lipid panel to monitor cholesterol levels. Additionally, recent notes from care team huddles highlight the need to update A1c and lipid panel results before his next appointment, especially to discuss ongoing diabetes and cholesterol management. There is also an alert about recent weight gain, suggesting he might benefit from dietary counseling.
+
+Recent lab results show his last A1c level was 8.3%, which is above his target (ideally less than 7%). Blood pressure readings have been slightly elevated, with recent measurements around 140/90 mmHg. His LDL cholesterol stands at 160 mg/dL, above the target of less than 100 mg/dL.
+
+John’s immunization history includes a recent influenza vaccine received in October 2023 and a pneumococcal vaccine administered in October 2021, with the next dose recommended around October 2026.
+
+Some care gaps have been identified, including an overdue colonoscopy for colorectal cancer screening and a diabetic eye exam, last completed in 2020, to check for retinopathy.
+
+The recommended next steps include scheduling his A1c, lipid panel, and foot exam before his upcoming visit. A referral to a dietitian for nutrition counseling may also be beneficial. A follow-up appointment in three months is suggested to reassess his diabetes and hypertension management. Additionally, it would be advisable to complete a referral for colorectal cancer screening.
 """
