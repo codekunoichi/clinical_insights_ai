@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit Summary Prompter</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Visit Summary Prompter</h1>
+
+    <!-- Form Section (Top part) -->
+    <div class="form-container">
+        <div class="form-box">
+            <h2>Enter Visit Notes</h2>
+            <form id="visitForm" method="post" action="/process">
+                <!-- Dropdown to select a visit note -->
+                <h3>Choose a visit note:</h3>
+                <select id="visit_note_select" onchange="fillVisitNote()">
+                    <option value="">-- Select a visit note --</option>
+                    <!-- Backend will populate these options with visit notes -->
+                    <option value="visit_1">Example Visit Note 1</option>
+                    <option value="visit_2">Example Visit Note 2</option>
+                    <option value="visit_3">Example Visit Note 3 </option>
+                    <option value="visit_4">Transcription Note from Rendr Doc</option>
+                    <option value="sdoh_visit">Example Visit Note  with SDOH (use in diagnosis test and hcc test)</option>
+                    <option value="diagnosis_visit_note">Example Visit Note with HCC, SDOH (use for diagnosis test)</option>
+                    <option value="lab_result">Example Visit Note for Lab Result Summary and Email</option>
+                    <option value="follow_up">Example Visit Note for Follow Up</option>
+                    <option value="medication_adherance">Example Visit Note with medication adherance Q & A</option>
+                    <option value="previsit_planner">Example Visit Note for Previsit Planning</option>
+                    <!--previsit_huddle-->
+                    <option value="previsit_huddle">Example Visit Note for Previsit Planning with Huddle Notes</option>
+                </select>
+                <br><br>
+
+                <!-- Visit Note Textarea -->
+                <textarea id="visit_note" name="visit_note" placeholder="Enter patient visit notes...">{{ visit_note or '' }}</textarea>
+                <br><br>
+
+                <!-- Prompter Type Radio Buttons -->
+                <h2>What do you want to do?</h2>
+
+                <h2>Multi-Lingual POC Examples for Patient Engagement (Audience of output = Patient)</h2>
+
+                <div id="prompter_type" class="radio-group">
+                    <input type="radio" id="spanish_summary" name="prompter_type" value="spanish_summary" {% if prompter_type == "spanish_summary" %}checked{% endif %}>
+                    <label for="spanish_summary">Generate patient summary in Spanish with follow-up due dates.</label><br>
+
+                    <!-- mandarin_summary-->
+                    <input type="radio" id="mandarin_summary" name="prompter_type" value="mandarin_summary" {% if prompter_type == "mandarin_summary" %}checked{% endif %}>
+                    <label for="mandarin_summary">Generate patient summary in Mandarin with follow-up due dates.</label><br>
+
+                    <!-- english_summary-->
+                    <input type="radio" id="english_summary" name="prompter_type" value="english_summary" {% if prompter_type == "english_summary" %}checked{% endif %}>
+                    <label for="english_summary">Generate patient summary in English with follow-up due dates.</label><br>
+
+                    <!-- korean_summary -->
+                    <input type="radio" id="korean_summary" name="prompter_type" value="korean_summary" {% if prompter_type == "korean_summary" %}checked{% endif %}>
+                    <label for="korean_summary">Generate patient summary in Korean with follow-up due dates.</label><br>
+
+                    <!-- arabic_summary -->
+                    <input type="radio" id="arabic_summary" name="prompter_type" value="arabic_summary" {% if prompter_type == "arabic_summary" %}checked{% endif %}>
+                    <label for="arabic_summary">Generate patient summary in Arabic with follow-up due dates.</label><br>
+
+                    <!-- bengali_summary -->
+                    <input type="radio" id="bengali_summary" name="prompter_type" value="bengali_summary" {% if prompter_type == "bengali_summary" %}checked{% endif %}>
+                    <label for="bengali_summary">Generate patient summary in Bengali with follow-up due dates.</label><br>
+                </div>
+
+                <!-- AI Model to use-->
+                 <h2>AI Model to Choose:</h2>
+                 <div id="model_type" class="radio-group">
+                    <input type="radio" id="openai" name="model_type" value="openai" {% if model_type == "openai" %}checked{% endif %}>
+                    <label for="openai">Open AI</label><br>
+                
+                    <input type="radio" id="anthropic" name="model_type" value="anthropic" {% if model_type == "anthropic" %}checked{% endif %}>
+                    <label for="anthropic">Anthropic</label><br>
+                </div>
+                <button type="submit" onclick="showSpinner()">Submit</button>
+                <!-- Reset button with an onClick event to reset the form -->
+                <button type="button" class="reset-button" onclick="resetForm()">Reset Form</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Spinner Container (Initially Hidden) -->
+    <div id="spinner-container" class="spinner-container">
+        <div id="spinner" class="spinner"></div>
+        <div id="spinner-text" class="spinner-text">Thinking...</div>
+    </div>
+
+    <!-- Split section (Bottom part) -->
+    <div class="split-container">
+        <!-- Left Side: Visit Note entered -->
+        <div id="visit-note-panel" class="box output-box">
+            <h2>Visit Note Entered</h2>
+            {% if visit_note %}
+                <pre>{{ visit_note }}</pre>
+            {% else %}
+                <p>No visit note entered yet.</p>
+            {% endif %}
+            {% if adherence_response %}
+                <h2>Medication Adherance Response Entered</h2>
+                <pre>{{ adherence_response }}</pre>
+            {% endif %}
+        </div>
+
+        <!-- Right Side: Generated Output -->
+        <div id="generated-output-panel" class="box output-box">
+            <h2>Generated Output 
+                {% if model_type %} <pre> using {{ model_type }}</pre>{% endif %}
+                {% if prompter_type %} <pre>for {{ prompter_type }}</pre>{% endif %}
+            </h2>
+            {% if result %}
+                <pre>{{ result | safe }}</pre>
+            {% else %}
+                <p>Generated output will appear here after submission.</p>
+            {% endif %}
+            {% if email %}
+                <h2>Patient Email</h2>
+                <pre>{{ email | safe }}</pre>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Reference external JavaScript file -->
+    <script src="/static/script.js?v=2.0"></script>
+</body>
+</html>

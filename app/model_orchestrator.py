@@ -142,7 +142,14 @@ if __name__ == "__main__":
     # result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_sdoh_visit()))
     # print(result)
 
+    # # Orchestrate with OpenAI model and SDOHPrompter
+    # orchestrator = ModelOrchestrator(model_type='openai', prompter_type='previsit_planner')
+    # result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_previst_planning_visit()))
+    # print(result)
+
+    #get_post_visit_summary_with_pharmacy
+
     # Orchestrate with OpenAI model and SDOHPrompter
-    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='previsit_planner')
-    result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_previst_planning_visit()))
+    orchestrator = ModelOrchestrator(model_type='openai', prompter_type='english_summary')
+    result = orchestrator.process_pretty(VisitSummary(VisitSummary.get_post_visit_summary_with_pharmacy()))
     print(result)

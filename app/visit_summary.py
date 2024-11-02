@@ -53,6 +53,10 @@ class VisitSummary:
     @staticmethod
     def get_previsit_planning_visit_with_huddlenotes():
         return SAMPLE_PATIENT_NOTE_VERBOS
+    
+    @staticmethod
+    def get_post_visit_summary_with_pharmacy():
+        return SAMPLE_POST_VISIT_SUMMARY_WITH_PHARMACY
 
 visit_4 = """Pre-operation evaluation for cataract surgery, left side. Patient planning for cataract surgery and denying difficult breathing, denying chest pain, denying nausea, vomiting, denying breathing. Next paragraph. Patient was evaluated by cardiology. According to cardiology report, on July 22, patient had CAD. CAD concern had stress positive on 2022. Last CAT showed LAD mild. Patient on aspirin. Patient denied any chest pain but had exertion shortness of breath. Next paragraph. Patient also had severe apnea, snoring, denying any severe. Next paragraph. Pre-diabetic hemoglobin A1c 6.4, non-compliant with the IR. Next paragraph. Next paragraph. COPD. Patient will have COPD. Was on inhaler and followed up by pulmonary. Recent CT scan was told unremarkable. CT scan on March 2023 shows emphysema in aorta, ascending aorta. Next paragraph. ECTASIS 3.9 cm. CT scan on the left upper lobe 1.6 cm was told stable by pulmonary. Assessment pre-operation evaluation, medical stable for cataract. This gastric patient continued on aspirin and Serato unless contraindicated by ophthalmology. Next paragraph. Emphysema. This gastric patient continued on the inhaler including Comvavent, COMVI, ENT inhaler stable. CT scan showed emphysema. Next paragraph. CAD with angina. Patient continued on Lipitor 20 mg and aspirin stable. Next paragraph. Patient had psoriasis. Psoriasis was followed by rheumatology. Continued on MTX 2.53 tablet and also another medication OTE ZLA 30 mg. Patient continued followed by rheumatology."""
 
@@ -396,4 +400,108 @@ John’s immunization history includes a recent influenza vaccine received in Oc
 Some care gaps have been identified, including an overdue colonoscopy for colorectal cancer screening and a diabetic eye exam, last completed in 2020, to check for retinopathy.
 
 The recommended next steps include scheduling his A1c, lipid panel, and foot exam before his upcoming visit. A referral to a dietitian for nutrition counseling may also be beneficial. A follow-up appointment in three months is suggested to reassess his diabetes and hypertension management. Additionally, it would be advisable to complete a referral for colorectal cancer screening.
+"""
+
+SAMPLE_POST_VISIT_SUMMARY_WITH_PHARMACY = """
+Patient Name: John Doe
+Date of Birth: 01/15/1970
+Date of Visit: 10/01/2024
+
+Subjective
+
+- Chief Complaint: "I've been feeling extremely tired and thirsty lately."
+- History of Present Illness:
+  The patient is a 53-year-old male presenting with a 3-week history of increased fatigue, excessive thirst (polydipsia), and frequent urination (polyuria). He reports unintentional weight loss of 5 pounds over the past month. Denies chest pain, shortness of breath, or fever.
+- Past Medical History:
+  - Hypertension diagnosed 5 years ago, managed with medication.
+- Medications:
+  - Lisinopril 20 mg once daily.
+- Allergies:
+  - No known drug allergies.
+- Family History:
+  - Father had type 2 diabetes mellitus.
+  - Mother had hyperlipidemia.
+- Social History:
+  - Non-smoker.
+  - Drinks alcohol occasionally.
+  - Sedentary lifestyle due to desk job.
+- Review of Systems:
+  - General: Reports fatigue and weight loss.
+  - Endocrine: Excessive thirst and urination.
+  - Cardiovascular: No chest pain or palpitations.
+  - Gastrointestinal: No nausea or abdominal pain.
+
+Objective
+
+- Vital Signs:
+  - Blood Pressure: 145/90 mmHg
+  - Heart Rate: 88 bpm
+  - Respiratory Rate: 16 breaths per minute
+  - Temperature: 98.6°F (37°C)
+  - Oxygen Saturation: 98% on room air
+  - Weight: 200 lbs (90.7 kg)
+  - Height: 5'10" (178 cm)
+  - Body Mass Index (BMI): 28.7 kg/m²
+- Physical Examination:
+  - General Appearance: Alert, appears slightly fatigued.
+  - Cardiovascular: Regular rhythm, no murmurs or gallops.
+  - Respiratory: Clear to auscultation bilaterally.
+  - Abdomen: Soft, non-tender, no organomegaly.
+  - Extremities: No edema or cyanosis.
+  - Neurological: Cranial nerves II-XII intact, no focal deficits.
+- Laboratory Results:
+  - Fasting Blood Glucose: 190 mg/dL (Normal: 70-99 mg/dL)
+  - Hemoglobin A1c: 8.2% (Normal: <5.7%)
+  - Lipid Panel:
+    - Total Cholesterol: 210 mg/dL (Normal: <200 mg/dL)
+    - LDL Cholesterol: 130 mg/dL (Normal: <100 mg/dL)
+    - HDL Cholesterol: 38 mg/dL (Normal: >40 mg/dL)
+    - Triglycerides: 180 mg/dL (Normal: <150 mg/dL)
+
+Assessment
+
+1. Type 2 Diabetes Mellitus (E11.9)
+   - Newly diagnosed based on elevated fasting glucose and HbA1c levels.
+2. Hypertension (I10)
+   - Blood pressure slightly elevated; continue current management.
+3. Hyperlipidemia (E78.5)
+   - Elevated LDL and triglycerides; low HDL.
+
+Plan
+
+- Type 2 Diabetes Mellitus:
+  - Medications Prescribed:
+    - Metformin 500 mg: Take one tablet twice daily with meals.
+  - Patient Education:
+    - Discussed the importance of blood sugar control.
+    - Provided educational materials on diabetic diet and exercise.
+  - Referrals:
+    - Referred to a diabetes educator for comprehensive management.
+- Hypertension:
+  - Continue Lisinopril 20 mg once daily.
+  - Encourage home blood pressure monitoring.
+- Hyperlipidemia:
+  - Medications Prescribed:
+    - Atorvastatin 20 mg: Take one tablet once daily at bedtime.
+  - Lifestyle Modifications:
+    - Advised dietary changes to lower cholesterol.
+    - Encourage increased physical activity.
+- Pharmacy Pick Up Address:
+  - Prescriptions sent to Main Street Pharmacy, 123 Main Street, Anytown, USA.
+- Open Care Gaps:
+  - Colonoscopy: Due for colorectal cancer screening; recommend scheduling.
+  - Diabetic Eye Exam: Recommend annual dilated retinal examination.
+  - Foot Exam: Schedule regular foot examinations due to diabetes.
+- Next Steps:
+  - Follow-Up Appointment: Scheduled for in 6 months to reassess blood sugar and lipid levels.
+  - Lab Tests: Repeat HbA1c and lipid panel prior to next visit in 4 weeks.
+- Additional Instructions:
+  - Provided prescription for a glucometer and test strips.
+  - Instructed on how to monitor and log blood glucose levels at home.
+  - Advised to report any symptoms of hypoglycemia.
+
+Provider Signature
+
+Dr. Jane Smith, MD
+National Provider Identifier (NPI): 1234567890
 """

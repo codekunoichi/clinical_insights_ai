@@ -409,26 +409,34 @@ class VisitSummaryPrompterEnglish(AbstractPromptGenerator):
         # System prompt components (for model behavior and boundaries)
         persona = (
             "You are an expert medical assistant specializing in generating patient visit summaries in English, tailored for patients. "
-            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the care plan, "
-            "and any necessary follow-up steps in a way that the patient can easily understand.\n"
+            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the diagnosis, "
+            "the care plan including medications prescribed, the pharmacy pick-up address, "
+            "any open care gaps, and any necessary follow-up steps in a way that the patient can easily understand.\n"
         )
         
         instruction = (
-            "Review the patient’s visit notes and highlight the main reason for the visit, the essential parts of the treatment plan, "
+            "Review the patient’s visit notes and highlight the main reason for the visit, the diagnoses, "
+            "the essential parts of the treatment plan including medications prescribed, "
+            "the pharmacy pick-up address, any open care gaps, "
             "and any instructions for follow-up. When noting follow-up dates, convert them into the MM/DD/YYYY format for clarity. "
             "Make sure the language is simple and patient-friendly, avoiding medical jargon.\n"
         )
         
         context = (
-            "The goal is to give the patient a clear summary in English that helps them remember why they visited, what care plan was decided, "
-            "and any next steps they should take. Only use information in the provided visit notes, and avoid any assumptions.\n"
+            "The goal is to give the patient a clear summary in English that helps them remember why they visited, what the diagnosis is, "
+            "what care plan was decided including medications and pharmacy information, any open care gaps, and any next steps they should take. "
+            "Only use information in the provided visit notes, and avoid any assumptions.\n"
         )
 
         # User prompt components (for generating the summary in English)
         data_format = (
             "Please create a patient-friendly summary with these sections:\n"
             "- **Reason for Visit**: Briefly explain why the patient came in.\n"
-            "- **Care Plan**: List the main points of the treatment plan.\n"
+            "- **Diagnosis**: State the diagnoses in simple, patient-friendly language.\n"
+            "- **Treatment Plan**: List the main points of the treatment plan.\n"
+            "- **Medications Prescribed**: List each medication prescribed separately.\n"
+            "- **Pharmacy Pick Up Address**: Provide the address of the pharmacy where the patient can pick up their medications.\n"
+            "- **Open Care Gaps**: Mention any open care gaps that the patient should be aware of.\n"
             "- **Next Steps**: Include follow-up dates and any upcoming appointments in MM/DD/YYYY format. If no follow-up is needed, state 'No follow-up needed.'\n"
         )
         
