@@ -52,10 +52,7 @@ form.addEventListener('submit', function(event) {
     // Simulate form submission for demo (remove this in production)
     setTimeout(() => {
         form.submit(); // Actually submit the form after the delay
-        document.getElementById("generated-output-panel").scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        })
+
     }, 100);  // Submit the form after a short delay (500ms)
 });
 
@@ -77,6 +74,10 @@ function resetResponsePanels() {
 // Add this to the form's onsubmit event
 form.onsubmit = function() {
     resetResponsePanels(); // Clear the lower panels when submit is clicked
+    document.getElementById("generated-output-panel").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    })
 };
 
 
