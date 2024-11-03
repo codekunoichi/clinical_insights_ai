@@ -88,6 +88,12 @@ function scrollToGeneration() {
 // Add this to the form's onsubmit event
 form.onsubmit = function() {
     resetResponsePanels(); // Clear the lower panels when submit is clicked
+    // Show the spinner and rotating text
+    spinnerContainer.style.display = 'flex';
+    spinner.style.display = 'block';  // Ensure spinner itself is visible
+
+    // Start rotating the messages
+    messageInterval = setInterval(rotateMessages, 1000);
 };
 
 
