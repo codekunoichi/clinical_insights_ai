@@ -52,12 +52,11 @@ form.addEventListener('submit', function(event) {
     // Simulate form submission for demo (remove this in production)
     setTimeout(() => {
         form.submit(); // Actually submit the form after the delay
+        document.getElementById("generated-output-panel").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        })
     }, 100);  // Submit the form after a short delay (500ms)
-
-    document.getElementById("generated-output-panel").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    })
 });
 
 // When the page is reloaded after the response is received, hide the spinner container
