@@ -53,15 +53,16 @@ form.addEventListener('submit', function(event) {
     setTimeout(() => {
         form.submit(); // Actually submit the form after the delay
     }, 100);  // Submit the form after a short delay (500ms)
+
+    document.getElementById("generated-output-panel").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    })
 });
 
 // When the page is reloaded after the response is received, hide the spinner container
 window.addEventListener('load', function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
-    document.getElementById("generated-output-panel").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    })
 });
 
 function resetForm() {
