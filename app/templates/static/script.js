@@ -57,8 +57,9 @@ form.addEventListener('submit', function(event) {
 });
 
 // When the page is reloaded after the response is received, hide the spinner container
-window.addEventListener('load', function() {
+window.addEventListener('load', onsubmit, function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
+    scrollToGeneration();
 });
 
 function resetForm() {
@@ -71,13 +72,16 @@ function resetResponsePanels() {
     document.getElementById('generated-output-panel').innerHTML = '<p>Generated output will appear here after submission.</p>';
 }
 
-// Add this to the form's onsubmit event
-form.onsubmit = function() {
-    resetResponsePanels(); // Clear the lower panels when submit is clicked
-    document.getElementById("generated-output-panel").scrollIntoView({
+function scrollToGeneration() {
+    document.getElementById("generated-output-panel").scrollIntoView({ 
         behavior: "smooth",
         block: "start"
     })
+}
+
+// Add this to the form's onsubmit event
+form.onsubmit = function() {
+    resetResponsePanels(); // Clear the lower panels when submit is clicked
 };
 
 
