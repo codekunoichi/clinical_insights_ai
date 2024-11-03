@@ -61,8 +61,10 @@ window.addEventListener('load', function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
 });
 
-window.addEventListener('load', (spinnerContainer.style.display = "none"), function() {
-    scrollToGeneration();
+window.addEventListener('load', function() {
+    if ((spinnerContainer.style.display = "none")) {
+        scrollToGeneration();
+    }
 });
 
 function resetForm() {
