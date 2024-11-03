@@ -38,7 +38,7 @@ class OpenAIModel(AIModel):
             {"role": "user", "content": user_prompt}
         ]
 
-        # Use the gpt-3.5-turbo model for chat-based completion
+        # Use the fine tuned followup-assistant-5a model for chat-based completion
         response = client.chat.completions.create(
             model="ft:gpt-4o-mini-2024-07-18:mdland-international:followup-assitance-5a:APTjpmCz",
             messages=messages,
