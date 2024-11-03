@@ -57,8 +57,11 @@ form.addEventListener('submit', function(event) {
 });
 
 // When the page is reloaded after the response is received, hide the spinner container
-window.addEventListener('load', onsubmit, function() {
+window.addEventListener('load', function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
+});
+
+window.addEventListener('load', (spinnerContainer.style.display = "none"), function() {
     scrollToGeneration();
 });
 
@@ -68,6 +71,7 @@ function resetForm() {
 
 function resetResponsePanels() {
     // Clear the content of the Visit Note and Generated Output panels
+    spinnerContainer.style.display = 'none'; // Hide spinner on page load
     document.getElementById('visit-note-panel').innerHTML = '<p>No visit note entered yet.</p>';
     document.getElementById('generated-output-panel').innerHTML = '<p>Generated output will appear here after submission.</p>';
 }
