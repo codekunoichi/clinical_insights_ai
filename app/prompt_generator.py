@@ -409,7 +409,7 @@ class VisitSummaryPrompterEnglish(AbstractPromptGenerator):
         # System prompt components (for model behavior and boundaries)
         persona = (
             "You are an expert medical assistant specializing in generating patient visit summaries in English, tailored for patients. "
-            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit, the diagnosis, "
+            "Your task is to provide a clear, easy-to-understand summary that explains the main reason for the visit (without mentioning the patient's name), the diagnosis, "
             "the care plan including medications prescribed, the pharmacy pick-up address, "
             "any open care gaps, and any necessary follow-up steps in a way that the patient can easily understand.\n"
         )
@@ -418,8 +418,10 @@ class VisitSummaryPrompterEnglish(AbstractPromptGenerator):
             "Review the patient’s visit notes and highlight the main reason for the visit, the diagnoses, "
             "the essential parts of the treatment plan including medications prescribed, "
             "the pharmacy pick-up address, any open care gaps, "
-            "and any instructions for follow-up. When noting follow-up dates, convert them into the MM/DD/YYYY format for clarity. "
-            "Make sure the language is simple and patient-friendly, avoiding medical jargon.\n"
+            "and any instructions for follow-up. When noting follow-up dates, use the format dd/mm/yyyy. "
+            "If a timeline is provided (e.g., 'in two weeks'), calculate the specific due date using the date of the visit and convert it into dd/mm/yyyy format for clarity. "
+            "Make sure the language is simple and patient-friendly, avoiding medical jargon. "
+            "Do not include the patient's name in any part of the summary, especially in the Reason for Visit.\n"
         )
         
         context = (
@@ -427,34 +429,35 @@ class VisitSummaryPrompterEnglish(AbstractPromptGenerator):
             "what care plan was decided including medications and pharmacy information, any open care gaps, and any next steps they should take. "
             "Only use information in the provided visit notes, and avoid any assumptions.\n"
         )
-
+    
         # User prompt components (for generating the summary in English)
         data_format = (
             "Please create a patient-friendly summary with these sections:\n"
-            "- **Reason for Visit**: Briefly explain why the patient came in.\n"
+            "- **Reason for Visit**: Briefly explain why you came in, without mentioning your name.\n"
             "- **Diagnosis**: State the diagnoses in simple, patient-friendly language.\n"
             "- **Treatment Plan**: List the main points of the treatment plan.\n"
             "- **Medications Prescribed**: List each medication prescribed separately.\n"
-            "- **Pharmacy Pick Up Address**: Provide the address of the pharmacy where the patient can pick up their medications.\n"
-            "- **Open Care Gaps**: Mention any open care gaps that the patient should be aware of.\n"
-            "- **Next Steps**: Include follow-up dates and any upcoming appointments in MM/DD/YYYY format. If no follow-up is needed, state 'No follow-up needed.'\n"
+            "- **Pharmacy Pick Up Address**: Provide the address of the pharmacy where you can pick up your medications.\n"
+            "- **Open Care Gaps**: Mention any open care gaps that you should be aware of.\n"
+            "- **Next Steps**: Include follow-up dates and any upcoming appointments in dd/mm/yyyy format. "
+            "If a timeline is mentioned, calculate the specific date using the visit date. If no follow-up is needed, state 'No follow-up needed.'\n"
         )
         
         follow_up = (
-            "Do not add any new information. Keep the summary based strictly on the provided notes, ensuring that it’s easy to understand for the patient.\n"
+            "Do not add any new information. Keep the summary based strictly on the provided notes, ensuring that it's easy to understand and does not include your name.\n"
         )
         
         audience = (
-            "This summary is for patients, to help them remember the key points from their visit in simple English."
+            "This summary is for you, to help you remember the key points from your visit in simple English."
         )
         
         tone = "The tone should be friendly, clear, and supportive.\n"
         data = f"Patient visit notes to summarize: {note}"
-
+    
         # Combine prompts
         user_prompt = data_format + follow_up + audience + tone + data
         system_prompt = persona + instruction + context
-
+    
         return system_prompt, user_prompt
     
 
