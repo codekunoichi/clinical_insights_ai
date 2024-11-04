@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Visit Summary</title>
+    <!-- Link to existing CSS file -->
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        /* Print-specific styles */
+        @media print {
+            body {
+                background-color: #fff;
+                font-size: 12pt;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                margin: 0 auto;
+                max-width: 700px;
+            }
+            h1, h2 {
+                color: #000;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Post-Visit Summary</h1>
+        
+        <div class="section">
+            <h2>Reason for Visit</h2>
+            <p>The patient presented with complaints of persistent fatigue, shortness of breath, and occasional chest pain, which have worsened over the past month. The patient also reported difficulty managing blood sugar levels.</p>
+        </div>
+        
+        <div class="section">
+            <h2>Treatment Plan</h2>
+            <p>The following treatment plan was discussed:</p>
+            <ul>
+                <li>Continue with current medications for diabetes management.</li>
+                <li>Introduce a daily exercise regimen focused on low-impact activities, aiming for 30 minutes per day.</li>
+                <li>Implement a low-sodium diet to help control blood pressure.</li>
+                <li>Scheduled follow-up for lab tests to monitor progress.</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Medications Prescribed</h2>
+            <ul>
+                <li>Metformin 500mg - Take one tablet twice daily with meals.</li>
+                <li>Lisinopril 10mg - Take one tablet once daily in the morning.</li>
+                <li>Atorvastatin 20mg - Take one tablet at bedtime.</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Pick Pharmacy Address</h2>
+            <p>Pharmacy Name: Green Valley Pharmacy</p>
+            <p>Address: 123 Main Street, Springfield, ST 12345</p>
+            <p>Phone: (123) 456-7890</p>
+        </div>
+        
+        <div class="section">
+            <h2>Follow-Up with Due Dates</h2>
+            <ul>
+                <li>Blood pressure check-up - Due on: 03/15/2024</li>
+                <li>Blood glucose test - Due on: 03/20/2024</li>
+                <li>Follow-up consultation with primary care physician - Due on: 04/05/2024</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Open Care Gaps Pending</h2>
+            <ul>
+                <li>Annual eye exam - Recommended to assess diabetic retinopathy.</li>
+                <li>Colonoscopy screening - Recommended based on age and medical history.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
