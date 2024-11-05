@@ -16,7 +16,6 @@ function setSelectedModel() {
 // Function to rotate messages
 function rotateMessages() {
     const spinnerText = document.getElementById('spinner-text');
-    
     // Update messages array after setting the selected model
     const messages = [
         `Talking to the ${selectedModel} models...`,
@@ -32,6 +31,7 @@ function rotateMessages() {
 function showSpinner() {
     setSelectedModel();  // Capture the selected model
     rotateMessages();    // Start rotating messages with updated model
+    messageInterval = setInterval(rotateMessages, 1000);
     setInterval(rotateMessages, 1000);  // Rotate every 1 seconds
 }
 
@@ -59,12 +59,15 @@ form.addEventListener('submit', function(event) {
 // When the page is reloaded after the response is received, hide the spinner container
 window.addEventListener('load', function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
+    messageInterval = setInterval(rotateMessages, 1000);
+
 });
 
 window.addEventListener('load', function() {
     if ((spinnerContainer.style.display = "none")) {
         scrollToGeneration();
     }
+    messageInterval = setInterval(rotateMessages, 1000);
 });
 
 function resetForm() {
@@ -94,6 +97,7 @@ form.onsubmit = function() {
 
     // Start rotating the messages
     messageInterval = setInterval(rotateMessages, 1000);
+    rotateMessages();  
 };
 
 
