@@ -31,10 +31,11 @@ function rotateMessages() {
 // Call this function when form is submitted or spinner is shown
 function showSpinner() {
     setSelectedModel();  // Capture the selected model
-    rotMessages();
+    startRotMessages();
 }
 
-function rotMessages() {
+function startRotMessages() {
+    clearInterval(messageInterval);
     messageInterval = setInterval(rotateMessages, 1000);
 }
 
