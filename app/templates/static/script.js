@@ -30,10 +30,11 @@ function rotateMessages() {
 function showSpinner() {
     setSelectedModel();  // Capture the selected model
     rotateMessages();    // Start rotating messages with updated model
-    messageInterval = setInterval(rotateMessages, 1000);
-    setInterval(rotateMessages, 1000);  // Rotate every 1 seconds
 }
 
+function rotMessages() {
+    setInterval(rotateMessages, 1000);
+}
 // Set an interval to change the message every 2 seconds
 let messageInterval;
 
@@ -91,7 +92,6 @@ form.onsubmit = function() {
     spinner.style.display = 'block';  // Ensure spinner itself is visible
 
     // Start rotating the messages
-    messageInterval = setInterval(rotateMessages, 1000);
 
 };
 
