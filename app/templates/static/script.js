@@ -29,7 +29,7 @@ function rotateMessages() {
 // Call this function when form is submitted or spinner is shown
 function showSpinner() {
     setSelectedModel();  // Capture the selected model
-    rotateMessages();    // Start rotating messages with updated model
+    rotMessages();
 }
 
 function rotMessages() {
