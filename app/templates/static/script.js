@@ -5,6 +5,8 @@ const spinnerText = document.getElementById('spinner-text');
 
 let messageIndex = 0;
 let selectedModel = 'OpenAI'; // Default model
+// Set an interval to change the message every 2 seconds
+let messageInterval;
 
 // Function to set selected AI model based on radio button
 function setSelectedModel() {
@@ -33,10 +35,8 @@ function showSpinner() {
 }
 
 function rotMessages() {
-    setInterval(rotateMessages, 1000);
+    messageInterval = setInterval(rotateMessages, 1000);
 }
-// Set an interval to change the message every 2 seconds
-let messageInterval;
 
 form.addEventListener('submit', function(event) {
     // Prevent the default form submission behavior
