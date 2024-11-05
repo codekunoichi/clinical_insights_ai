@@ -123,6 +123,14 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
+@app.get("/visit_summary", response_class=HTMLResponse)
+async def get_form(request: Request):
+    return templates.TemplateResponse("visit_summary.html", {"request": request})
+
+@app.get("/chinese_summary", response_class=HTMLResponse)
+async def get_form(request: Request):
+    return templates.TemplateResponse("chinese_summary.html", {"request": request})
+
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
