@@ -22,7 +22,6 @@ function rotateMessages() {
         "Thinking...",
         "Generating content..."
     ];
-
     messageIndex = (messageIndex + 1) % messages.length;
     spinnerText.innerHTML = messages[messageIndex];
 }
@@ -47,8 +46,7 @@ form.addEventListener('submit', function(event) {
     spinner.style.display = 'block';  // Ensure spinner itself is visible
 
     // Start rotating the messages
-    rotateMessages();
-
+    messageInterval = setInterval(rotateMessages, 1000);
     // Simulate form submission for demo (remove this in production)
     setTimeout(() => {
         form.submit(); // Actually submit the form after the delay
@@ -59,7 +57,6 @@ form.addEventListener('submit', function(event) {
 // When the page is reloaded after the response is received, hide the spinner container
 window.addEventListener('load', function() {
     spinnerContainer.style.display = 'none'; // Hide spinner on page load
-    messageInterval = setInterval(rotateMessages, 1000);
 
 });
 
@@ -67,7 +64,6 @@ window.addEventListener('load', function() {
     if ((spinnerContainer.style.display = "none")) {
         scrollToGeneration();
     }
-    messageInterval = setInterval(rotateMessages, 1000);
 });
 
 function resetForm() {
@@ -96,8 +92,6 @@ form.onsubmit = function() {
     spinner.style.display = 'block';  // Ensure spinner itself is visible
 
     // Start rotating the messages
-    messageInterval = setInterval(rotateMessages, 1000);
-    rotateMessages();  
 };
 
 
