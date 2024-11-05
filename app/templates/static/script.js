@@ -46,7 +46,6 @@ form.addEventListener('submit', function(event) {
     spinner.style.display = 'block';  // Ensure spinner itself is visible
 
     // Start rotating the messages
-    messageInterval = setInterval(rotateMessages, 1000);
     // Simulate form submission for demo (remove this in production)
     setTimeout(() => {
         form.submit(); // Actually submit the form after the delay
@@ -92,6 +91,8 @@ form.onsubmit = function() {
     spinner.style.display = 'block';  // Ensure spinner itself is visible
 
     // Start rotating the messages
+    messageInterval = setInterval(rotateMessages, 1000);
+
 };
 
 
