@@ -18,6 +18,7 @@ from starlette.status import HTTP_401_UNAUTHORIZED
 import secrets
 from dotenv import load_dotenv
 from pathlib import Path
+from app.openai_model import OpenAIModel
 
 app = FastAPI()
 templates = Jinja2Templates(directory="app/templates")
@@ -127,6 +128,10 @@ async def get_form(request: Request):
 async def get_form(request: Request):
     return templates.TemplateResponse("visit_summary.html", {"request": request})
 
+@app.get("/followup_asst", response_class=HTMLResponse)
+async def get_form(request: Request):
+    return templates.TemplateResponse("post_visit_summary.html", {"request": request})
+
 @app.get("/chinese_summary", response_class=HTMLResponse)
 async def get_form(request: Request):
     return templates.TemplateResponse("chinese_summary.html", {"request": request})
@@ -134,6 +139,18 @@ async def get_form(request: Request):
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
+
+@app.post("/process_followup", response_class=HTMLResponse)
+async def process_followup(
+    request: Request,
+    visit_note: str = Form(...),
+    model_type: str = Form(...)
+):
+    print(f"Request received for note:\n\n{visit_note}")
+    openai_client = OpenAIModel(None)
+    response = openai_client.get_followup(visit_note)
+    result = response.choices[0].message.content
+    return templates.TemplateResponse("/post_visit_summary.html", {"request": request, "model_type": model_type, "visit_note": visit_note, "result": result})
 
 
 @app.post("/process", response_class=HTMLResponse)
