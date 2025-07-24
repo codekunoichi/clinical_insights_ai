@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Decision Support</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .medication-section {
+            margin-bottom: 20px;
+        }
+        .medication-section h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .alert-critical {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .alert-high {
+            background-color: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .alert-medium {
+            background-color: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .clinical-output {
+            line-height: 1.6;
+        }
+        .clinical-output h3 {
+            color: #1976d2;
+            border-bottom: 2px solid #e3f2fd;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clinical Decision Support System</h1>
+
+    <!-- Form Section (Top part) -->
+    <div class="form-container">
+        <div class="form-box">
+            <h2>Clinical Analysis Input</h2>
+            <form id="clinicalForm" method="post" action="/clinical_decision_support">
+                <!-- Dropdown to select a clinical scenario -->
+                <h3>Choose a clinical scenario:</h3>
+                <select id="clinical_scenario_select" onchange="fillClinicalScenario()">
+                    <option value="">-- Select a clinical scenario --</option>
+                    <option value="diabetes_hypertension">Diabetes + Hypertension Patient</option>
+                    <option value="cardiac_medication">Cardiac Patient with Multiple Medications</option>
+                    <option value="elderly_polypharmacy">Elderly Patient - Polypharmacy Concerns</option>
+                    <option value="anticoagulation">Patient on Anticoagulation Therapy</option>
+                    <option value="chronic_kidney_disease">Chronic Kidney Disease Patient</option>
+                </select>
+                <br><br>
+
+                <!-- Visit Note Textarea -->
+                <div class="medication-section">
+                    <h3>Patient Visit Notes</h3>
+                    <textarea id="visit_note" name="visit_note" placeholder="Enter patient visit notes including symptoms, examination findings, lab results...">{{ visit_note or '' }}</textarea>
+                </div>
+
+                <!-- Current Medications Textarea -->
+                <div class="medication-section">
+                    <h3>Current Medications List</h3>
+                    <textarea id="current_medications" name="current_medications" placeholder="Enter current medications with dosages, frequencies, and start dates...">{{ current_medications or '' }}</textarea>
+                </div>
+
+                <!-- AI Model Selection -->
+                <h3>AI Model to Choose:</h3>
+                <div id="model_type" class="radio-group">
+                    <input type="radio" id="openai" name="model_type" value="openai" {% if model_type == "openai" %}checked{% endif %}>
+                    <label for="openai">OpenAI GPT</label><br>
+                
+                    <input type="radio" id="anthropic" name="model_type" value="anthropic" {% if model_type == "anthropic" %}checked{% endif %}>
+                    <label for="anthropic">Anthropic Claude</label><br>
+                </div>
+
+                <button type="submit" onclick="showSpinner()">Analyze Clinical Data</button>
+                <button type="button" class="reset-button" onclick="resetClinicalForm()">Reset Form</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Spinner Container (Initially Hidden) -->
+    <div id="spinner-container" class="spinner-container">
+        <div id="spinner" class="spinner"></div>
+        <div id="spinner-text" class="spinner-text">Analyzing clinical data...</div>
+    </div>
+
+    <!-- Split section (Bottom part) -->
+    <div class="split-container">
+        <!-- Left Side: Input Data -->
+        <div id="clinical-input-panel" class="box output-box">
+            <h2>Clinical Input Data</h2>
+            {% if visit_note %}
+                <h3>Visit Notes:</h3>
+                <pre>{{ visit_note }}</pre>
+            {% else %}
+                <p>No visit notes entered yet.</p>
+            {% endif %}
+            
+            {% if current_medications %}
+                <h3>Current Medications:</h3>
+                <pre>{{ current_medications }}</pre>
+            {% endif %}
+        </div>
+
+        <!-- Right Side: Clinical Decision Support Output -->
+        <div id="clinical-output-panel" class="box output-box clinical-output">
+            <h2>Clinical Decision Support Analysis
+                {% if model_type %} <span style="font-size: 0.8em;">using {{ model_type|title }}</span>{% endif %}
+            </h2>
+            {% if result %}
+                <div>{{ result | safe }}</div>
+            {% else %}
+                <p>Clinical analysis will appear here after submission.</p>
+                <div class="alert-medium">
+                    <strong>What this system analyzes:</strong>
+                    <ul>
+                        <li>🚨 Critical safety alerts and contraindications</li>
+                        <li>⚠️ Drug-drug interactions and their significance</li>
+                        <li>📋 Missing screenings and monitoring requirements</li>
+                        <li>💊 Medication optimization opportunities</li>
+                        <li>📊 Patient risk stratification</li>
+                        <li>📚 Evidence-based guideline adherence</li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function fillClinicalScenario() {
+            const select = document.getElementById('clinical_scenario_select');
+            const visitNoteField = document.getElementById('visit_note');
+            const medicationsField = document.getElementById('current_medications');
+            
+            const scenarios = {
+                'diabetes_hypertension': {
+                    visitNote: `Patient: 58-year-old male with Type 2 diabetes and hypertension
+Presenting symptoms: Fatigue, increased thirst, frequent urination
+Vital signs: BP 165/95, HR 88, BMI 32.1
+Recent HbA1c: 9.2% (target <7%)
+eGFR: 65 mL/min/1.73m² (mild kidney impairment)
+Examination: No acute distress, mild peripheral edema
+Assessment: Poorly controlled diabetes, uncontrolled hypertension
+Plan: Medication adjustment needed, lifestyle counseling`,
+                    medications: `1. Metformin 1000mg twice daily (started 2 years ago)
+2. Lisinopril 10mg once daily (started 1 year ago)
+3. Amlodipine 5mg once daily (started 6 months ago)
+4. Atorvastatin 20mg once daily (started 1 year ago)
+5. Aspirin 81mg once daily (started 1 year ago)`
+                },
+                'cardiac_medication': {
+                    visitNote: `Patient: 72-year-old female with atrial fibrillation and heart failure
+Presenting for routine follow-up
+Vital signs: BP 110/70, HR 78 (irregular), O2 sat 96%
+Recent echo: EF 35%, mild mitral regurgitation
+INR: 2.8 (target 2.0-3.0)
+BNP: 450 pg/mL (elevated)
+Examination: Clear lungs, trace ankle edema
+Assessment: Stable heart failure, well-controlled AF`,
+                    medications: `1. Warfarin 5mg daily (INR monitoring)
+2. Metoprolol succinate 50mg twice daily
+3. Lisinopril 20mg once daily
+4. Furosemide 40mg once daily
+5. Spironolactone 25mg once daily
+6. Digoxin 0.125mg once daily`
+                },
+                'elderly_polypharmacy': {
+                    visitNote: `Patient: 85-year-old female with multiple comorbidities
+Chief complaint: Dizziness and falls (2 in past month)
+Medical history: HTN, DM, depression, osteoarthritis, insomnia
+Vital signs: BP 95/60 (orthostatic drop), HR 58
+Recent labs: Creatinine 1.4, eGFR 42
+Mental status: Alert but reports confusion at times
+Assessment: Polypharmacy concerns, possible medication-related falls`,
+                    medications: `1. Amlodipine 10mg daily
+2. Hydrochlorothiazide 25mg daily
+3. Glipizide 10mg twice daily
+4. Sertraline 100mg daily
+5. Tramadol 50mg four times daily PRN
+6. Zolpidem 10mg at bedtime
+7. Omeprazole 40mg daily
+8. Calcium carbonate 1200mg twice daily`
+                },
+                'anticoagulation': {
+                    visitNote: `Patient: 65-year-old male on anticoagulation for atrial fibrillation
+Presenting with minor laceration requiring sutures
+Vital signs stable, no active bleeding
+CHA2DS2-VASc score: 4 (high stroke risk)
+HAS-BLED score: 2 (moderate bleeding risk)
+Last INR: 3.5 (slightly elevated)
+Assessment: Need to balance bleeding vs thrombotic risk`,
+                    medications: `1. Warfarin 7.5mg daily (target INR 2.0-3.0)
+2. Diltiazem 120mg daily
+3. Rosuvastatin 20mg daily
+4. Pantoprazole 40mg daily
+5. Fish oil 1000mg daily
+6. Multivitamin daily`
+                },
+                'chronic_kidney_disease': {
+                    visitNote: `Patient: 68-year-old male with CKD stage 3b and diabetes
+Follow-up for kidney function monitoring
+eGFR: 38 mL/min/1.73m² (declined from 45 last year)
+Creatinine: 1.8 mg/dL
+Proteinuria: 150mg/dL
+HbA1c: 7.8%
+BP: 145/88 (target <130/80 in CKD)
+Assessment: Progressive CKD, suboptimal diabetes control`,
+                    medications: `1. Metformin 500mg twice daily
+2. Lisinopril 20mg daily
+3. Amlodipine 10mg daily
+4. Atorvastatin 40mg daily
+5. Furosemide 20mg daily
+6. Calcium acetate 667mg with meals
+7. Calcitriol 0.25mcg daily`
+                }
+            };
+            
+            if (scenarios[select.value]) {
+                visitNoteField.value = scenarios[select.value].visitNote;
+                medicationsField.value = scenarios[select.value].medications;
+            }
+        }
+
+        function showSpinner() {
+            document.getElementById('spinner-container').style.display = 'flex';
+        }
+
+        function resetClinicalForm() {
+            document.getElementById('clinicalForm').reset();
+            document.getElementById('clinical_scenario_select').value = '';
+        }
+    </script>
+</body>
+</html>

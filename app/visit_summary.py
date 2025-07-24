@@ -57,6 +57,10 @@ class VisitSummary:
     @staticmethod
     def get_post_visit_summary_with_pharmacy():
         return SAMPLE_POST_VISIT_SUMMARY_WITH_PHARMACY
+    
+    @staticmethod
+    def get_clinical_decision_support_sample():
+        return clinical_decision_support_sample
 
 visit_4 = """Pre-operation evaluation for cataract surgery, left side. Patient planning for cataract surgery and denying difficult breathing, denying chest pain, denying nausea, vomiting, denying breathing. Next paragraph. Patient was evaluated by cardiology. According to cardiology report, on July 22, patient had CAD. CAD concern had stress positive on 2022. Last CAT showed LAD mild. Patient on aspirin. Patient denied any chest pain but had exertion shortness of breath. Next paragraph. Patient also had severe apnea, snoring, denying any severe. Next paragraph. Pre-diabetic hemoglobin A1c 6.4, non-compliant with the IR. Next paragraph. Next paragraph. COPD. Patient will have COPD. Was on inhaler and followed up by pulmonary. Recent CT scan was told unremarkable. CT scan on March 2023 shows emphysema in aorta, ascending aorta. Next paragraph. ECTASIS 3.9 cm. CT scan on the left upper lobe 1.6 cm was told stable by pulmonary. Assessment pre-operation evaluation, medical stable for cataract. This gastric patient continued on aspirin and Serato unless contraindicated by ophthalmology. Next paragraph. Emphysema. This gastric patient continued on the inhaler including Comvavent, COMVI, ENT inhaler stable. CT scan showed emphysema. Next paragraph. CAD with angina. Patient continued on Lipitor 20 mg and aspirin stable. Next paragraph. Patient had psoriasis. Psoriasis was followed by rheumatology. Continued on MTX 2.53 tablet and also another medication OTE ZLA 30 mg. Patient continued followed by rheumatology."""
 
@@ -504,4 +508,37 @@ Provider Signature
 
 Dr. Jane Smith, MD
 National Provider Identifier (NPI): 1234567890
+"""
+
+# Clinical Decision Support Sample Data
+clinical_decision_support_sample = """
+Patient: 68-year-old male with diabetes, hypertension, and chronic kidney disease
+Chief Complaint: Follow-up for medication management and blood pressure control
+Vital Signs: BP 165/95, HR 78, Weight 185 lbs, BMI 29.2
+Recent Labs: 
+- eGFR: 35 mL/min/1.73m² (Stage 3b CKD)
+- Creatinine: 2.1 mg/dL (elevated from 1.8 last visit)
+- HbA1c: 8.9% (poor control)
+- Potassium: 5.2 mEq/L (slightly elevated)
+- INR: 2.8 (on warfarin)
+
+Physical Exam:
+- Alert and oriented, no acute distress
+- Cardiovascular: Regular rhythm, 2/6 systolic murmur
+- Pulmonary: Clear bilaterally
+- Extremities: 2+ pitting edema bilateral lower extremities
+- Skin: No rashes or lesions
+
+Assessment:
+1. Uncontrolled diabetes mellitus type 2
+2. Hypertensive crisis (BP >160/100)
+3. Chronic kidney disease stage 3b with progression
+4. Fluid retention with bilateral edema
+5. Atrial fibrillation on anticoagulation
+
+Plan:
+- Increase diabetes medication dosing
+- Adjust antihypertensive regimen
+- Monitor kidney function closely
+- Consider cardiology referral for heart failure evaluation
 """

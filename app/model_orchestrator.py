@@ -1,7 +1,7 @@
 from app.openai_model import OpenAIModel
 from app.anthropic_model import AnthropicModel
 from app.visit_summary import VisitSummary
-from app.prompt_generator import CPTCodePrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter, PreVisitPlanningPrompter, VisitSummaryPrompterSpanish, VisitSummaryPrompterMandarin, VisitSummaryPrompterEnglish, VisitSummaryPrompterKorean, VisitSummaryPrompterArabic, VisitSummaryPrompterBengali, PreVisitPlanningPrompter_Alternate
+from app.prompt_generator import CPTCodePrompter, SummarizeChartPrompter, DiagnosisCodePrompter, LabResultEmailer, MedicationAdherencePrompter, FollowUpPrompter, HCCPrompter, SDOHPrompter, PreVisitPlanningPrompter, VisitSummaryPrompterSpanish, VisitSummaryPrompterMandarin, VisitSummaryPrompterEnglish, VisitSummaryPrompterKorean, VisitSummaryPrompterArabic, VisitSummaryPrompterBengali, PreVisitPlanningPrompter_Alternate, ClinicalDecisionSupportPrompter
 class ModelOrchestrator:
     def __init__(self, model_type: str, prompter_type: str):
         print(f"************* Summarization for {model_type} for the persona {prompter_type}")
@@ -37,6 +37,8 @@ class ModelOrchestrator:
             self.prompter = VisitSummaryPrompterArabic()
         elif prompter_type == 'bengali_summary':
             self.prompter = VisitSummaryPrompterBengali()
+        elif prompter_type == 'clinical_decision_support':
+            self.prompter = ClinicalDecisionSupportPrompter()
         else:
             raise ValueError(f"{prompter_type} - Invalid prompter type provided.")
 

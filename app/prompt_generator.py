@@ -745,3 +745,71 @@ class PreVisitPlanningPrompter_Alternate(AbstractPromptGenerator):
         system_prompt = persona + instruction + context
 
         return system_prompt, user_prompt
+
+
+class ClinicalDecisionSupportPrompter(AbstractPromptGenerator):
+    def generate_prompt(self, note: str, additional_data: str = None) -> tuple:
+        # System prompt components (for model behavior and boundaries)
+        persona = (
+            "You are an expert clinical decision support specialist with deep knowledge of pharmacology, clinical guidelines, "
+            "and evidence-based medicine. Your role is to analyze patient visit notes and current medications to identify "
+            "potential clinical risks, drug interactions, contraindications, and care gaps that require immediate attention.\n"
+        )
+
+        instruction = (
+            "Review the patient's visit notes and current medication list to identify:\n"
+            "1. Potential drug-drug interactions and their clinical significance\n"
+            "2. Contraindications based on patient conditions and medications\n"
+            "3. Missing screenings or monitoring based on current medications and diagnoses\n"
+            "4. Dosage concerns or medication adjustments needed\n"
+            "5. Evidence-based treatment recommendations aligned with clinical guidelines\n"
+            "6. Risk stratification for adverse events or complications\n"
+            "Only provide recommendations supported by established clinical evidence.\n"
+        )
+
+        context = (
+            "This clinical decision support is designed to enhance patient safety by providing real-time alerts "
+            "and evidence-based recommendations to healthcare providers. Focus on actionable insights that can "
+            "prevent medical errors, improve treatment outcomes, and ensure guideline adherence. Prioritize "
+            "high-risk situations that require immediate clinical attention.\n"
+        )
+
+        # User prompt components (for generating clinical decision support)
+        data_format = (
+            "Generate a clinical decision support report with these priority sections:\n"
+            "- **🚨 CRITICAL ALERTS**: High-priority safety concerns requiring immediate attention\n"
+            "- **⚠️ DRUG INTERACTIONS**: Significant drug-drug interactions with clinical recommendations\n"
+            "- **📋 CARE GAPS**: Missing screenings, monitoring, or preventive care based on current conditions\n"
+            "- **💊 MEDICATION REVIEW**: Dosage concerns, therapeutic alternatives, or optimization opportunities\n"
+            "- **📊 RISK ASSESSMENT**: Patient risk stratification for complications or adverse events\n"
+            "- **📚 GUIDELINE ADHERENCE**: Alignment with evidence-based clinical guidelines\n"
+            "- **✅ RECOMMENDATIONS**: Specific, actionable clinical recommendations\n\n"
+            "For each finding, include:\n"
+            "- Severity level (Critical/High/Medium/Low)\n"
+            "- Clinical rationale with evidence basis\n"
+            "- Specific action recommended\n"
+            "If no significant issues are found in a category, state 'No significant concerns identified.'\n"
+        )
+
+        follow_up = (
+            "Base all recommendations strictly on the provided clinical information. Do not add assumptions "
+            "about patient history or conditions not mentioned in the visit notes. Prioritize patient safety "
+            "and evidence-based care.\n"
+        )
+
+        audience = (
+            "This clinical decision support is intended for healthcare providers to enhance clinical decision-making, "
+            "improve patient safety, and ensure evidence-based care delivery during patient encounters.\n"
+        )
+
+        tone = "The tone should be professional, urgent when appropriate, and focused on actionable clinical guidance.\n"
+        
+        # Format the clinical data
+        medications_data = additional_data if additional_data else "No current medications provided."
+        data = f"Patient Visit Notes: {note}\n\nCurrent Medications: {medications_data}"
+
+        # Combine prompts
+        user_prompt = data_format + follow_up + audience + tone + data
+        system_prompt = persona + instruction + context
+
+        return system_prompt, user_prompt

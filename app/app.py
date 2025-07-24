@@ -136,6 +136,10 @@ async def get_form(request: Request):
 async def get_form(request: Request):
     return templates.TemplateResponse("chinese_summary.html", {"request": request})
 
+@app.get("/clinical_decision_support", response_class=HTMLResponse)
+async def get_clinical_decision_support(request: Request, credentials: HTTPBasicCredentials = Depends(authenticate)):
+    return templates.TemplateResponse("clinical_decision_support.html", {"request": request})
+
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
@@ -152,6 +156,30 @@ async def process_followup(
     result = response.choices[0].message.content
     return templates.TemplateResponse("/post_visit_summary.html", {"request": request, "model_type": model_type, "visit_note": visit_note, "result": result})
 
+
+@app.post("/clinical_decision_support", response_class=HTMLResponse)
+async def process_clinical_decision_support(
+    request: Request,
+    visit_note: str = Form(...),
+    current_medications: str = Form(...),
+    model_type: str = Form(...),
+    credentials: HTTPBasicCredentials = Depends(authenticate)
+):
+    # Initialize orchestrator for clinical decision support
+    orchestrator = ModelOrchestrator(model_type=model_type, prompter_type='clinical_decision_support')
+    print(f"Clinical decision support request received for note:\n\n{visit_note}")
+    print(f"Current medications:\n\n{current_medications}")
+    
+    visit_summary = VisitSummary([visit_note])
+    result = orchestrator.process_pretty_with_additional_data(visit_summary, current_medications)
+    
+    return templates.TemplateResponse("clinical_decision_support.html", {
+        "request": request, 
+        "model_type": model_type, 
+        "visit_note": visit_note, 
+        "current_medications": current_medications,
+        "result": result
+    })
 
 @app.post("/process", response_class=HTMLResponse)
 async def process_note(
