@@ -3,15 +3,18 @@
 
 # Clinical Insights AI
 
-This project provides AI-powered insights into patient visit notes, generating medical summaries, CPT and ICD codes, and lab result summaries, while also maintaining HIPAA-compliant patient communication.
+A comprehensive AI-powered healthcare automation platform that transforms patient visit notes into actionable clinical insights. The application supports medical billing & coding, clinical decision support, patient care coordination, and multilingual patient communication using both OpenAI and Anthropic AI models.
 
 ## Features
 
-- Summarize patient visit notes.
-- Generates appropriate CPT codes for medical billing.
-- Recommends ICD-10 diagnosis codes.
-- Creates patient-friendly emails summarizing lab results with trends.
-- Facilitates healthcare providers by delivering quick, concise insights into patient histories.
+- **Clinical Documentation & Summaries**: Generate professional chart summaries and patient visit notes
+- **Medical Billing & Coding**: Extract CPT codes, recommend ICD-10 diagnosis codes, HCC coding, and SDOH Z-codes
+- **Lab Result Communication**: Create patient-friendly emails summarizing lab results with trends
+- **Clinical Decision Support**: Analyze drug interactions, contraindications, and identify care gaps
+- **Patient Care Coordination**: Track follow-up appointments, medication adherence, and pre-visit planning
+- **Multilingual Patient Communication**: Generate patient visit summaries in English, Spanish, Mandarin, Korean, Arabic, and Bengali
+- **HIPAA-Compliant**: Secure basic authentication for all protected health information
+- **AI-Powered**: Supports both OpenAI and Anthropic models for flexible AI processing
 
 ---
 
@@ -44,24 +47,42 @@ Before running the application, you need to purchase token credits for OpenAI an
 - OpenAI Credits: Purchase token credits from OpenAI.
 - Anthropic Credits: Purchase token credits from Anthropic.
 
-After purchasing credits, set the following environment variables for your API keys:
+After purchasing credits, create a `.env` file in the project root with the following environment variables:
+```bash
+# AI API Keys
+OPENAI_API_KEY="your-openai-api-key"
+ANTHROPIC_API_KEY="your-anthropic-api-key"
+
+# Basic Authentication (for HIPAA compliance)
+BASIC_AUTH_USERNAME="your-username"
+BASIC_AUTH_PASSWORD="your-secure-password"
 ```
+
+Alternatively, you can export them directly:
+```bash
 export OPENAI_API_KEY="your-openai-api-key"
 export ANTHROPIC_API_KEY="your-anthropic-api-key"
+export BASIC_AUTH_USERNAME="your-username"
+export BASIC_AUTH_PASSWORD="your-secure-password"
 ```
 
 ### Required Libraries
 
-Ensure the following libraries are installed:
-- `fastapi`
-- `uvicorn`
-- `jinja2`
-- `openai`
-- `anthropic`
+The following libraries are required (see `requirements.txt`):
+- `fastapi==0.85.0` - Web framework
+- `uvicorn==0.19.0` - ASGI server
+- `jinja2==3.0.1` - Template engine
+- `openai==1.51.2` - OpenAI API client
+- `anthropic==0.36.1` - Anthropic API client
+- `python-dotenv` - Environment variable management
+- `python-multipart` - Form data parsing
+- `Flask==2.1.1` - Additional web framework components
+- `Werkzeug==2.0` - WSGI utilities
+- `gunicorn` - Production WSGI server
 
-Install them using:
+All dependencies are installed via:
 ```bash
-pip install fastapi uvicorn jinja2 openai anthropic
+pip install -r requirements.txt
 ```
 
 ### Running the FastAPI Server
@@ -73,25 +94,133 @@ uvicorn app.app:app --reload
 
 Access the app at `http://localhost:8000` in your browser.
 
+**Note**: The application uses HTTP Basic Authentication. You'll be prompted to enter the username and password you configured in your environment variables (`BASIC_AUTH_USERNAME` and `BASIC_AUTH_PASSWORD`).
+
+### Available Web Interfaces
+
+The application provides multiple web interfaces for different medical workflows:
+
+- **`/`** - Landing page with links to all available tools and API key status
+- **`/form`** - Main interface for billing, coding, summaries, and patient communication
+- **`/clinical_decision_support`** - Clinical decision support analysis (drug interactions, contraindications, care gaps)
+- **`/followup_asst`** - Post-visit follow-up appointment tracking
+- **`/visit_summary`** - Visit summary generation
+- **`/chinese_summary`** - Mandarin Chinese patient summary generation
+
+### API Endpoints
+
+- **POST `/process`** - Main processing endpoint for most prompter types
+- **POST `/clinical_decision_support`** - Clinical decision support with medication analysis
+- **POST `/process_followup`** - Follow-up appointment processing
+- **GET `/get_visit_note`** - Retrieves sample visit notes for testing
+
+---
+
+## Quick Start Guide
+
+1. **Set up environment** (see Setup section above)
+2. **Start the server**: `uvicorn app.app:app --reload`
+3. **Navigate to** `http://localhost:8000`
+4. **Log in** with your configured username and password
+5. **Choose a workflow** from the landing page:
+   - Medical billing/coding
+   - Clinical decision support
+   - Patient communication
+   - Multilingual summaries
+6. **Select a model**: OpenAI or Anthropic (ensure API key is configured)
+7. **Choose a sample visit note** or paste your own
+8. **Select the prompter type** for your desired analysis
+9. **Click process** and review the AI-generated results
+
 ---
 
 ## Prompter Types
 
-This project includes several types of prompt generators:
+This project includes 18+ specialized prompt generators organized by clinical workflow:
 
-### 1. **CPT Code Prompter**
-   - Extracts CPT codes from patient visit summaries.
-   - Recommends appropriate CPT codes based on performed procedures, referrals, or specific diagnoses.
+### Medical Billing & Coding
+- **biller** (`CPTCodePrompter`): Extracts CPT codes and E&M level recommendations from patient visit summaries
+- **diagnosis** (`DiagnosisCodePrompter`): Identifies ICD-10 diagnosis codes relevant to patient visits
+- **hcc_coder** (`HCCPrompter`): Hierarchical Condition Category coding for risk adjustment
+- **sdoh_coder** (`SDOHPrompter`): Social Determinants of Health Z-code identification
 
-### 2. **ICD-10 Code Prompter**
-   - Identifies ICD-10 codes relevant to patient visits.
-   - Focuses on diagnoses mentioned in the visit notes with specific sections for HCC and SDOH codes.
+### Clinical Documentation
+- **summarizer** (`SummarizeChartPrompter`): Creates professional chart summaries for healthcare providers
+- **clinical_decision_support** (`ClinicalDecisionSupportPrompter`): Analyzes drug interactions, contraindications, and identifies care gaps
 
-### 3. **Chart Summary Prompter**
-   - Summarizes the key points of the patient’s chart, providing a concise and professional overview for healthcare providers.
+### Patient Care Coordination
+- **follow_up** (`FollowUpPrompter`): Tracks follow-up appointments and recommended services
+- **medication_adherance** (`MedicationAdherencePrompter`): Generates patient medication compliance messages
+- **previsit_planner** (`PreVisitPlanningPrompter`): Pre-visit planning with EHR data analysis
+- **previsit_planner_2** (`PreVisitPlanningPrompter_Alternate`): Alternative pre-visit workflow with huddle notes
 
-### 4. **Lab Result Email Prompter**
-   - Generates patient-friendly summaries of lab results, highlighting trends without sharing specific values, protecting patient privacy in email communication.
+### Lab & Communication
+- **lab_result_emailer** (`LabResultEmailer`): Patient-friendly lab result summaries with trend analysis
+
+### Multilingual Patient Summaries
+- **english_summary** (`VisitSummaryPrompterEnglish`): Patient visit summary in English
+- **spanish_summary** (`VisitSummaryPrompterSpanish`): Patient visit summary in Spanish
+- **mandarin_summary** (`VisitSummaryPrompterMandarin`): Patient visit summary in Mandarin Chinese
+- **korean_summary** (`VisitSummaryPrompterKorean`): Patient visit summary in Korean
+- **arabic_summary** (`VisitSummaryPrompterArabic`): Patient visit summary in Arabic
+- **bengali_summary** (`VisitSummaryPrompterBengali`): Patient visit summary in Bengali
+
+All multilingual summaries include diagnosis information, treatment plans, medications, and pharmacy pickup details.
+
+---
+
+## Architecture & Technology Stack
+
+### Design Patterns
+- **Strategy Pattern**: Flexible prompter and model selection
+- **Factory Pattern**: `ModelOrchestrator` creates appropriate prompter/model combinations
+- **Abstract Factory Pattern**: `AbstractPromptGenerator` base class for all prompters
+
+### Technology Stack
+- **Backend**: FastAPI (Python 3.9) with Jinja2 templating
+- **AI Models**: OpenAI GPT and Anthropic Claude
+- **Authentication**: HTTP Basic Auth with `secrets` module
+- **Deployment**: Heroku with Gunicorn + Uvicorn workers
+- **Configuration**: python-dotenv for environment management
+
+### Application Layers
+1. **Presentation Layer**: FastAPI routes and Jinja2 templates
+2. **Orchestration Layer**: `ModelOrchestrator` coordinates models and prompters
+3. **Processing Layer**: AI models with specialized prompt generators
+
+---
+
+## Security & HIPAA Compliance
+
+The application implements the following security measures:
+
+- **HTTP Basic Authentication**: All protected routes require username/password authentication
+- **Environment Variable Security**: API keys and credentials stored in `.env` file (never commit this file!)
+- **Cache Prevention**: Headers configured to prevent credential caching
+- **Secure Credential Comparison**: Uses `secrets.compare_digest()` for timing-attack resistant authentication
+
+**Important**:
+- Always use HTTPS in production and ensure strong passwords for basic authentication
+- Never commit your `.env` file to version control (add it to `.gitignore`)
+- Rotate API keys and credentials regularly
+- Follow HIPAA guidelines for handling protected health information (PHI)
+
+---
+
+## Sample Visit Notes
+
+The application includes built-in sample visit notes for testing different workflows:
+
+- `visit_1`, `visit_2`, `visit_3`, `visit_4` - General patient visits
+- `sdoh_visit` - Social Determinants of Health scenario
+- `diagnosis_visit_note` - Diagnosis-focused visit
+- `lab_result` - Laboratory result sample
+- `follow_up` - Follow-up appointment scenario
+- `medication_adherance` - Medication compliance tracking
+- `previsit_planner` - Pre-visit planning data
+- `previsit_huddle` - Pre-visit huddle notes
+
+These are accessible via the `/get_visit_note` endpoint or through the web interface dropdowns.
 
 ---
 
@@ -161,10 +290,17 @@ Replace <your-app-name> with a unique name for your app.
 
 Ensure your repository contains:
 
-- A runtime.txt specifying the Python version, e.g., python-3.9.12.
-- A Procfile in the root directory with the following line:
+- A `runtime.txt` specifying the Python version:
+  ```
+  python-3.9
+  ```
 
-``` web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.app:app --bind 0.0.0.0:8000 ```
+- A `Procfile` in the root directory with the following line:
+  ```
+  web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.app:app --bind 0.0.0.0:$PORT
+  ```
+
+  Note: Heroku automatically sets the `$PORT` environment variable.
 
 
 
